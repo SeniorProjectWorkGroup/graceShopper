@@ -1,8 +1,10 @@
 const User = require('./user')
 const Category = require('./category')
-//Category.hasMany(Product, through: 'Product-Category')
-
 const Product = require('./product')
+
+
+// Category.belongsToMany(Product, {through: 'Product-Category'})
+
 
 /**
  * If we had any associations to make, this would be a great place to put them!
