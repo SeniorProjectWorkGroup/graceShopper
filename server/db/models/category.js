@@ -11,3 +11,5 @@ const Category = db.define('category', {
     }
   }
 })
+
+export default Category;
