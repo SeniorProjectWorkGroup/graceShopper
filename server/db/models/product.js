@@ -6,7 +6,7 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  stock: {
+  numInStock: {
     type: Sequelize.INTEGER,
     allowNull: false
   },
