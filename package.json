@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "graceShopper",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Ecommerce site for fullstack",
   "engines": {
     "node": ">= 7.0.0"
   },
