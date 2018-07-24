@@ -19,6 +19,7 @@ const Product = require('./product')
 Product.belongsToMany(Category, {through: 'ProductCategory'})
 Category.belongsToMany(Product, {through: 'ProductCategory'})
 
+
 module.exports = {
   User,
   Category,
