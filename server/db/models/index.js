@@ -1,8 +1,9 @@
 const User = require('./user')
 const Category = require('./category')
-//Category.hasMany(Product, through: 'Product-Category')
-
 const Product = require('./product')
+
+
+// Category.belongsToMany(Product, {through: 'Product-Category'})
 
 
 /**
@@ -18,9 +19,12 @@ const Product = require('./product')
  * for example, we can say: const {User} = require('../db/models')
  * instead of: const User = require('../db/models/user')
  */
+
+Product.belongsToMany(Category, {through: 'CategoryProduct'})
+Category.belongsToMany(Product, {through: 'CategoryProduct'})
+
 module.exports = {
   User,
   Category,
   Product
-
 }

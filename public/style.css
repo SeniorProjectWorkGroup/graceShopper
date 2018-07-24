@@ -19,3 +19,34 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+/* Utilities */
+.flex {
+  display: flex;
+}
+
+.flexDown{
+  display: flex;
+  flex-direction: column;
+}
+.flexEnd{
+  display: flex;
+  justify-content: end;
+}
+
+nav {
+  background-color: #999;
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  color: white;
+}
+
+
+
+.cartIcon img{
+  margin-top: 10px;
+  height: 30px;
+  width: 30px;
+}

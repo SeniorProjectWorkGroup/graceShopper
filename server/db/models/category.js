@@ -1,15 +1,14 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-
 const Category = db.define('category', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isEmpty: false
+      notEmpty: true
     }
   }
 })
 
-module.exports = Category;
+module.exports = Category

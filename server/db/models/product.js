@@ -11,24 +11,22 @@ const Product = db.define('product', {
     allowNull: false
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.FLOAT,
     validate: {
       min: 0
     }
   },
-description: {
-  type: Sequelize.TEXT,
-  allowNull: false
-},
-imageUrls: {
-  type: Sequelize.ARRAY(Sequelize.TEXT)
-}
+  description: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
+  imageUrls: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
+  }
 })
 
-
 Product.findByCategory = async function(category) {
-  return await Product.findAll({where:{categoryId: category}})
-    }
-
+  return await Product.findAll({where: {categoryId: category}})
+}
 
 module.exports = Product
