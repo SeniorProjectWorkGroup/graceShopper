@@ -29,8 +29,15 @@ router.get('/:productId', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  const {name, numInStock, price, description, imageUrls} = req.body
   try {
-    const product = await Product.create(req.body)
+    const product = await Product.create({
+      name,
+      numInStock,
+      price,
+      description,
+      imageUrls
+    })
     res.json(product)
   } catch (err) {
     next(err)
@@ -42,8 +49,11 @@ router.put('/:productId', async (req, res, next) => {
   const changedProduct = {name, numInStock, price, description, imageUrls}
   try {
     const productToChange = await Product.findById(req.params.productId)
-    productToChange.update(changedProduct)
-    res.json(productToChange)
+    await productToChange.update(changedProduct)
+    res.json({
+      productToChange: productToChange,
+      message: 'Product Updated'
+    })
   } catch (err) {
     next(err)
   }
@@ -52,8 +62,8 @@ router.put('/:productId', async (req, res, next) => {
 router.delete('/:productId', async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.productId)
-    product.destroy()
-    res.json(product)
+    await product.destroy()
+    res.json({product: product, message: 'Product Deleted'})
   } catch (err) {
     next(err)
   }
