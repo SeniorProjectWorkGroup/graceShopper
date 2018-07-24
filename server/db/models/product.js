@@ -20,8 +20,8 @@ const Product = db.define('product', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  imageUrls: {
-    type: Sequelize.ARRAY(Sequelize.TEXT)
+  imageUrl: {
+    type: Sequelize.TEXT
   }
 })
 
