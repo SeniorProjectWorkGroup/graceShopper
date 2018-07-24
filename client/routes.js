@@ -6,6 +6,7 @@ import {Login, Signup, UserHome, ProductList} from './components'
 import {me} from './store'
 import CategorySideBar from './components/CategorySideBar';
 import AddProductForm from './components/Product-Forms/AddProductForm'
+import EditProductForm from './components/Product-Forms/EditProductForm'
 
 /**
  * COMPONENT
@@ -32,6 +33,10 @@ class Routes extends Component {
             <Route
               path="/addProduct"
               render={routeProps => <AddProductForm {...routeProps} />}
+            />
+            <Route
+              path="/editProduct/:productId"
+              render={routeProps => <EditProductForm {...routeProps} />}
             />
           </Switch>
         )}
