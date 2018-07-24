@@ -2,7 +2,6 @@
 
 const {expect} = require('chai')
 const request = require('supertest')
-// const supertest = require('supertest-as-promised')(require('../app'))
 const db = require('../db')
 const app = require('../index')
 const Product = db.model('product')
@@ -24,7 +23,6 @@ describe('Product routes', () => {
     }
 
     beforeEach(async () => {
-      console.log(dummyProduct)
       await Product.create(dummyProduct)
       await Category.create(dummyCategory)
     })
@@ -38,17 +36,44 @@ describe('Product routes', () => {
       expect(res.body[0].name).to.be.equal('Happy Tree')
     })
 
-    // it('POST creates a new product & responds with the created product', () => {
-    //   return supertest
-    //     .post('/products')
-    //     .send({name: 'product', description: 'it is a product'}) // the HTTP request body
-    //     .expect('Content-Type', /json/)
-    //     .expect(res => {
-    //       expect(res.body).to.eql({
-    //         name: 'product',
-    //         description: 'it is a product'
-    //       })
-    // })
-    // })
+    it('POST creates a new product & responds with the created product', () => {
+      return (
+        request(app)
+          .post('/api/products')
+          .send({
+            name: 'product',
+            numInStock: 3,
+            description: 'it is a product'
+          }) // the HTTP request body
+          // .expect('Content-Type', /json/)
+          .expect(res => {
+            expect(res.body.name).to.eql('product')
+            expect(res.body.description).to.eql('it is a product')
+          })
+      )
+    })
+
+    it('PUT /api/products/:productId', () => {
+      return request(app)
+        .put('/api/products/1')
+        .send({
+          name: 'product',
+          numInStock: 3,
+          description: 'it is a product'
+        })
+        .expect(res => {
+          expect(res.body.productToChange.name).to.be.equal('product')
+          expect(res.body.message).to.be.equal('Product Updated')
+        })
+    })
+
+    it('DELETE /api/products/:productId', () => {
+      return request(app)
+        .delete('/api/products/1')
+        .expect(res => {
+          expect(res.body).to.be.an('object')
+          expect(res.body.message).to.be.equal('Product Deleted')
+        })
+    })
   }) // end describe('/api/products')
 }) // end describe('Product routes')
