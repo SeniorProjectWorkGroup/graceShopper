@@ -2,7 +2,7 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
-const products = require('./data/product.json')
+const sampleProducts = require('./data/product.json')
 const Product = require('../server/db/models/product')
 
 /**
@@ -22,12 +22,12 @@ async function seed() {
 
   // Seed Products
   const promiseArr = []
-  products.forEach((product) => {
+  sampleProducts.forEach((product) => {
     const {name, numInStock, price, description} = product;
     promiseArr.push(Product.create({name, numInStock, price, description}))
   })
   await Promise.all(promiseArr)
-  console.log(`seeded ${products.length} products`)
+  console.log(`seeded ${sampleProducts.length} products`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.
