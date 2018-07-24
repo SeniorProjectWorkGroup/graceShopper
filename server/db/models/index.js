@@ -2,10 +2,6 @@ const User = require('./user')
 const Category = require('./category')
 const Product = require('./product')
 
-const db = require('../db')
-
-// Category.belongsToMany(Product, {through: 'Product-Category'})
-
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -20,18 +16,11 @@ const db = require('../db')
  * instead of: const User = require('../db/models/user')
  */
 
-
- // *Have to explicitly create join table in order to seed / test it.
- // Can't get it to work otherwise
-const ProductCategory = db.define('productcategory', {
-});
-
-Product.belongsToMany(Category, {through: ProductCategory})
-Category.belongsToMany(Product, {through: ProductCategory})
+Product.belongsToMany(Category, {through: 'ProductCategory'})
+Category.belongsToMany(Product, {through: 'ProductCategory'})
 
 module.exports = {
   User,
   Category,
-  Product,
-  ProductCategory
+  Product
 }

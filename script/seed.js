@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Category, ProductCategory} = require('../server/db/models')
+const {User, Product, Category} = require('../server/db/models')
 const sampleProducts = require('./data/product.json')
 const sampleCategories = require('./data/category.json')
 const productCategories = require('./data/product_category.json')
@@ -30,7 +30,16 @@ async function seed() {
   console.log(`seeded ${sampleCategories.length} categories`)
 
   // Seed Product-Category associations
-  await ProductCategory.bulkCreate(productCategories);
+  const promiseArr = []
+  productCategories.forEach((productCategory) => {
+    // Get each product and add the category to it
+    let promise = Product.findById(productCategory.productId)
+    .then((product) => {
+      return product.addCategory(productCategory.categoryId)
+    })
+    promiseArr.push(promise)
+  })
+  await Promise.all(promiseArr)
   console.log(`seeded ${productCategories.length} product-category associations`)
 }
 
