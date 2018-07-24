@@ -17,10 +17,7 @@ describe('Product model', () => {
       price: 5.99,
       description:
         "This thing is so dang shiny. You need special sunglasses just to see it. Don't be the only person on your block without one!",
-      imageUrls: [
-        'https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjN0ODGmbbcAhVOUt8KHRP_BQIQjRx6BAgBEAU&url=https%3A%2F%2Fmedium.com%2Fthe-bridge%2Fthat-shiny-thing-you-like-so-much-went-through-a-process-thats-why-it-works-7552638e7232&psig=AOvVaw2XE_Vz7Yjktl9spikuqH0h&ust=1532468852972335',
-        'https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiihpbgmbbcAhWM3oMKHfa3CnwQjRx6BAgBEAU&url=https%3A%2F%2Fmotionarray.com%2Fstock-motion-graphics%2Fneon-disco-ball-31645&psig=AOvVaw320MZNXT3wsPqx54A25p1g&ust=1532468920008956'
-      ]
+      imageUrl: 'https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjN0ODGmbbcAhVOUt8KHRP_BQIQjRx6BAgBEAU&url=https%3A%2F%2Fmedium.com%2Fthe-bridge%2Fthat-shiny-thing-you-like-so-much-went-through-a-process-thats-why-it-works-7552638e7232&psig=AOvVaw2XE_Vz7Yjktl9spikuqH0h&ust=1532468852972335'
     })
   })
 
