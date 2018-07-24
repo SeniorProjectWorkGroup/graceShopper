@@ -1,7 +1,7 @@
 const User = require('./user')
 const Category = require('./category')
 const Product = require('./product')
-
+const db = require('../db')
 
 // Category.belongsToMany(Product, {through: 'Product-Category'})
 
@@ -20,11 +20,17 @@ const Product = require('./product')
  * instead of: const User = require('../db/models/user')
  */
 
-Product.belongsToMany(Category, {through: 'CategoryProduct'})
-Category.belongsToMany(Product, {through: 'CategoryProduct'})
+ // *Have to explicitly create join table in order to seed / test it.
+ // Can't get it to work otherwise
+const ProductCategory = db.define('productcategory', {
+});
+
+Product.belongsToMany(Category, {through: ProductCategory})
+Category.belongsToMany(Product, {through: ProductCategory})
 
 module.exports = {
   User,
   Category,
-  Product
+  Product,
+  ProductCategory
 }

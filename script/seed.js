@@ -1,9 +1,10 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product, Category, ProductCategory} = require('../server/db/models')
 const sampleProducts = require('./data/product.json')
-const Product = require('../server/db/models/product')
+const sampleCategories = require('./data/category.json')
+const productCategories = require('./data/product_category.json')
 
 /**
  * Welcome to the seed file!
@@ -23,6 +24,14 @@ async function seed() {
   // Seed Products
   await Product.bulkCreate(sampleProducts);
   console.log(`seeded ${sampleProducts.length} products`)
+
+  // Seed Categories
+  await Category.bulkCreate(sampleCategories);
+  console.log(`seeded ${sampleCategories.length} categories`)
+
+  // Seed Product-Category associations
+  await ProductCategory.bulkCreate(productCategories);
+  console.log(`seeded ${productCategories.length} product-category associations`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.
