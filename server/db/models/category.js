@@ -12,4 +12,4 @@ const Category = db.define('category', {
   }
 })
 
-export default Category;
+module.exports = Category;
