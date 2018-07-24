@@ -43,7 +43,6 @@ router.delete('/:categoryId', async (req, res, next) => {
   try {
     const selectedCategory = await Category.findById(req.params.categoryId)
     await selectedCategory.destroy()
-    res.status()
     res.json({
       message: 'Category Deleted'
     })
