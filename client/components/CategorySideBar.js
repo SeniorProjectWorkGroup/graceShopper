@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {fetchCategories} from '../store/category'
 
 class CategorySideBar extends React.Component {
-
   componentDidMount() {
     this.props.fetchCategories()
   }
@@ -13,17 +12,24 @@ class CategorySideBar extends React.Component {
     return (
       <div>
         <ul>
-        {categories && categories.map(category => {
-          return <li key={category.id}>{category.name}</li>
-        })}
+          {categories &&
+            categories.map(category => {
+              return (
+                <li key={category.id}>
+                  <button type="button" className="category-btn">{category.name}</button>
+                </li>
+              )
+            })}
         </ul>
       </div>
     )
   }
 }
 
-const mapStateToProps= ({ categories }) => ({ categories })
+const mapStateToProps = ({categories}) => ({categories})
 
-const mapDispatchToProps = (dispatch) => ({ fetchCategories: () => dispatch(fetchCategories()) })
+const mapDispatchToProps = dispatch => ({
+  fetchCategories: () => dispatch(fetchCategories())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySideBar)

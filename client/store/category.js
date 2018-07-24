@@ -22,9 +22,10 @@ export const fetchCategories = () => {
 }
 
 // ============  Reducers  ============
-function reduceCategories({ categories }, action) {
+export const categories = (state = [], action) => {
+  // console.log('in reduceCategories. action:', action)
   switch(action.type) {
-    case GOT_CATEGORIES_FROM_SERVER: return { categories: action.categories }
-    default: return { categories }
+    case GOT_CATEGORIES_FROM_SERVER: return action.categories
+    default: return state
   }
 }
