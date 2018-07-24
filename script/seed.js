@@ -21,12 +21,7 @@ async function seed() {
   console.log(`seeded ${users.length} users`)
 
   // Seed Products
-  const promiseArr = []
-  sampleProducts.forEach((product) => {
-    const {name, numInStock, price, description} = product;
-    promiseArr.push(Product.create({name, numInStock, price, description}))
-  })
-  await Promise.all(promiseArr)
+  await Product.bulkCreate(sampleProducts);
   console.log(`seeded ${sampleProducts.length} products`)
 }
 
