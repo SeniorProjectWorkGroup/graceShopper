@@ -1,10 +1,10 @@
 const User = require('./user')
 const Category = require('./category')
 const Product = require('./product')
+
 const db = require('../db')
 
 // Category.belongsToMany(Product, {through: 'Product-Category'})
-
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -19,6 +19,7 @@ const db = require('../db')
  * for example, we can say: const {User} = require('../db/models')
  * instead of: const User = require('../db/models/user')
  */
+
 
  // *Have to explicitly create join table in order to seed / test it.
  // Can't get it to work otherwise
