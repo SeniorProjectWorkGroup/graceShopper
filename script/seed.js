@@ -3,7 +3,7 @@
 const db = require('../server/db')
 const {User} = require('../server/db/models')
 // const fs = require('fs');
-const products = require('./product.json')
+const products = require('./data/product.json')
 const Product = require('../server/db/models/product')
 
 /**
