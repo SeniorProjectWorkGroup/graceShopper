@@ -2,17 +2,12 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
-// const fs = require('fs');
 const products = require('./data/product.json')
 const Product = require('../server/db/models/product')
 
 /**
  * Welcome to the seed file!
  */
-
-// function readJSON(filePath) {
-//   return JSON.parse(fs.readFileSync(filePath));
-// }
 
 async function seed() {
   await db.sync({force: true})
@@ -26,8 +21,6 @@ async function seed() {
   console.log(`seeded ${users.length} users`)
 
   // Seed Products
-  // let products = readJSON('product.json');
-  // console.log(products);
   const promiseArr = []
   products.forEach((product) => {
     const {name, numInStock, price, description} = product;
