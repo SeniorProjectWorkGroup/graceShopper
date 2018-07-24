@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-export default class AddProductForm extends Component {
+import {postProducts} from '../../store/products/productsList'
+
+class AddProductForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -27,10 +29,17 @@ export default class AddProductForm extends Component {
 
   handleChange(evt) {
     this.setState({[evt.target.name]: evt.target.value})
-    console.log(this.state)
   }
   handleSubmit(evt) {
     evt.preventDefault()
+    const newProductEntry = {
+      name: this.state.name,
+      numInStock: this.state.numInStock,
+      price: this.state.price,
+      imgURL: this.state.imgURL,
+      description: this.state.description
+    }
+    this.props.submitProduct(newProductEntry)
   }
 
   render() {
@@ -87,6 +96,8 @@ export default class AddProductForm extends Component {
   }
 }
 
-// const mapDispatchToProps = dispatch => ({
-//   submitProduct: product => dispatch(postProduct)
-// })
+const mapDispatchToProps = dispatch => ({
+  submitProduct: product => dispatch(postProducts(product))
+})
+
+export default connect(null, mapDispatchToProps)(AddProductForm)

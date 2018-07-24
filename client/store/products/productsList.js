@@ -28,9 +28,10 @@ const deleteProduct = deletedId => ({
   deletedId
 })
 
-const editProduct = editedId => ({
+const editProduct = (editedId, updatedProduct) => ({
   type: EDIT_PRODUCT,
-  editedId
+  editedId,
+  updatedProduct
 })
 
 //THUNK CREATORS
@@ -55,9 +56,11 @@ export const postProducts = product => {
   }
 }
 
-export const putProductById = productId => {
+export const putProductById = (productId, productUpdated) => {
   return async dispatch => {
-    const {data} = await axios.put(`/api/products/${productId}`)
+    console.log('ID', productId)
+    console.log('Prodddd', productUpdated)
+    const {data} = await axios.put(`/api/products/${productId}`, productUpdated)
     dispatch(editProduct(data))
   }
 }
@@ -84,10 +87,10 @@ const productListReducer = (productListState = [], action) => {
       return filteredList
     }
     case EDIT_PRODUCT: {
-      const filteredList = this.productListState(product => {
-        return product.id !== action.editedId
+      const updatedList = productListState.map(product => {
+        if (product.id !== action.editedId) return action.updatedProduct
       })
-      return filteredList
+      return updatedList
     }
     default:
       return productListState
