@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCategories} from '../store/category'
+import {setDisplayedProducts} from '../store/products/displayedProducts'
 
 class CategorySideBar extends React.Component {
   componentDidMount() {
@@ -9,7 +10,11 @@ class CategorySideBar extends React.Component {
 
   createClickHandler = categoryId => event => {
     console.log('event.target:', event.target, 'categoryId:', categoryId)
-    // TODO: Update displayedProducts to show products for the category
+    // Update displayedProducts to show products for the category
+    const productsInCategory = this.props.productList.filter((product) => {
+      return product.categories.find((category) => category.id === categoryId)
+    })
+    this.props.setDisplayedProducts(productsInCategory)
   }
 
   render() {
@@ -25,7 +30,6 @@ class CategorySideBar extends React.Component {
                     className="btn"
                     onClick={this.createClickHandler(category.id)}
                     type="button"
-                    className="btn"
                   >
                     {category.name}
                   </button>
@@ -38,10 +42,14 @@ class CategorySideBar extends React.Component {
   }
 }
 
-const mapStateToProps = ({categories}) => ({categories})
+const mapStateToProps = ({categories, productList}) => ({
+  categories,
+  productList
+})
 
 const mapDispatchToProps = dispatch => ({
-  fetchCategories: () => dispatch(fetchCategories())
+  fetchCategories: () => dispatch(fetchCategories()),
+  setDisplayedProducts: products => dispatch(setDisplayedProducts(products))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySideBar)

@@ -10,6 +10,7 @@ const Navbar = ({handleClick, isLoggedIn, userRole}) => (
       <div className="flex">
         {/* The navbar will show these links after you log in */}
         <Link to="/home">Home</Link>
+         <Link to="/products">Products</Link>
         {userRole === 'ADMIN' ? (
           <Fragment>
             <Link to="/addProduct"> Add Product </Link>

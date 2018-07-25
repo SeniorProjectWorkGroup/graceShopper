@@ -24,11 +24,11 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/products" component={ProductList} />
-        <Route exact path="/" component={CategorySideBar} />
+        <Route exact path="/" render={() => <Redirect to="/products" />} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route exact path="/" render={() => <Redirect to="/home" />} />
+            <Route exact path="/" render={() => <Redirect to="/products" />} />
             <Route path="/home" component={UserHome} />
             <Route
               path="/addProduct"
