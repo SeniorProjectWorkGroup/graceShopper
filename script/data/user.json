@@ -1,0 +1,62 @@
+[
+  {
+    "email": "cody@email.com",
+    "password": "123",
+    "role": "ADMIN"
+  },
+  {
+    "email": "murphy@email.com",
+    "password": "123",
+    "role": "ADMIN"
+  },
+  {
+    "email": "ealcalde0@purevolume.com",
+    "password": "kxyIUXiAIjQP",
+    "role": "SHOPPER"
+  },
+  {
+    "email": "wbarnet1@geocities.com",
+    "password": "vgRMyHU",
+    "role": "ADMIN"
+  },
+  {
+    "email": "jleftwich2@gnu.org",
+    "password": "6xUJsu",
+    "role": "ADMIN"
+  },
+  {
+    "email": "eheeps3@amazon.co.uk",
+    "password": "EJK2IrAymJv",
+    "role": "ADMIN"
+  },
+  {
+    "email": "aswalough4@cam.ac.uk",
+    "password": "FC3zKdsdI",
+    "role": "SHOPPER"
+  },
+  {
+    "email": "ptows5@altervista.org",
+    "password": "70aBcLyr1tt",
+    "role": "SHOPPER"
+  },
+  {
+    "email": "fprudence6@com.com",
+    "password": "juyYRk",
+    "role": "ADMIN"
+  },
+  {
+    "email": "hrobert7@jiathis.com",
+    "password": "UjloXWvVXAXB",
+    "role": "ADMIN"
+  },
+  {
+    "email": "tking8@utexas.edu",
+    "password": "nYum0x7y",
+    "role": "SHOPPER"
+  },
+  {
+    "email": "tweatherhill9@guardian.co.uk",
+    "password": "atOnNEV",
+    "role": "ADMIN"
+  }
+]
