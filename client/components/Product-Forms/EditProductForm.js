@@ -57,7 +57,7 @@ class AddProductForm extends Component {
     return (
       <div>
         <h1> Edit the Product </h1>
-        <form onSubmit={this.handleSubmit}>
+        <form className="text-center form-group" onSubmit={this.handleSubmit}>
           <label htmlFor="name"> Product Name </label>
           <input
             name="name"
@@ -100,7 +100,11 @@ class AddProductForm extends Component {
             value={this.state.imgURL}
             onChange={this.handleChange}
           />
-          <button disabled={this.validation()} type="submit">
+          <button
+            className="flex btn-primary m-auto mt-lg-1 rounded"
+            disabled={this.validation()}
+            type="submit"
+          >
             {' '}
             Add Product{' '}
           </button>

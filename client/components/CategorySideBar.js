@@ -25,11 +25,11 @@ class CategorySideBar extends React.Component {
           {categories &&
             categories.map(category => {
               return (
-                <li key={category.id}>
+                <li className="categories" key={category.id}>
                   <button
+                    className="btn"
                     onClick={this.createClickHandler(category.id)}
                     type="button"
-                    className="category-btn"
                   >
                     {category.name}
                   </button>
