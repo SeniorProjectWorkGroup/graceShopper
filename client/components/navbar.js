@@ -10,11 +10,10 @@ const Navbar = ({handleClick, isLoggedIn, userRole}) => (
       <div className="flex">
         {/* The navbar will show these links after you log in */}
         <Link to="/home">Home</Link>
-         <Link to="/products">Products</Link>
+        <Link to="/products">Products</Link>
         {userRole === 'ADMIN' ? (
           <Fragment>
             <Link to="/addProduct"> Add Product </Link>
-            <Link to="/editProduct"> Edit Product </Link>
           </Fragment>
         ) : null}
         <a href="#" onClick={handleClick}>
