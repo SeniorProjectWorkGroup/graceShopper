@@ -2,11 +2,18 @@ import axios from 'axios'
 
 // ============  Action Types  ============
 export const GOT_CATEGORIES_FROM_SERVER = 'GOT_CATEGORIES_FROM_SERVER'
+export const FILTER_PRODUCTS_BY_CATEGORY = 'FILTER_PRODUCTS_BY_CATEGORY'
 
 // ============  Action Creators  ============
 export const gotCategories = (categories) => ({
   type: GOT_CATEGORIES_FROM_SERVER,
   categories
+})
+
+export const filterProductsByCategory = (category, products) => ({
+  type: FILTER_PRODUCTS_BY_CATEGORY,
+  category,
+  products
 })
 
 // ============  Thunk Creators  ============

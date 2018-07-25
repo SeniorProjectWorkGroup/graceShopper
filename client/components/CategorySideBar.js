@@ -1,15 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCategories} from '../store/category'
+import {setDisplayedProducts} from '../store/products/displayedProducts'
 
 class CategorySideBar extends React.Component {
   componentDidMount() {
     this.props.fetchCategories()
   }
 
-  createClickHandler = (categoryId) => (event) => {
+  createClickHandler = categoryId => event => {
     console.log('event.target:', event.target, 'categoryId:', categoryId)
-    // TODO: Update displayedProducts to show products for the category
+    // Update displayedProducts to show products for the category
+    const productsInCategory = this.props.productList.filter((product) => {
+      return product.categories.find((category) => category.id === categoryId)
+    })
+    this.props.setDisplayedProducts(productsInCategory)
   }
 
   render() {
@@ -21,7 +26,13 @@ class CategorySideBar extends React.Component {
             categories.map(category => {
               return (
                 <li key={category.id}>
-                  <button onClick={this.createClickHandler(category.id)} type="button" className="category-btn">{category.name}</button>
+                  <button
+                    onClick={this.createClickHandler(category.id)}
+                    type="button"
+                    className="category-btn"
+                  >
+                    {category.name}
+                  </button>
                 </li>
               )
             })}
@@ -31,10 +42,14 @@ class CategorySideBar extends React.Component {
   }
 }
 
-const mapStateToProps = ({categories}) => ({categories})
+const mapStateToProps = ({categories, productList}) => ({
+  categories,
+  productList
+})
 
 const mapDispatchToProps = dispatch => ({
-  fetchCategories: () => dispatch(fetchCategories())
+  fetchCategories: () => dispatch(fetchCategories()),
+  setDisplayedProducts: products => dispatch(setDisplayedProducts(products))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySideBar)

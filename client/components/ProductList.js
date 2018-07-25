@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import Product from './Product'
 import {connect} from 'react-redux'
-import {fetchProducts} from '../store/products/productsList'
+import {fetchProductsAndDisplay} from '../store/products/productsList'
 
 function ProductList(props) {
+  console.log(props.products)
   return (
     <ul>
       {props.products.map(product => (
@@ -15,19 +16,19 @@ function ProductList(props) {
 
 class ProductLoader extends Component {
   componentDidMount() {
-    this.props.getAllProducts()
+    console.log('ProductLoader.componentDidMount()')
+    // Fetch all the products from the server and set them to be the displayedProducts
+    this.props.fetchProductsAndDisplay()
   }
   render() {
     return <ProductList {...this.props} />
   }
 }
 
-const mapStateToProps = function(state) {
-  return {products: state.productList}
-}
+const mapStateToProps = ({ displayedProducts = [] }) => ({ products: displayedProducts })
 
-const mapDispatchToProps = function(dispatch) {
-  return {getAllProducts: () => dispatch(fetchProducts())}
-}
+const mapDispatchToProps = (dispatch) => ({
+  fetchProductsAndDisplay: () => dispatch(fetchProductsAndDisplay())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductLoader)
