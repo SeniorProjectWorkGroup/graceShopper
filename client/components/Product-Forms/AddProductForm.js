@@ -40,6 +40,7 @@ class AddProductForm extends Component {
       description: this.state.description
     }
     this.props.submitProduct(newProductEntry)
+    this.props.history.push('/')
   }
 
   render() {

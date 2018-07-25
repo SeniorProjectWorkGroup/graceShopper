@@ -43,14 +43,11 @@ class AddProductForm extends Component {
       imgURL: this.state.imgURL,
       description: this.state.description
     }
-    console.log('ProdId form', this.props.match.params.productId)
-
-    console.log('Form Entry', editedProductEntry)
-
     this.props.submitProduct(
       this.props.match.params.productId,
       editedProductEntry
     )
+    this.props.history.push('/')
   }
 
   render() {

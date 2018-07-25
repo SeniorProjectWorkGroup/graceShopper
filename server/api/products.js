@@ -2,16 +2,14 @@ const router = require('express').Router()
 const {Product, User, Category} = require('../db/models')
 module.exports = router
 
-
 router.get('/', async (req, res, next) => {
   try {
     // Eager load the categories for the products
-    let whereClause = { include: [Category] }
+    let whereClause = {include: [Category]}
     if (req.query.categoryId) {
       whereClause.categoryId = req.query.params.categoryId
     }
     const products = await Product.findAll(whereClause)
-    console.log('products:', products)
     res.json(products)
   } catch (err) {
     next(err)
