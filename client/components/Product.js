@@ -15,6 +15,10 @@ function Product(props) {
         </NavLink>
         <span className="product-price">{product.price}</span>
         <span className="product-numInStock">{product.numInStock}</span>
+        {product.categories.map((category) => {
+          return <span key={category.id} className="product-category">{category.name}</span>
+        })}
+
       </div>
     </li>
   )

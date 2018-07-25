@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {setDisplayedProducts} from './displayedProducts'
 
 //ACTION TYPES
 const GET_PRODUCTS = 'GET_PRODUCTS'
@@ -37,8 +38,17 @@ const editProduct = (editedId, updatedProduct) => ({
 //THUNK CREATORS
 export const fetchProducts = () => {
   return async dispatch => {
-    const {data} = await axios.get('/api/products')
-    dispatch(getProducts(data))
+    const {data: products} = await axios.get('/api/products')
+    dispatch(getProducts(products))
+  }
+}
+
+export const fetchProductsAndDisplay = () => {
+  return async dispatch => {
+    const {data: products} = await axios.get('/api/products')
+    dispatch(getProducts(products))
+    // Display all the products
+    dispatch(setDisplayedProducts(products))
   }
 }
 
