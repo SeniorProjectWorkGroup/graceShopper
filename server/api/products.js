@@ -3,11 +3,9 @@ const {Product, Category} = require('../db/models')
 const {isAdmin} = require('./helper')
 
 module.exports = router
-
 router.get('/', async (req, res, next) => {
   try {
     // Eager load the categories for the products
-    console.log('inside product get', req.session.userInfo)
     let whereClause = {include: [Category]}
     if (req.query.categoryId) {
       whereClause.categoryId = req.query.params.categoryId

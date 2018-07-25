@@ -2,9 +2,11 @@
 
 const db = require('../server/db')
 const {User, Product, Category} = require('../server/db/models')
+const users = require('./data/user.json')
 const sampleProducts = require('./data/product.json')
 const sampleCategories = require('./data/category.json')
 const productCategories = require('./data/product_category.json')
+const orders = require('./data/order.json')
 
 /**
  * Welcome to the seed file!
@@ -15,10 +17,7 @@ async function seed() {
   console.log('db synced!')
 
   // Seed Users
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
+  await User.bulkCreate(users);
   console.log(`seeded ${users.length} users`)
 
   // Seed Products
@@ -41,6 +40,10 @@ async function seed() {
   })
   await Promise.all(promiseArr)
   console.log(`seeded ${productCategories.length} product-category associations`)
+
+  // Seed the Orders
+  // await Order.bulkCreate(orders)
+  // console.log(`seeded ${orders.length} orders`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.

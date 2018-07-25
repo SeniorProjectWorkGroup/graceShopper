@@ -18,8 +18,9 @@ class AddProductForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.validation = this.validation.bind(this)
   }
-  componentDidMount() {
-    this.props.getCurrentProduct(this.props.match.params.productId)
+  async componentDidMount() {
+    await this.props.getCurrentProduct(this.props.match.params.productId)
+    await this.setState(this.props.currentProduct)
   }
 
   validation() {
@@ -43,14 +44,11 @@ class AddProductForm extends Component {
       imgURL: this.state.imgURL,
       description: this.state.description
     }
-    console.log('ProdId form', this.props.match.params.productId)
-
-    console.log('Form Entry', editedProductEntry)
-
     this.props.submitProduct(
       this.props.match.params.productId,
       editedProductEntry
     )
+    this.props.history.push('/')
   }
 
   render() {
@@ -89,7 +87,9 @@ class AddProductForm extends Component {
           <label htmlFor="description"> Product Description </label>
           <textarea
             name="description"
-            className={this.state.description.length > 0 ? '' : 'require'}
+            className={
+              this.state.description.length > 0 ? 'w-100' : 'w-100 require'
+            }
             value={this.state.description}
             onChange={this.handleChange}
             placeholder="Enter description here"

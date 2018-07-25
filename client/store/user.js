@@ -10,7 +10,11 @@ const REMOVE_USER = 'REMOVE_USER'
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultUser = {
+  id: 299,
+  email: 'bmeyer@email.com',
+  role: 'ADMIN'
+}
 
 /**
  * ACTION CREATORS

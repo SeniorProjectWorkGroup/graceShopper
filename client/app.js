@@ -7,8 +7,10 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <CategorySideBar />
-      <Routes />
+      <div className="flex">
+        <CategorySideBar />
+        <Routes />
+      </div>
     </div>
   )
 }
