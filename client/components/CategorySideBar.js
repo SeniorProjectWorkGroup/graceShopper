@@ -7,7 +7,7 @@ class CategorySideBar extends React.Component {
     this.props.fetchCategories()
   }
 
-  createClickHandler = (categoryId) => (event) => {
+  createClickHandler = categoryId => event => {
     console.log('event.target:', event.target, 'categoryId:', categoryId)
     // TODO: Update displayedProducts to show products for the category
   }
@@ -20,8 +20,15 @@ class CategorySideBar extends React.Component {
           {categories &&
             categories.map(category => {
               return (
-                <li key={category.id}>
-                  <button onClick={this.createClickHandler(category.id)} type="button" className="category-btn">{category.name}</button>
+                <li className="categories" key={category.id}>
+                  <button
+                    className="btn"
+                    onClick={this.createClickHandler(category.id)}
+                    type="button"
+                    className="btn"
+                  >
+                    {category.name}
+                  </button>
                 </li>
               )
             })}

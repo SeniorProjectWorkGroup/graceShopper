@@ -1,17 +1,21 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, userRole}) => (
   <nav>
     {isLoggedIn ? (
       <div className="flex">
         {/* The navbar will show these links after you log in */}
         <Link to="/home">Home</Link>
-        <Link to="/addProduct"> Add Product </Link>
-        <Link to="/editProduct"> Edit Product </Link>
+        {userRole === 'ADMIN' ? (
+          <Fragment>
+            <Link to="/addProduct"> Add Product </Link>
+            <Link to="/editProduct"> Edit Product </Link>
+          </Fragment>
+        ) : null}
         <a href="#" onClick={handleClick}>
           Logout
         </a>
@@ -34,7 +38,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userRole: state.user.role
   }
 }
 

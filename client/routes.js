@@ -4,7 +4,7 @@ import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, ProductList} from './components'
 import {me} from './store'
-import CategorySideBar from './components/CategorySideBar';
+import CategorySideBar from './components/CategorySideBar'
 import AddProductForm from './components/Product-Forms/AddProductForm'
 import EditProductForm from './components/Product-Forms/EditProductForm'
 
@@ -24,7 +24,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/products" component={ProductList} />
-        <Route path="/" component={CategorySideBar} />
+        <Route exact path="/" component={CategorySideBar} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
