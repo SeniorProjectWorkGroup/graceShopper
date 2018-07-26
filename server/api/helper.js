@@ -1,11 +1,13 @@
 const {User} = require('../db/models')
 // const router = require('express').Router()
 
-export const isAdmin = async function(req, next) {
-  const user = await User.findById(req.user)
-  return user || user.role === 'ADMIN'
+const isAdmin = function(req, next) {
+  console.log('inside isAdmin', req.user)
+  return req.user && req.user.role === 'ADMIN'
 }
-export const isUser = async function(req, next) {
-  const user = await User.findById(req.user)
-  return user
+const isUser = async function(req, next) {
+  console.log('inside isUser', req.user)
+  return !!req.user
 }
+
+module.exports = {isAdmin, isUser}
