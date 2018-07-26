@@ -36,11 +36,11 @@ router.delete('/:itemId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const {quantity, productId} = req.body
+    const {quantity, cartId, productId} = req.body
     const lineItem = await LineItem.create({
       productId,
       quantity,
-      CartId: req.params.cartId
+      cartId
     })
     res.json({
       message: 'Item Created',
