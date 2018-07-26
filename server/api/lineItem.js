@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {LineItem, Cart} = require('../db/models')
+const {LineItem} = require('../db/models')
 module.exports = router
 
 router.get('/:itemId', async (req, res, next) => {
@@ -36,11 +36,18 @@ router.delete('/:itemId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const {quantity, cartId, productId} = req.body
-    const lineItem = await LineItem.create({
-      productId,
-      quantity,
-      cartId
+    const lineItem = await LineItem.findOrCreate({
+      where: {productId: req.body.productId},
+      defaults: {
+        cartId: req.body.cartId,
+        quantity: 1
+      }
+    }).spread(async (item, created) => {
+      if (!created) {
+        const quantity = item.quantity + 1
+        await item.update({quantity})
+      }
+      return item
     })
     res.json({
       message: 'Item Created',

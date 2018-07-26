@@ -53,41 +53,53 @@ describe.only('line-items api', () => {
           expect(res.body.productId).to.be.equal(dummyLineItem.productId)
         })
     })
-    it('POST /items', () => {
+    it('POST to /items where item doesnt exist', () => {
       return request(app)
         .post('/api/items')
         .send({
           productId: 2,
+          cartId: 1
+        })
+        .expect(res => {
+          expect(res.body).to.be.an('object')
+          expect(res.body.lineItem.quantity).to.be.equal(1)
+          expect(res.body.lineItem.cartId).to.be.equal(dummyLineItem.cartId)
+          expect(res.body.lineItem.productId).to.be.equal(2)
+        })
+    })
+    it('POST to /items where item exists', () => {
+      return request(app)
+        .post('/api/items')
+        .send({
+          productId: 1,
           cartId: 1,
           quantity: 10
         })
         .expect(res => {
           expect(res.body).to.be.an('object')
-          expect(res.body.lineItem.quantity).to.be.equal(10)
-          expect(res.body.lineItem.cartId).to.be.equal(
-            dummyLineItem.lineItem.cartId
+          expect(res.body.lineItem.quantity).to.be.equal(
+            dummyLineItem.quantity + 1
           )
-          expect(res.body.lineItem.productId).to.be.equal(
-            dummyLineItem.productId
-          )
+          expect(res.body.lineItem.cartId).to.be.equal(dummyLineItem.cartId)
+          expect(res.body.lineItem.productId).to.be.equal(1)
         })
     })
-    // it('PUT /:item', () => {
-    //   return request(app)
-    //     .post('/api/items/1')
-    //     .send({quantity: 11})
-    //     .expect(res => {
-    //       expect(res.body.quantity).to.be.equal(11)
-    //       expect(res.body.cartId).to.be.equal(dummyLineItem.cartId)
-    //       expect(res.body.productId).to.be.equal(dummyLineItem.productId)
-    //     })
-    // })
-    // it('DELETE /:item', () => {
-    //   return request(app)
-    //   .delete('/api/items/1')
-    //   .expect((res) => {
-    //     expect(res.body.message).to.be.equal('Item Deleted')
-    //   })
-    // })
+    it('PUT /:item', () => {
+      return request(app)
+        .put('/api/items/1')
+        .send({quantity: 11})
+        .expect(res => {
+          expect(res.body.quantity).to.be.equal(11)
+          expect(res.body.cartId).to.be.equal(dummyLineItem.cartId)
+          expect(res.body.productId).to.be.equal(dummyLineItem.productId)
+        })
+    })
+    it('DELETE /:item', () => {
+      return request(app)
+        .delete('/api/items/1')
+        .expect(res => {
+          expect(res.body.message).to.be.equal('Item Deleted')
+        })
+    })
   })
 })
