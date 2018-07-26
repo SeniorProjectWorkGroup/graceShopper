@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
     // Eager load the categories for the products
     let whereClause = {include: [Category]}
     if (req.query.categoryId) {
-      whereClause.categoryId = req.query.params.categoryId
+      whereClause.where = {categoryId: req.query.params.categoryId}
     }
     const products = await Product.findAll(whereClause)
     res.json(products)

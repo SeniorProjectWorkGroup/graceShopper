@@ -1,75 +1,75 @@
 [{
-  "address": "7 Little Fleur Lane",
+  "addressAtPurchase": "7 Little Fleur Lane",
   "dateOrdered": "9/3/2017",
-  "status": "COMPLETED",
+  "status": "COMPLETE",
   "userId": 2
 }, {
-  "address": "9 Bay Place",
+  "addressAtPurchase": "9 Bay Place",
   "dateOrdered": "8/31/2017",
   "status": "CREATED",
   "userId": 1
 }, {
-  "address": "523 Rutledge Alley",
+  "addressAtPurchase": "523 Rutledge Alley",
   "dateOrdered": "7/20/2018",
-  "status": "CANCELLED",
+  "status": "CANCELED",
   "userId": 1
 }, {
-  "address": "5 Dakota Center",
+  "addressAtPurchase": "5 Dakota Center",
   "dateOrdered": "12/11/2017",
   "status": "PROCESSING",
   "userId": 1
 }, {
-  "address": "43866 Logan Trail",
+  "addressAtPurchase": "43866 Logan Trail",
   "dateOrdered": "7/19/2018",
   "status": "CREATED",
   "userId": 2
 }, {
-  "address": "085 Brickson Park Trail",
+  "addressAtPurchase": "085 Brickson Park Trail",
   "dateOrdered": "10/8/2017",
-  "status": "CANCELLED",
+  "status": "CANCELED",
   "userId": 1
 }, {
-  "address": "28 Steensland Parkway",
+  "addressAtPurchase": "28 Steensland Parkway",
   "dateOrdered": "10/18/2017",
-  "status": "CANCELLED",
+  "status": "CANCELED",
   "userId": 1
 }, {
-  "address": "41099 Sullivan Alley",
+  "addressAtPurchase": "41099 Sullivan Alley",
   "dateOrdered": "3/9/2018",
   "status": "CREATED",
   "userId": 2
 }, {
-  "address": "5 Helena Center",
+  "addressAtPurchase": "5 Helena Center",
   "dateOrdered": "2/26/2018",
-  "status": "COMPLETED",
+  "status": "COMPLETE",
   "userId": 2
 }, {
-  "address": "02 Everett Drive",
+  "addressAtPurchase": "02 Everett Drive",
   "dateOrdered": "7/13/2018",
-  "status": "COMPLETED",
+  "status": "COMPLETE",
   "userId": 1
 }, {
-  "address": "93 Ludington Parkway",
+  "addressAtPurchase": "93 Ludington Parkway",
   "dateOrdered": "11/5/2017",
   "status": "PROCESSING",
   "userId": 1
 }, {
-  "address": "1 Walton Pass",
+  "addressAtPurchase": "1 Walton Pass",
   "dateOrdered": "10/9/2017",
   "status": "PROCESSING",
   "userId": 2
 }, {
-  "address": "44 Graedel Road",
+  "addressAtPurchase": "44 Graedel Road",
   "dateOrdered": "2/1/2018",
-  "status": "COMPLETED",
+  "status": "COMPLETE",
   "userId": 2
 }, {
-  "address": "70 Hintze Junction",
+  "addressAtPurchase": "70 Hintze Junction",
   "dateOrdered": "11/25/2017",
   "status": "CREATED",
   "userId": 2
 }, {
-  "address": "9303 Heath Center",
+  "addressAtPurchase": "9303 Heath Center",
   "dateOrdered": "3/20/2018",
   "status": "PROCESSING",
   "userId": 2
