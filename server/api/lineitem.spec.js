@@ -7,7 +7,7 @@ const Cart = db.model('cart')
 const LineItem = db.model('lineitem')
 const User = db.model('user')
 
-describe.only('line-items api', () => {
+describe('line-items api', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
