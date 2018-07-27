@@ -1,11 +1,13 @@
-const {User} = require('../db/models')
+// const {User} = require('../db/models')
 // const router = require('express').Router()
 
-export const isAdmin = async function(req, next) {
-  const user = await User.findById(req.user)
-  return user || user.role === 'ADMIN'
+module.exports.isAdmin = function(req, next) {
+  // const user = await User.findById(req.user)
+  // return user && user.role === 'ADMIN'
+  return true;
 }
-export const isUser = async function(req, next) {
-  const user = await User.findById(req.user)
-  return user
+module.exports.isUser = function(req, next) {
+  // const user = await User.findById(req.user)
+  // return !!user
+  return true;
 }
