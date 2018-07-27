@@ -32,7 +32,7 @@ User.hasMany(Review)
 
 Product.belongsToMany(Cart, {through: LineItem})
 Cart.belongsToMany(Product, {through: LineItem})
-Cart.belongsTo(User)
+Cart.hasOne(User)
 
 module.exports = {
   Category,

@@ -4,7 +4,7 @@ const LineItem = db.model('lineitem')
 const Product = db.model('product')
 const Cart = db.model('cart')
 
-describe.only('LineItem Model', () => {
+describe('LineItem Model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
