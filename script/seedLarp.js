@@ -3,9 +3,6 @@
 const db = require('../server/db')
 const {Category, Order, Product, Review, User} = require('../server/db/models')
 const users = require('./data/user.json')
-const sampleProducts = require('./data/product.json')
-const sampleCategories = require('./data/category.json')
-const productCategories = require('./data/product_category.json')
 const orders = require('./data/order.json')
 const reviews = require('./data/review.json')
 const fs = require('fs')
@@ -57,13 +54,13 @@ async function seed() {
         description: product.description,
         imageUrl: 'img/' + product.localImgName
       }
-      // console.log(productObj)
-      const createdProduct = await Product.create(productObj)
+      const createdProduct = await Product.create(productObj, {returning: true})
+      console.log('createdProduct.id:', createdProduct.id)
 
       // Find or create categories
       const categories = product.categories
       for (let k = 0; k < categories.length; k++) {
-        const category = await Category.findOrCreate({
+        const [category, found] = await Category.findOrCreate({
           where: {name: categories[k]},
           default: {name: categories[k]}
         })
@@ -72,34 +69,14 @@ async function seed() {
       }
     }
   }
-  // Seed Products
-  // await Product.bulkCreate(sampleProducts);
-  // console.log(`seeded ${sampleProducts.length} products`)
-
-  // Seed Categories
-  // await Category.bulkCreate(sampleCategories);
-  // console.log(`seeded ${sampleCategories.length} categories`)
-
-  // Seed Product-Category associations
-  // const promiseArr = []
-  // productCategories.forEach((productCategory) => {
-  //   // Get each product and add the category to it
-  //   let promise = Product.findById(productCategory.productId)
-  //   .then((product) => {
-  //     return product.addCategory(productCategory.categoryId)
-  //   })
-  //   promiseArr.push(promise)
-  // })
-  // await Promise.all(promiseArr)
-  // console.log(`seeded ${productCategories.length} product-category associations`)
 
   // Seed the Orders
-  // await Order.bulkCreate(orders)
-  // console.log(`seeded ${orders.length} orders`)
+  await Order.bulkCreate(orders)
+  console.log(`seeded ${orders.length} orders`)
 
   // Seed the Reviews
-  // await Review.bulkCreate(reviews)
-  // console.log(`seeded ${reviews.length} reviews`)
+  await Review.bulkCreate(reviews)
+  console.log(`seeded ${reviews.length} reviews`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.
