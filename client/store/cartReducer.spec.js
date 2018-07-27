@@ -51,7 +51,7 @@ describe('reducer', () => {
     expect(state).to.deep.equal([])
   })
 })
-describe.only('thunks', () => {
+describe('thunks', () => {
   let store
   let mockAxios
   const initState = []
