@@ -40,8 +40,10 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
         defaults: {name, email}
       })
         .then(async ([user]) => {
-          const cart = await Cart.create({name: user.email})
-          cart.setUser(user)
+          if (!user.cartId) {
+            const cart = await Cart.create({name: user.email})
+            cart.setUser(user)
+          }
           done(null, user)
         })
         .catch(done)
