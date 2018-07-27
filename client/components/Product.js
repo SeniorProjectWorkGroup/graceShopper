@@ -5,20 +5,30 @@ function Product(props) {
   const product = props.product
   return (
     <div>
-      <li className="product">
-        <a>
-          <img className="product-img" src={product.imageUrl} />
-        </a>
-
-        <div className="product-body">
+      <li className="card">
+        <div
+          className="top-of-card"
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}
+        >
           <NavLink to={`/products/${product.id}`}>
             <span className="product-name">{product.name}</span>
           </NavLink>
           <span className="product-price">{product.price}</span>
-          <span className="product-numInStock">{product.numInStock}</span>
+        </div>
+        <a>
+          <img className="card-img-top" src={product.imageUrl} />
+        </a>
+
+        <div className="card-body">
+          <span className="card-title">
+            {product.numInStock} left in stock!
+          </span>
           {product.categories.map(category => {
             return (
-              <span key={category.id} className="product-category">
+              <span key={category.id} className="card-subtitle mb-2 text-muted">
                 {category.name}
               </span>
             )
