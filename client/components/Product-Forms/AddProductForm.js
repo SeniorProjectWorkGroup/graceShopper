@@ -10,6 +10,7 @@ export class AddProductForm extends Component {
       numInStock: 1,
       price: 10,
       imgURL: '',
+      category: 0,
       description: ''
     }
     this.submitBtn = null
@@ -82,6 +83,19 @@ export class AddProductForm extends Component {
           onChange={this.handleChange}
           placeholder="Enter description here"
         />
+        <label htmlFor="category"> Product Category </label>
+        <select
+          name="category"
+          className="form-control"
+          value={this.state.category}
+          onChange={this.handleChange}
+        >
+          {this.props.categories.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
         <label htmlFor="imgURLs"> Image URLs </label>
         <input
           name="imgURL"
@@ -101,8 +115,12 @@ export class AddProductForm extends Component {
   }
 }
 
+const mapState = state => ({
+  categories: state.categories
+})
+
 const mapDispatchToProps = dispatch => ({
   submitProduct: product => dispatch(postProducts(product))
 })
 
-export default connect(null, mapDispatchToProps)(AddProductForm)
+export default connect(mapState, mapDispatchToProps)(AddProductForm)
