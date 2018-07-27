@@ -10,7 +10,7 @@ export class AddProductForm extends Component {
       numInStock: 1,
       price: 10,
       imgURL: '',
-      category: 0,
+      category: 1,
       description: ''
     }
     this.submitBtn = null
@@ -38,6 +38,7 @@ export class AddProductForm extends Component {
       numInStock: this.state.numInStock,
       price: this.state.price,
       imgURL: this.state.imgURL,
+      category: this.state.category,
       description: this.state.description
     }
     this.props.submitProduct(newProductEntry)

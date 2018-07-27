@@ -27,7 +27,7 @@ router.get('/:productId', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  const {name, numInStock, price, description, imageUrls} = req.body
+  const {name, numInStock, price, description, imageUrls, categoryId} = req.body
   try {
     if (!isAdmin(req, next)) throw new Error('User not authorized for post')
     const product = await Product.create({
@@ -37,6 +37,8 @@ router.post('/', async (req, res, next) => {
       description,
       imageUrls
     })
+    const categoryForProduct = await Category.findById(categoryId)
+    product.addCategory(categoryForProduct)
     res.json(product)
   } catch (err) {
     next(err)
@@ -44,12 +46,21 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put('/:productId', async (req, res, next) => {
-  const {name, numInStock, price, description, imageUrls} = req.body
-  const changedProduct = {name, numInStock, price, description, imageUrls}
+  const {name, numInStock, price, description, imageUrls, categoryId} = req.body
+  const changedProduct = {
+    name,
+    numInStock,
+    price,
+    description,
+    imageUrls
+  }
   try {
     if (!isAdmin(req, next)) throw new Error('User not authorized for put')
     const productToChange = await Product.findById(req.params.productId)
     await productToChange.update(changedProduct)
+    const categoryForProduct = await Category.findById(categoryId)
+    productToChange.addCategory(categoryForProduct)
+
     res.json({
       productToChange: productToChange,
       message: 'Product Updated'

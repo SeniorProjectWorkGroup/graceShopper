@@ -43,6 +43,7 @@ class AddProductForm extends Component {
       numInStock: this.state.numInStock,
       price: this.state.price,
       imgURL: this.state.imgURL,
+      category: this.state.category,
       description: this.state.description
     }
     this.props.submitProduct(
@@ -130,7 +131,8 @@ class AddProductForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentProduct: state.currentProduct
+  currentProduct: state.currentProduct,
+  categories: state.categories
 })
 const mapDispatchToProps = dispatch => ({
   getCurrentProduct: id => dispatch(fetchProductById(id)),
