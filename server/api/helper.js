@@ -1,5 +1,6 @@
-const {User} = require('../db/models')
+// const {User} = require('../db/models')
 // const router = require('express').Router()
+
 
 const isAdmin = function(req, next) {
   console.log('inside isAdmin', req.user)
@@ -8,6 +9,7 @@ const isAdmin = function(req, next) {
 const isUser = async function(req, next) {
   console.log('inside isUser', req.user)
   return !!req.user
+
 }
 
 module.exports = {isAdmin, isUser}
