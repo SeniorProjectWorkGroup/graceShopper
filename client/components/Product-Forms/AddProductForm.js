@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postProducts} from '../../store/products/productsList'
 
-class AddProductForm extends Component {
+export class AddProductForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
