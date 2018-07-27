@@ -1,43 +1,75 @@
+import axios from 'axios'
 //ACTION TYPES
 const ActionTypes = {
   GET_CART: 'GET_CART',
-  UPDATE_CART: 'UPDATE_CART',
-  DELETE_CART: 'DELETE_CART',
+  ADD_ITEM: 'ADD_ITEM',
+  DELETE_ITEM: 'DELETE_ITEM',
+  CLEAR_CART: 'CLEAR_CART',
   CREATE_CART: 'CREATE_CART'
 }
 //ACTION CREATORS
-const getCart = cart => ({
+export const getCart = cart => ({
   type: ActionTypes.GET_CART,
   cart
 })
-const updateCart = newCart => ({
-  type: ActionTypes.UPDATE_CART,
-  newCart
+export const addItem = newItem => ({
+  type: ActionTypes.ADD_ITEM,
+  newItem
 })
-const deleteCart = () => ({
-  type: ActionTypes.GET_CART
+export const deleteItem = deletedId => ({
+  type: ActionTypes.DELETE_ITEM,
+  deletedId
 })
-const createCart = cart => ({
-  type: ActionTypes.CREATE_CART,
-  cart
+export const clearCart = () => ({
+  type: ActionTypes.CLEAR_CART
 })
 //THUNK CREATORS
-// export fetchCart = () =>
+export const fetchCart = cartId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/cart/${cartId}`)
+      console.log(data)
+      dispatch(getCart(data))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const destroyItem = itemId => {
+  return async dispatch => {
+    await axios.delete(`/api/items/${itemId}`)
+    dispatch(deleteItem(itemId))
+  }
+}
+export const postItem = item => {
+  return async dispatch => {
+    const {data} = await axios.post(`/api/items/`, item)
+    dispatch(addItem(data))
+  }
+}
 
 //REDUCER
-const defaultCart = {}
+const defaultCart = []
 
 const cartReducer = (cartState = defaultCart, action) => {
   switch (action.type) {
     case ActionTypes.GET_CART:
       return action.cart
-    case ActionTypes.UPDATE_CART:
-      return action.newCart
-    case ActionTypes.DELETE_CART:
+    case ActionTypes.ADD_ITEM:
+      return [...cartState, action.newItem]
+    case ActionTypes.DELETE_ITEM: {
+      const filtered = cartState.filter(item => {
+        return item.id !== action.deletedId
+      })
+      console.log('Filtered', filtered)
+      return filtered
+    }
+    case ActionTypes.CLEAR_CART:
+      console.log('Clearing')
       return defaultCart
-    case ActionTypes.CREATE_CART:
-      return action.cart
     default:
+      // console.log("default", cartState)
       return cartState
   }
 }
