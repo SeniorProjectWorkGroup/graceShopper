@@ -7,6 +7,7 @@ import {me} from './store'
 import CategorySideBar from './components/CategorySideBar'
 import AddProductForm from './components/Product-Forms/AddProductForm'
 import EditProductForm from './components/Product-Forms/EditProductForm'
+import SingleProductPage from './components/SingleProductPage';
 
 /**
  * COMPONENT
@@ -23,7 +24,8 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/products" component={ProductList} />
+        <Route exact path="/products" component={ProductList} />
+        <Route path="/products/:id" component={SingleProductPage} />
         <Route exact path="/" render={() => <Redirect to="/products" />} />
         {isLoggedIn && (
           <Switch>
