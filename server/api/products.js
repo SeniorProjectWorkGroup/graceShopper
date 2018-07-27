@@ -29,7 +29,7 @@ router.get('/:productId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   const {name, numInStock, price, description, imageUrls} = req.body
   try {
-    if (!isAdmin) throw new Error('User not authorized for post')
+    if (!isAdmin(req, next)) throw new Error('User not authorized for post')
     const product = await Product.create({
       name,
       numInStock,
@@ -47,7 +47,7 @@ router.put('/:productId', async (req, res, next) => {
   const {name, numInStock, price, description, imageUrls} = req.body
   const changedProduct = {name, numInStock, price, description, imageUrls}
   try {
-    if (!isAdmin) throw new Error('User not authorized for post')
+    if (!isAdmin(req, next)) throw new Error('User not authorized for put')
     const productToChange = await Product.findById(req.params.productId)
     await productToChange.update(changedProduct)
     res.json({
@@ -61,7 +61,7 @@ router.put('/:productId', async (req, res, next) => {
 
 router.delete('/:productId', async (req, res, next) => {
   try {
-    if (!isAdmin) throw new Error('User not authorized for post')
+    if (!isAdmin(req, next)) throw new Error('User not authorized for post')
     const product = await Product.findById(req.params.productId)
     await product.destroy()
     res.json({product: product, message: 'Product Deleted'})

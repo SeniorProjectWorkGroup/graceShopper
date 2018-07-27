@@ -2,12 +2,10 @@ const router = require('express').Router()
 const {LineItem, Cart} = require('../db/models')
 module.exports = router
 
-router.use('/:cartId/item', require('./lineItem'))
-
 //get items in a cart
-router.get('/:cartId', (req, res, next) => {
+router.get('/:cartId', async (req, res, next) => {
   try {
-    const cartItems = LineItem.findAll({
+    const cartItems = await LineItem.findAll({
       where: {
         cartId: req.params.cartId
       }
@@ -32,11 +30,15 @@ router.delete('/:cartId', async (req, res, next) => {
 // Need to manage adding user id if unauth
 router.post('/', async (req, res, next) => {
   try {
+    let userId
+    if (req.user) userId = req.user.id
+    else userId = null
+    const {name} = req.body
     const newCart = await Cart.create({
-      // Check what is in req.user
-      userId: req.user.id || null
+      name,
+      userId
     })
-    res.json({message: 'Created Cart'})
+    res.json({message: 'Created Cart', cart: newCart})
   } catch (err) {
     next(err)
   }
@@ -45,12 +47,14 @@ router.post('/', async (req, res, next) => {
 router.put('/:cartId', async (req, res, next) => {
   try {
     const {userId} = req.body
-    const updatedCart = await Cart.update({
+
+    const targetCart = await Cart.findById(req.params.cartId)
+    const updatedCart = await targetCart.update({
       userId
     })
     res.json({
       message: 'Cart Updated',
-      updatedCart
+      cart: updatedCart
     })
   } catch (err) {
     next(err)

@@ -27,13 +27,12 @@ Category.belongsToMany(Product, {through: 'ProductCategory'})
 Product.belongsToMany(Order, {through: ProductOrder})
 Order.belongsToMany(Product, {through: ProductOrder})
 
-
 Product.hasMany(Review)
 User.hasMany(Review)
 
 Product.belongsToMany(Cart, {through: LineItem})
 Cart.belongsToMany(Product, {through: LineItem})
-
+Cart.hasOne(User)
 
 module.exports = {
   Category,
