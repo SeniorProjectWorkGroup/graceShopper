@@ -13,7 +13,7 @@ const deleteUser = deletedId => ({
   deletedId
 })
 const editUser = editedUser => ({
-  type: ActionTypes.DELETE_USER,
+  type: ActionTypes.EDIT_USER,
   editedUser
 })
 const getUsers = userList => ({
@@ -29,18 +29,18 @@ export const destroyUser = id => async dispatch => {
     console.error(err)
   }
 }
-export const putUser = id => async dispatch => {
+export const putUser = (id, updatedUser) => async dispatch => {
   try {
-    const updatedUser = await axios.put(`/api/users/${id}`)
-    dispatch(editUser(updatedUser))
+    const {data} = await axios.put(`/api/users/${id}`, updatedUser)
+    dispatch(editUser(data))
   } catch (err) {
     console.error(err)
   }
 }
 export const fetchUsers = () => async dispatch => {
   try {
-    const userList = await axios.get(`/api/users/`)
-    dispatch(getUsers(userList))
+    const {data} = await axios.get(`/api/users/`)
+    dispatch(getUsers(data))
   } catch (err) {
     console.log(err)
   }
@@ -50,16 +50,17 @@ const defaultUserList = []
 export default function(userListState = defaultUserList, action) {
   switch (action.type) {
     case ActionTypes.DELETE_USER:
-      return action.userListState.filter(user => {
+      return userListState.filter(user => {
         return user.id !== action.deletedId
       })
     case ActionTypes.EDIT_USER: {
-      return action.userListState.map(user => {
+      return userListState.map(user => {
         if (user.id === action.editedUser.id) return action.editedUser
         else return user
       })
     }
     case ActionTypes.GET_USERS: {
+      return action.userList
     }
     default:
       return userListState

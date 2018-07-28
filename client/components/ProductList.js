@@ -5,7 +5,7 @@ import {fetchProductsAndDisplay} from '../store/products/productsList'
 
 function ProductList(props) {
   return (
-    <div classNam="list-container">
+    <div className="list-container">
       <ul className="product-grid">
         {props.products.map(product => (
           <Product product={product} key={product.id} />

@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
   try {
     if (!isAdmin(req, next)) throw new Error('User not authorized for post')
     const users = await User.findAll({
-      attributes: ['id', 'email']
+      attributes: ['id', 'email', 'role']
     })
     res.json(users)
   } catch (err) {
@@ -18,10 +18,12 @@ router.get('/', async (req, res, next) => {
 router.put('/:userId', async (req, res, next) => {
   try {
     const {role} = req.body
+    console.log('Role', role)
     if (!isAdmin(req, next)) throw new Error('User not authorized for post')
     const selectedUser = await User.findById(req.params.userId)
-    await selectedUser.update({role})
-    res.json({message: 'User Role Updated', user: selectedUser})
+    const {dataValues} = await selectedUser.update({role})
+    console.log('updatedUser', dataValues)
+    res.json({message: 'User Role Updated', user: dataValues})
   } catch (err) {
     next(err)
   }
