@@ -26,13 +26,13 @@ function Product(props) {
           <span className="card-title">
             {product.numInStock} left in stock!
           </span>
-          {product.categories.map(category => {
-            return (
-              <span key={category.id} className="card-subtitle mb-2 text-muted">
-                {category.name}
+          {/* {product.categories.map(category => { */}
+            {/* return ( */}
+              <span key={product.description} className="card-subtitle mb-2 text-muted">
+                {product.description}
               </span>
-            )
-          })}
+            {/* )
+          })} */}
           {props.user.role === 'ADMIN' ? (
             <NavLink to={`/editProduct/${product.id}`} className="btn-primary">
               Edit Product

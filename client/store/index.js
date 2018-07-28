@@ -9,15 +9,17 @@ import {categories} from './category'
 import {displayedProducts} from './products/displayedProducts'
 import cartReducer from './cartReducer'
 import lineItemReducer from './lineItemReducer'
+import {reviewsForCurrProduct} from './reviews'
 
 const reducer = combineReducers({
-  user,
-  productList,
+  cartReducer,
   categories,
   currentProduct,
   displayedProducts,
-  cartReducer,
-  lineItemReducer
+  lineItemReducer,
+  productList,
+  reviewsForCurrProduct,
+  user,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
