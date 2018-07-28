@@ -28,7 +28,6 @@ export const fetchCart = cartId => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/cart/${cartId}`)
-      console.log(data)
       dispatch(getCart(data))
     } catch (err) {
       console.log(err)

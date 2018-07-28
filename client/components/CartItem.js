@@ -3,27 +3,32 @@ import {connect} from 'react-redux'
 import {removeFromCart, addToCart} from '../store/lineItemReducer'
 
 function CartItem(props) {
-  const item = props.item
+  const {item} = props
   return (
     <div>
-      <li className="cart-item">
+      <li className="cart-item list-unstyled">
         <a>
           <img className="item-img" src={item.imageUrl} />
         </a>
 
-        <div className="item-body">
+        <div className="item-body flexDown">
           <span className="item-name">{item.name}</span>
           <span className="item-price">{item.price}</span>
-          <button
-            type="button"
-            onClick={() => props.dispatch(removeFromCart(item))}
-          >
-            -
-          </button>
-          <span className="item-quantity">{item.quantity}</span>
-          <button type="button" onClick={() => props.dispatch(addToCart(item))}>
-            +
-          </button>
+          <div className="flex">
+            <button
+              type="button"
+              onClick={() => props.dispatch(removeFromCart(item))}
+            >
+              -
+            </button>
+            <span className="item-quantity">{props.quantity}</span>
+            <button
+              type="button"
+              onClick={() => props.dispatch(addToCart(item))}
+            >
+              +
+            </button>
+          </div>
         </div>
       </li>
     </div>
