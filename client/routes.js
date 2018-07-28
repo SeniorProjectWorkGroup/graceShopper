@@ -7,6 +7,7 @@ import {me} from './store'
 import CategorySideBar from './components/CategorySideBar'
 import AddProductForm from './components/Product-Forms/AddProductForm'
 import EditProductForm from './components/Product-Forms/EditProductForm'
+import AdminUserManagement from './components/Admin/AdminUserManagement'
 
 /**
  * COMPONENT
@@ -37,6 +38,10 @@ class Routes extends Component {
             <Route
               path="/editProduct/:productId"
               render={routeProps => <EditProductForm {...routeProps} />}
+            />
+            <Route
+              path="/users"
+              render={routeProps => <AdminUserManagement {...routeProps} />}
             />
           </Switch>
         )}

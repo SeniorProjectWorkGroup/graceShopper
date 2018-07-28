@@ -4,7 +4,7 @@ const db = require('../db')
 const app = require('../index')
 const Product = db.model('product')
 const Cart = db.model('cart')
-const LineItem = db.model('lineitem')
+const lineItem = db.model('lineitem')
 const User = db.model('user')
 
 describe('Cart routes', () => {
@@ -35,7 +35,7 @@ describe('Cart routes', () => {
     beforeEach(async () => {
       await Product.create(dummyProduct)
       await Cart.create(dummyCart)
-      await LineItem.create(dummyLineItem)
+      await lineItem.create(dummyLineItem)
       await User.create(dummyUser)
     })
 
