@@ -38,6 +38,7 @@ class SingleProductPage extends React.Component {
             return (
               <div key={review.id}>
                 <div>{review.title}</div>
+                <div>user name</div>
                 <div>
                   <StarRating num={review.rating} />
                 </div>

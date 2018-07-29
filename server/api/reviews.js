@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/product/:productId', async (req, res, next) => {
   try {
-    console.log('req.params.productId:', req.params.productId)
+    // console.log('req.params.productId:', req.params.productId)
     const whereClause = {
       where: {
         productId: req.params.productId
