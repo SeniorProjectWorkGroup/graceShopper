@@ -2,12 +2,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, ProductList} from './components'
+import {Login, Signup, UserHome, ProductList, Cart} from './components'
 import {me} from './store'
-import CategorySideBar from './components/CategorySideBar'
 import AddProductForm from './components/Product-Forms/AddProductForm'
 import EditProductForm from './components/Product-Forms/EditProductForm'
 import SingleProductPage from './components/SingleProductPage';
+import AdminUserManagement from './components/Admin/AdminUserManagement'
 
 /**
  * COMPONENT
@@ -26,6 +26,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/products" component={ProductList} />
         <Route path="/products/:id" component={SingleProductPage} />
+        <Route path="/cart" component={Cart} />
         <Route exact path="/" render={() => <Redirect to="/products" />} />
         {isLoggedIn && (
           <Switch>
@@ -39,6 +40,10 @@ class Routes extends Component {
             <Route
               path="/editProduct/:productId"
               render={routeProps => <EditProductForm {...routeProps} />}
+            />
+            <Route
+              path="/users"
+              render={routeProps => <AdminUserManagement {...routeProps} />}
             />
           </Switch>
         )}
