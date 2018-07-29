@@ -37,7 +37,10 @@ router.delete('/:itemId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const lineItem = await LineItem.findOrCreate({
-      where: {productId: req.body.productId},
+      where: {
+        productId: req.body.productId,
+        cartId: req.body.cartId
+      },
       defaults: {
         cartId: req.body.cartId,
         quantity: 1
