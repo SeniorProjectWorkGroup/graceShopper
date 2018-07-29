@@ -26,8 +26,10 @@ router.get('/', async (req, res, next) => {
     // Pulls the keys from req.query and uses them to construct a where clause
     options.where = buildWhereClause({
       obj: req.query,
-      keys: ['categoryId', 'limit', 'offset']
+      keys: ['categoryId']
     })
+    if (req.query.limit) options.limit = req.query.limit
+    if (req.query.offset) options.offset = req.query.offset
 
     const products = await Product.findAll(options)
     res.json(products)

@@ -1,17 +1,25 @@
 import axios from 'axios'
 import {setDisplayedProducts} from './displayedProducts'
 
-//ACTION TYPES
+// ===========  ACTION TYPES ============
 const GET_PRODUCTS = 'GET_PRODUCTS'
+const GOT_PRODUCTS_WITH_PAGINATION = 'GOT_PRODUCTS_WITH_PAGINATION'
 const GET_PRODUCTS_BY_CATEGORY = 'GET_PRODUCTS_BY_CATEGORY'
 const ADD_PRODUCT = 'POST_PRODUCTS'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
 const EDIT_PRODUCT = 'EDIT_PRODUCT'
 
-//ACTION CREATORS
+// ========== ACTION CREATORS ================
 const getProducts = products => ({
   type: GET_PRODUCTS,
   products
+})
+
+const gotProductsWithPagination = (products) => ({
+  type: GOT_PRODUCTS_WITH_PAGINATION,
+  products,
+  // limit,
+  // offset
 })
 
 const addProduct = product => ({
@@ -35,7 +43,7 @@ const editProduct = (editedId, updatedProduct) => ({
   updatedProduct
 })
 
-//THUNK CREATORS
+// =========== THUNK CREATORS ===========
 export const fetchProducts = () => {
   return async dispatch => {
     const {data: products} = await axios.get('/api/products')
@@ -59,6 +67,18 @@ export const fetchProductsByCategory = categoryId => {
     dispatch(getProductsByCategory(data))
   }
 }
+
+export const fetchProductsWithPagination = (limit, offset) => {
+  return async dispatch => {
+    const {data: products} = await axios.get(
+      `/api/products?limit=${limit}&offset=${offset}`
+    )
+    dispatch(gotProductsWithPagination(products))
+    // Display the products
+    dispatch(setDisplayedProducts(products))
+  }
+}
+
 export const postProducts = product => {
   return async dispatch => {
     const {data} = await axios.post('/api/products', product)
@@ -82,12 +102,43 @@ export const destroy = productId => {
   }
 }
 
+const mergeArrays = (arr1, arr2, comparator) => {
+  // Copy all the elems of arr1 first
+  const newArr = [...arr1]
+  // For each elem of arr2, check if need to update elem from newArr.
+  // If not, add to the end
+  arr2.forEach(arr2Elem => {
+    // Compare by ids, not reference
+    const idxFound = arr1.findIndex(arr1Elem => {
+      return comparator(arr1Elem, arr2Elem)
+    })
+    // If found, update it with arr2's elem
+    if (idxFound !== -1) {
+      //newArr.splice(idxFound, 1, arr2Elem)
+      Object.assign(newArr[idxFound], arr2Elem)
+    } else {
+      // Else add to the end
+      newArr.push(arr2Elem)
+    }
+  })
+  return newArr
+}
+
 const productListReducer = (productListState = [], action) => {
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products
     case GET_PRODUCTS_BY_CATEGORY:
       return action.products
+    case GOT_PRODUCTS_WITH_PAGINATION: {
+      // Merge the new set of products with the current list, maintaining order
+      // and updating any duplicates
+      return mergeArrays(
+        productListState,
+        action.products,
+        (obj1, obj2) => obj1.id === obj2.id
+      )
+    }
     case ADD_PRODUCT:
       return [...productListState, action.product]
     case DELETE_PRODUCT: {
