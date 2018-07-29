@@ -7,11 +7,11 @@ import {
   fetchProductsWithPagination
 } from '../store/products/productsList'
 
-function ProductList(props) {
+function ProductList({products}) {
   return (
     <div className="list-container">
       <ul className="product-grid">
-        {props.displayedProducts.map(product => (
+        {products.map(product => (
           <Product product={product} key={product.id} />
         ))}
       </ul>
@@ -26,7 +26,7 @@ const toIntIfExists = str => {
   return undefined
 }
 
-const DEFAULT_LIMIT = 30
+const DEFAULT_LIMIT = 3
 const DEFAULT_OFFSET = 0
 
 class ProductLoader extends Component {
@@ -47,26 +47,37 @@ class ProductLoader extends Component {
     }
   }
 
-  // React components 2 cases:
-  //  1. First mounting (navigating directly to URL in URL bar or first time to URL)
-  //  2. Update without remounting (like change url search params)
+  // React component loading 2 cases:
+  //  1. Hard load. First mounting (navigating directly to URL in URL bar or first time to URL)
+  //  2. Soft load. Update without remounting (like change url search params, Back button)
 
   // Either set display and this component only shows displayedComponents (what does the updates?)
   // - The next button click needs to fetch and display next products b/c component won't mount again
+  // - *Back button is broken
   // - easier to implement? Navigating directly to the URL will be a hard refresh so that'll work
 
   // Or component receives limit & offset window and displays what's in allProducts based on that
   // - Inflexible
 
+  // **NOTE: Current impl ignores displayedProducts. It displays a window on productList
   render() {
     // Use the current limit and offset to compute the pagination navigation limits & offsets
     const query = new URLSearchParams(this.props.location.search)
     let limit = toIntIfExists(query.get('limit')) || DEFAULT_LIMIT
     const currOffset = toIntIfExists(query.get('offset')) || DEFAULT_OFFSET
     const newOffset = currOffset + limit
+    // console.log('limit:', limit, 'currOffset:', currOffset, 'newOffset:', newOffset)
+    // Set the window on allProducts
+    const productsToShow = this.props.allProducts.slice(
+      currOffset,
+      currOffset + limit
+    )
+
+    // console.log('allProducts:', this.props.allProducts)
+    // console.log('productsToShow:', productsToShow)
     return (
       <div>
-        <ProductList {...this.props} />
+        <ProductList products={productsToShow} />
         {/* Pagination navigation */}
         <NavLink
           to={`/products?limit=${limit}&offset=${newOffset}`}
@@ -79,8 +90,8 @@ class ProductLoader extends Component {
   }
 }
 
-const mapStateToProps = ({products = [], displayedProducts = []}) => ({
-  allProducts: products,
+const mapStateToProps = ({productList = [], displayedProducts = []}) => ({
+  allProducts: productList,
   displayedProducts: displayedProducts
 })
 
