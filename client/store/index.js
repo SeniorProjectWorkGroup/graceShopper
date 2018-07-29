@@ -7,17 +7,20 @@ import productList from './products/productsList'
 import currentProduct from './products/singleProduct'
 import {categories} from './category'
 import {displayedProducts} from './products/displayedProducts'
+import {reviewsForCurrProduct} from './reviews'
 import cart from './cartReducer'
 import lineItems from './lineItemReducer'
 import userList from './userListReducer'
+
 const reducer = combineReducers({
-  user,
-  productList,
+  cart,
   categories,
   currentProduct,
   displayedProducts,
-  cart,
   lineItems,
+  productList,
+  reviewsForCurrProduct,
+  user,
   userList
 })
 const middleware = composeWithDevTools(

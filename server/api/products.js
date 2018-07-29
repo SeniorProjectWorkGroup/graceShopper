@@ -3,14 +3,35 @@ const {Product, Category} = require('../db/models')
 const {isAdmin} = require('./helper')
 
 module.exports = router
+
+function buildWhereClause(...dataArr) {
+  const where = {}
+  dataArr.forEach(data => {
+    const {obj, keys} = data
+    keys.forEach(key => {
+      // If the key exists in the object, add it to the where clause
+      if (obj[key]) {
+        where[key] = obj[key]
+      }
+    })
+  })
+  return where
+}
+
 router.get('/', async (req, res, next) => {
   try {
     // Eager load the categories for the products
-    let whereClause = {include: [Category]}
-    if (req.query.categoryId) {
-      whereClause.where = {categoryId: req.query.params.categoryId}
-    }
-    const products = await Product.findAll(whereClause)
+    let options = {include: [Category]}
+
+    // Pulls the keys from req.query and uses them to construct a where clause
+    options.where = buildWhereClause({
+      obj: req.query,
+      keys: ['categoryId']
+    })
+    if (req.query.limit) options.limit = req.query.limit
+    if (req.query.offset) options.offset = req.query.offset
+
+    const products = await Product.findAll(options)
     res.json(products)
   } catch (err) {
     next(err)
