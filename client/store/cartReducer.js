@@ -4,6 +4,7 @@ const ActionTypes = {
   GET_CART: 'GET_CART',
   ADD_ITEM: 'ADD_ITEM',
   DELETE_ITEM: 'DELETE_ITEM',
+  EDIT_ITEM: 'EDIT_ITEM',
   CLEAR_CART: 'CLEAR_CART',
   CREATE_CART: 'CREATE_CART'
 }
@@ -16,6 +17,12 @@ export const addItem = newItem => ({
   type: ActionTypes.ADD_ITEM,
   newItem
 })
+
+export const editItem = editedItem => ({
+  type: ActionTypes.EDIT_ITEM,
+  editedItem
+})
+
 export const deleteItem = deletedId => ({
   type: ActionTypes.DELETE_ITEM,
   deletedId
@@ -32,6 +39,13 @@ export const fetchCart = cartId => {
     } catch (err) {
       console.log(err)
     }
+  }
+}
+
+export const putItem = (itemId, editedItem) => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/items/${itemId}`, editedItem)
+    dispatch(editItem(data))
   }
 }
 
@@ -57,18 +71,23 @@ const cartReducer = (cartState = defaultCart, action) => {
       return action.cart
     case ActionTypes.ADD_ITEM:
       return [...cartState, action.newItem]
+    case ActionTypes.EDIT_ITEM: {
+      const edited = cartState.map(item => {
+        if (item.id === action.editedItem.id) {
+          return action.editedItem
+        } else return item
+      })
+      return edited
+    }
     case ActionTypes.DELETE_ITEM: {
       const filtered = cartState.filter(item => {
         return item.id !== action.deletedId
       })
-      console.log('Filtered', filtered)
       return filtered
     }
     case ActionTypes.CLEAR_CART:
-      console.log('Clearing')
       return defaultCart
     default:
-      // console.log("default", cartState)
       return cartState
   }
 }
