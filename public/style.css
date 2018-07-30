@@ -8754,3 +8754,8 @@ img.star-rating {
   width: 27px;
   height: 27px;
 }
+
+.review-input-box {
+  width: 500px;
+  height: 100px;
+}
