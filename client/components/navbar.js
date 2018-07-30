@@ -15,6 +15,7 @@ const Navbar = ({handleClick, isLoggedIn, userRole, cartId}) => (
         {userRole === 'ADMIN' ? (
           <Fragment>
             <Link to="/addProduct"> Add Product </Link>
+            <Link to="/users"> Edit Users </Link>
           </Fragment>
         ) : null}
         <a href="#" onClick={handleClick}>
