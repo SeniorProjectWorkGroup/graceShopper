@@ -1,44 +1,39 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import CartItem from './CartItem'
-import {fetchCart, destroyItem} from '../store/cartReducer'
+import {fetchLineItems, destroyItem} from '../store/lineItemReducer'
 import {NavLink} from 'react-router-dom'
 import {calculateTaxAndTotal} from '../utils'
 class CartLoader extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      requested: false
-    }
-  }
   componentDidMount() {
-    if (this.props.user.cartId && !this.state.requested) {
-      this.props.loadCart(this.props.user.cartId)
-      this.setState({requested: true})
-    }
+    // if (this.props.user.cartId && !this.state.requested) {
+    console.log('Loading Cart')
+    this.props.fetchLineItemsInCart()
   }
-
-  componentDidUpdate() {
-    if (this.props.user.cartId && !this.state.requested) {
-      this.props.loadCart(this.props.user.cartId)
-      this.setState({requested: true})
-    }
-  }
-
+  // componentDidUpdate() {
+  //   if (!this.props.cart.lineItems.length) {
+  //     console.log('Loading Cart Again')
+  //     this.props.fetchLineItemsInCart()
+  //   }
+  // }
   deleteClicked = async targetId => {
     this.props.deleteLineitem(targetId)
   }
 
   render() {
-    if (!this.props.user.cartId) {
+    console.log('In Cart.render. this.props.cart:', this.props.cart)
+    const {lineItems} = this.props.cart
+    console.log('In Cart.render. this.props.lineItems:', lineItems)
+    if (!this.props.cart.lineItems.length) {
+      console.log('Empty. this.props.cart:', this.props.cart)
       return <h1> Loading Cart</h1>
     } else {
-      const {tax, total} = calculateTaxAndTotal(this.props.cartItems)
+      const {tax, total} = calculateTaxAndTotal(lineItems)
       return (
         <div>
           Welcome to your cart! {this.props.user.cartId}
           <ul>
-            {this.props.cartItems.map(item => {
+            {lineItems.map(item => {
               return (
                 <CartItem
                   quantity={item.quantity}
@@ -61,12 +56,12 @@ class CartLoader extends Component {
   }
 }
 const mapStateToProps = state => ({
-  cartItems: state.cart,
+  cart: state.cart,
   user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadCart: id => dispatch(fetchCart(id)),
+  fetchLineItemsInCart: () => dispatch(fetchLineItems()),
   deleteLineitem: deleteId => dispatch(destroyItem(deleteId))
 })
 
