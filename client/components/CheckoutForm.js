@@ -4,6 +4,7 @@ import {CardElement, injectStripe} from 'react-stripe-elements'
 import {fetchCart} from '../store/cartReducer'
 import {calculateTaxAndTotal} from '../utils'
 import history from '../history'
+import {postOrders} from '../store/orderReducer'
 
 const states = [
   'AL',
@@ -91,6 +92,7 @@ class CheckoutForm extends Component {
 
   async submit(ev) {
     // User clicked submit
+    const {total} = calculateTaxAndTotal(this.props.cartItems)
     ev.preventDefault()
     let {token} = await this.props.stripe.createToken({name: 'Name'})
     // build new order to thunk out
@@ -98,19 +100,26 @@ class CheckoutForm extends Component {
       name: this.state.name,
       addressAtPurchase: this.state.addressStreet,
       dateOfPurchase: new Date(),
-      userId: this.props.user.id
+      userId: this.props.user.id,
+      status: this.state.status,
+      token: token.id,
+      amount: total
     }
+    await this.props.submitOrder(newOrderEntry)
+    console.log('Purchase Complete!')
+    this.setState({complete: true})
+    history.push('/home')
 
     //rewrite this using api routes
-    let response = await fetch('/orders', {
-      method: 'POST',
-      headers: {'Content-Type': 'text/plain'},
-      body: token.id
-    })
+    // let response = await fetch('/orders', {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'text/plain'},
+    //   body: token.id
+    // })
 
-    if (response.ok) this.setState({complete: true})
-    console.log('Purchase Complete!')
-    history.push('/')
+    // if (response.ok) this.setState({complete: true})
+    // console.log('Purchase Complete!')
+    // history.push('/')
   }
 
   render() {
@@ -200,7 +209,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadCart: id => dispatch(fetchCart(id))
+  loadCart: id => dispatch(fetchCart(id)),
+  submitOrder: order => dispatch(postOrders(order))
 })
 
 const injectedForm = injectStripe(CheckoutForm)
