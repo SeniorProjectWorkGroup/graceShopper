@@ -32,8 +32,8 @@ Review.belongsTo(Product)
 User.hasMany(Review)
 Review.belongsTo(User)
 
-Product.belongsToMany(Cart, {through: LineItem})
-Cart.belongsToMany(Product, {through: LineItem})
+LineItem.belongsTo(Cart)
+LineItem.belongsTo(Product)
 Cart.hasOne(User)
 
 module.exports = {
