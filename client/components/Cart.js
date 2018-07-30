@@ -55,7 +55,7 @@ class CartLoader extends Component {
           </ul>
           <div>Tax: {tax}</div>
           <div>Total: {total}</div>
-          <NavLink to={`/checkout`} className="btn-primary">
+          <NavLink to="/checkout" className="btn-primary">
             Checkout!
           </NavLink>
         </div>

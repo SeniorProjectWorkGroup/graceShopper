@@ -1,6 +1,7 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {postItem} from '../store/cartReducer'
 
 function Product(props) {
   const product = props.product
@@ -39,6 +40,13 @@ function Product(props) {
               Edit Product
             </NavLink>
           ) : null}
+          <button
+            type="button"
+            onClick={() => props.addToCart(product.id, props.user.cartId)}
+          >
+            {' '}
+            Add to Cart{' '}
+          </button>
         </div>
       </li>
     </div>
@@ -49,4 +57,8 @@ const mapState = state => ({
   user: state.user
 })
 
-export default connect(mapState)(Product)
+const mapDispatch = dispatch => ({
+  addToCart: (productId, cartId) => dispatch(postItem({productId, cartId}))
+})
+
+export default connect(mapState, mapDispatch)(Product)
