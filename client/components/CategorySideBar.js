@@ -1,54 +1,78 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCategories} from '../store/category'
 import {setDisplayedProducts} from '../store/products/displayedProducts'
 
 class CategorySideBar extends React.Component {
-  componentDidMount() {
-    this.props.fetchCategories()
-  }
 
-  createClickHandler = categoryId => event => {
-    console.log('event.target:', event.target, 'categoryId:', categoryId)
+  createClickHandler = categoryId => () => {
+    categoryId = parseInt(categoryId, 10)
+    // console.log('event.target:', event.target, 'categoryId:', categoryId)
     // Update displayedProducts to show products for the category
-    const productsInCategory = this.props.productList.filter((product) => {
-      return product.categories.find((category) => category.id === categoryId)
+    const productsInCategory = this.props.productList.filter(product => {
+      return product.categories.find(category => category.id === categoryId)
     })
     this.props.setDisplayedProducts(productsInCategory)
+    // this.props.history.push('/products')
+  }
+
+  getCategoriesAndCount = (products = []) => {
+    // Format: {catId1: {categoryInfo, count}, catId2: {categoryInfo, count}..}
+    // count refers to # of products
+    const categoryHash = {}
+
+    products.forEach(product => {
+      // For each category of this product
+      product.categories.forEach(category => {
+        // Check if it's in the hash. If so, increment count, else add it to hash
+        const categoryData = categoryHash[category.id]
+        if (categoryData) {
+          categoryData.count = categoryData.count + 1
+        } else {
+          categoryHash[category.id] = {categoryInfo: category, count: 1}
+        }
+      })
+    })
+    return categoryHash
+  }
+
+  capitalize = (str) => {
+    return str[0].toUpperCase() + str.slice(1)
   }
 
   render() {
-    const {categories} = this.props
+    // Derive the categories from the productList
+    const categoriesAndCount = this.getCategoriesAndCount(
+      this.props.productList
+    )
     return (
       <div>
-        <ul>
-          {categories &&
-            categories.map(category => {
-              return (
-                <li className="categories" key={category.id}>
-                  <button
-                    className="btn"
-                    onClick={this.createClickHandler(category.id)}
-                    type="button"
-                  >
-                    {category.name}
-                  </button>
-                </li>
-              )
-            })}
+        <h2>Filters</h2>
+        <ul className="category-filter-list">
+          {categoriesAndCount &&
+            Object.entries(categoriesAndCount).map(
+              ([categoryId, categoryData]) => {
+                return (
+                  <li className="categories" key={categoryId}>
+                    <button
+                      className="btn"
+                      onClick={this.createClickHandler(categoryId)}
+                      type="button"
+                    >
+                      <img src="/icons/broad-dagger.svg" className="category-icon"/>&nbsp;{this.capitalize(categoryData.categoryInfo.name)} <span>{categoryData.count}</span>
+                    </button>
+                  </li>
+                )
+              }
+            )}
         </ul>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({categories, productList}) => ({
-  categories,
-  productList
-})
+const mapStateToProps = ({productList}) => ({ productList })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCategories: () => dispatch(fetchCategories()),
   setDisplayedProducts: products => dispatch(setDisplayedProducts(products))
 })
 
