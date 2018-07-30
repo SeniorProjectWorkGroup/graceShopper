@@ -5,9 +5,9 @@ import {Elements, StripeProvider} from 'react-stripe-elements'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, ProductList, Cart} from './components'
 import {me} from './store'
-import CategorySideBar from './components/CategorySideBar'
 import AddProductForm from './components/Product-Forms/AddProductForm'
 import EditProductForm from './components/Product-Forms/EditProductForm'
+import SingleProductPage from './components/SingleProductPage';
 import AdminUserManagement from './components/Admin/AdminUserManagement'
 import CheckoutForm from './components/CheckoutForm'
 
@@ -26,7 +26,8 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/products" component={ProductList} />
+        <Route exact path="/products" component={ProductList} />
+        <Route path="/products/:id" component={SingleProductPage} />
         <Route path="/cart" component={Cart} />
         <Route exact path="/" render={() => <Redirect to="/products" />} />
         <Route

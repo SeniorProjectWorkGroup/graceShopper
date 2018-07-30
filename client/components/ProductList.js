@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 import Product from './Product'
 import {connect} from 'react-redux'
-import {fetchProductsAndDisplay} from '../store/products/productsList'
+import {NavLink} from 'react-router-dom'
+import {
+  fetchProductsWithPagination
+} from '../store/products/productsList'
 
-function ProductList(props) {
+function ProductList({products}) {
   return (
     <div className="list-container">
       <ul className="product-grid">
-        {props.products.map(product => (
+        {products.map(product => (
           <Product product={product} key={product.id} />
         ))}
       </ul>
@@ -15,22 +18,74 @@ function ProductList(props) {
   )
 }
 
+const toIntIfExists = str => {
+  if (str && str !== null) {
+    return parseInt(str, 10)
+  }
+  return undefined
+}
+
+const DEFAULT_LIMIT = 3
+const DEFAULT_OFFSET = 0
+
 class ProductLoader extends Component {
   componentDidMount() {
-    // Fetch all the products from the server and set them to be the displayedProducts
-    this.props.fetchProductsAndDisplay()
+    // Fetch and set the displayedProducts based on any changes to the URL
+    // Handles user clicking on a browser navigation button (Forward or Back)
+    // as well as any intra-app navigation (like clicking the Next pagination button)
+    this.props.history.listen((location, action) => {
+      console.log(
+        `The current URL is ${location.pathname}${location.search}${
+          location.hash
+        }`
+      )
+      console.log(`The last navigation action was ${action}`)
+      this.doFetchProducts(location)
+    })
+
+    // Fetch with pagination
+    this.doFetchProducts(this.props.location)
   }
+
+  parsePaginationQuery = (location) => {
+    const query = new URLSearchParams(location.search)
+    const limit = toIntIfExists(query.get('limit')) || DEFAULT_LIMIT
+    const offset = toIntIfExists(query.get('offset')) || DEFAULT_OFFSET
+    return [limit, offset]
+  }
+
+  doFetchProducts = location => {
+    // Fetch with pagination
+    const [limit, offset] = this.parsePaginationQuery(location)
+    this.props.fetchProductsWithPagination(limit, offset)
+  }
+
   render() {
-    return <ProductList {...this.props} />
+    // Use the current limit and offset to compute the pagination navigation limits & offsets
+    const [limit, offset] = this.parsePaginationQuery(this.props.location)
+    const newOffset = offset + limit
+
+    const productsToShow = this.props.displayedProducts
+
+    return (
+      <div>
+        <ProductList products={productsToShow} />
+        {/* Pagination navigation */}
+        <NavLink to={`/products?limit=${limit}&offset=${newOffset}`}>
+          Next ->
+        </NavLink>
+      </div>
+    )
   }
 }
 
 const mapStateToProps = ({displayedProducts = []}) => ({
-  products: displayedProducts
+  displayedProducts: displayedProducts
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchProductsAndDisplay: () => dispatch(fetchProductsAndDisplay())
+  fetchProductsWithPagination: (limit, offset) =>
+    dispatch(fetchProductsWithPagination(limit, offset))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductLoader)

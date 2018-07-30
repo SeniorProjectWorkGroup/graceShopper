@@ -4,25 +4,17 @@ import CartItem from './CartItem'
 import {fetchCart} from '../store/cartReducer'
 import {NavLink} from 'react-router-dom'
 
-let i = 1
-
-function Cart(props) {
-  return (
-    <div>
-      Welcome to your cart!
-      <ul>
-        console.log(props)
-        {props.cartItems.map(item => <CartItem item={item} key={item.id} />)}
-      </ul>
-    </div>
-  )
-}
-
 class CartLoader extends Component {
   constructor(props) {
     super(props)
     this.state = {
       requested: false
+    }
+  }
+  componentDidMount() {
+    if (this.props.user.cartId && !this.state.requested) {
+      this.props.loadCart(this.props.user.cartId)
+      this.setState({requested: true})
     }
   }
 
@@ -35,12 +27,12 @@ class CartLoader extends Component {
   }
 
   render() {
-    // return <Cart {...this.props} />
     if (!this.props.user.cartId) {
       return <h1> Loading Cart</h1>
     } else {
+      /*Calculate Vitual Variables for Total and Tax*/
       const sumTotal = this.props.cartItems.reduce((sum, item) => {
-        sum = sum + item.product.price
+        sum = sum + item.product.price * item.quantity
         return sum
       }, 0)
       const tax = Math.round(0.0875 * sumTotal * 100) / 100
@@ -56,6 +48,7 @@ class CartLoader extends Component {
                   quantity={item.quantity}
                   item={item.product}
                   key={item.id}
+                  itemId={item.id}
                 />
               )
             })}

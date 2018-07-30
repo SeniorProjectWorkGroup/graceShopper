@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {LineItem} = require('../db/models')
+const {LineItem, Product} = require('../db/models')
 module.exports = router
 
 router.get('/:itemId', async (req, res, next) => {
@@ -14,7 +14,9 @@ router.get('/:itemId', async (req, res, next) => {
 router.put('/:itemId', async (req, res, next) => {
   try {
     const {quantity} = req.body
-    const lineItem = await LineItem.findById(req.params.itemId)
+    const lineItem = await LineItem.findById(req.params.itemId, {
+      include: [Product]
+    })
     const updatedItem = await lineItem.update({quantity})
     res.json(updatedItem)
   } catch (err) {

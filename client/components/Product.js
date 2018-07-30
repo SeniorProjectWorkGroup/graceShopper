@@ -1,6 +1,7 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
+
 function Product(props) {
   const product = props.product
   return (
@@ -16,23 +17,23 @@ function Product(props) {
           <NavLink to={`/products/${product.id}`}>
             <span className="product-name">{product.name}</span>
           </NavLink>
-          <span className="product-price">{product.price}</span>
+          <span className="product-price">${product.price}</span>
         </div>
-        <a>
+        <NavLink to={`/products/${product.id}`}>
           <img className="card-img-top" src={product.imageUrl} />
-        </a>
+        </NavLink>
 
         <div className="card-body">
           <span className="card-title">
             {product.numInStock} left in stock!
           </span>
-          {product.categories.map(category => {
-            return (
-              <span key={category.id} className="card-subtitle mb-2 text-muted">
-                {category.name}
-              </span>
-            )
-          })}
+          <span
+            key={product.description}
+            className="card-subtitle mb-2 text-muted"
+          >
+            {product.description.slice(0, 70) + '...'}
+          </span>
+
           {props.user.role === 'ADMIN' ? (
             <NavLink to={`/editProduct/${product.id}`} className="btn-primary">
               Edit Product
