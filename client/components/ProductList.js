@@ -29,11 +29,15 @@ const DEFAULT_LIMIT = 3
 const DEFAULT_OFFSET = 0
 
 class ProductLoader extends Component {
+  state = {
+    unlisten: null
+  }
+
   componentDidMount() {
     // Fetch and set the displayedProducts based on any changes to the URL
     // Handles user clicking on a browser navigation button (Forward or Back)
     // as well as any intra-app navigation (like clicking the Next pagination button)
-    this.props.history.listen((location, action) => {
+    const unlisten = this.props.history.listen((location, action) => {
       console.log(
         `The current URL is ${location.pathname}${location.search}${
           location.hash
@@ -42,9 +46,19 @@ class ProductLoader extends Component {
       console.log(`The last navigation action was ${action}`)
       this.doFetchProducts(location)
     })
+    this.setState({ unlisten })
 
     // Fetch with pagination
     this.doFetchProducts(this.props.location)
+  }
+
+  componentWillUnmount() {
+    // Unregister the browser listener if this component unmounts so we don't
+    // double up on listeners if component remounts
+    const unlisten = this.state.unlisten
+    if (unlisten) {
+      unlisten()
+    }
   }
 
   parsePaginationQuery = (location) => {
@@ -69,6 +83,7 @@ class ProductLoader extends Component {
 
     return (
       <div>
+        <h1>All Products</h1>
         <ProductList products={productsToShow} />
         {/* Pagination navigation */}
         <NavLink to={`/products?limit=${limit}&offset=${newOffset}`}>

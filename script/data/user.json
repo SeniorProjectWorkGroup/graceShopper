@@ -1,62 +1,86 @@
 [
   {
+    "name": "Cody the Dog",
+    "imageUrl": "/icons/dwarf-face.svg",
     "email": "cody@email.com",
     "password": "123",
     "role": "ADMIN"
   },
   {
+    "name": "Murphy Murph",
+    "imageUrl": "/icons/dwarf-face.svg",
     "email": "murphy@email.com",
     "password": "123",
     "role": "ADMIN"
   },
   {
-    "email": "ealcalde0@purevolume.com",
-    "password": "kxyIUXiAIjQP",
+    "name": "Oby Comley",
+    "imageUrl": "/icons/woman-elf-face.svg",
+    "email": "ocomley0@bandcamp.com",
+    "password": "KOcMzRJ",
     "role": "SHOPPER"
   },
   {
-    "email": "wbarnet1@geocities.com",
-    "password": "vgRMyHU",
+    "name": "Margi Littlepage",
+    "imageUrl": "/icons/dwarf-face.svg",
+    "email": "mlittlepage1@google.cn",
+    "password": "HzIfO9bZsI",
     "role": "ADMIN"
   },
   {
-    "email": "jleftwich2@gnu.org",
-    "password": "6xUJsu",
-    "role": "ADMIN"
-  },
-  {
-    "email": "eheeps3@amazon.co.uk",
-    "password": "EJK2IrAymJv",
-    "role": "ADMIN"
-  },
-  {
-    "email": "aswalough4@cam.ac.uk",
-    "password": "FC3zKdsdI",
+    "name": "Anatol Kettley",
+    "imageUrl": "/icons/woman-elf-face.svg",
+    "email": "akettley2@dedecms.com",
+    "password": "uX8SsvoV7sZO",
     "role": "SHOPPER"
   },
   {
-    "email": "ptows5@altervista.org",
-    "password": "70aBcLyr1tt",
-    "role": "SHOPPER"
-  },
-  {
-    "email": "fprudence6@com.com",
-    "password": "juyYRk",
+    "name": "Garrick Shillam",
+    "imageUrl": "/icons/dwarf-face.svg",
+    "email": "gshillam3@fda.gov",
+    "password": "9LPe12XFwlN3",
     "role": "ADMIN"
   },
   {
-    "email": "hrobert7@jiathis.com",
-    "password": "UjloXWvVXAXB",
-    "role": "ADMIN"
-  },
-  {
-    "email": "tking8@utexas.edu",
-    "password": "nYum0x7y",
+    "name": "Haskell McGurgan",
+    "imageUrl": "/icons/woman-elf-face.svg",
+    "email": "hmcgurgan4@mozilla.com",
+    "password": "7zuUwRGhpr",
     "role": "SHOPPER"
   },
   {
-    "email": "tweatherhill9@guardian.co.uk",
-    "password": "atOnNEV",
+    "name": "Ferdinand Bladon",
+    "imageUrl": "/icons/woman-elf-face.svg",
+    "email": "fbladon5@pen.io",
+    "password": "8h8M8eOyLpQ",
+    "role": "SHOPPER"
+  },
+  {
+    "name": "Elberta Loblie",
+    "imageUrl": "/icons/woman-elf-face.svg",
+    "email": "eloblie6@gov.uk",
+    "password": "vxZABRvBe4B",
+    "role": "ADMIN"
+  },
+  {
+    "name": "Alice Bonnavant",
+    "imageUrl": "/icons/dwarf-face.svg",
+    "email": "abonnavant7@engadget.com",
+    "password": "3jkBT5ollUI",
+    "role": "ADMIN"
+  },
+  {
+    "name": "Glenn McGovern",
+    "imageUrl": "/icons/dwarf-face.svg",
+    "email": "gmcgovern8@amazon.de",
+    "password": "3UZzNjg",
+    "role": "ADMIN"
+  },
+  {
+    "name": "Alejandro Blinerman",
+    "imageUrl": "/icons/dwarf-face.svg",
+    "email": "ablinerman9@forbes.com",
+    "password": "sxQTstBO",
     "role": "ADMIN"
   }
 ]

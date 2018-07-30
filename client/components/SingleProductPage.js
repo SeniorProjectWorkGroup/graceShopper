@@ -39,7 +39,7 @@ class SingleProductPage extends React.Component {
           reviews.map(review => {
             return (
               <div key={review.id}>
-                <div>user pic; {review.user.email}</div>
+                <div><img src={review.user.imageUrl} className="user-review-icon"/> {review.user.name}</div>
                 <div><StarRating num={review.rating} />&nbsp;<b>{review.title}</b></div>
                 <div>{review.createdAt}</div>
                 <div><p>{review.text}</p></div>
