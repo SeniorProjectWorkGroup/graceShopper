@@ -23,6 +23,11 @@ class CartItem extends React.Component {
       this.setState({editClicked: true})
     }
   }
+  handleDelete = evt => {
+    evt.preventDefault()
+    this.props.deleteClicked(this.props.itemId)
+  }
+
   render() {
     const {item} = this.props
     return (
@@ -50,6 +55,15 @@ class CartItem extends React.Component {
               />
               <button type="button" onClick={this.editItem}>
                 {this.state.editClicked ? 'SAVE' : 'EDIT'}
+              </button>
+
+              <button
+                onClick={this.handleDelete}
+                className="btn-warning"
+                type="button"
+              >
+                {' '}
+                Remove Item{' '}
               </button>
             </div>
           </div>

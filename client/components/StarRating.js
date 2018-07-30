@@ -14,9 +14,13 @@ const stars = ({num}) => {
   if (numHalf) {
     imgDataArr.push({ key: count, url: '/icons/half_star.png'})
   }
+  // If there's less than 5 stars, pad it out with empty stars
+  while (imgDataArr.length < 5) {
+    imgDataArr.push({ key: imgDataArr.length, url: '/icons/empty_star.png'})
+  }
   return (
     <span>
-      {imgDataArr.map(obj => (<img key={obj.key} src={obj.url}/>))}
+      {imgDataArr.map(obj => (<img className="star-rating" key={obj.key} src={obj.url}/>))}
     </span>
   )
 }
