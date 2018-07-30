@@ -24,8 +24,10 @@ const Review = require('./review')
 Product.belongsToMany(Category, {through: 'ProductCategory'})
 Category.belongsToMany(Product, {through: 'ProductCategory'})
 
-Product.belongsToMany(Order, {through: ProductOrder})
-Order.belongsToMany(Product, {through: ProductOrder})
+ProductOrder.belongsTo(Order)
+ProductOrder.belongsTo(Product)
+
+User.hasMany(Order)
 
 Product.hasMany(Review)
 Review.belongsTo(Product)

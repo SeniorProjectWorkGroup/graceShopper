@@ -1,15 +1,15 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const {Order, Product, ProductOrder} = require('../db/models')
 const {isAdmin, isUser} = require('./helper')
 const stripe = require('stripe')('pk_test_oAeGHI2qYF1MucHECmbLFF5i')
 
 module.exports = router
 
 //get all orders
-router.get('/', async (req, res, next) => {
+router.get('/admin', async (req, res, next) => {
   try {
     if (!isAdmin(req)) throw new Error('User not authorized for get')
-    const orders = await Order.findAll()
+    const orders = await Order.findAll({include: [{model: Product}]})
     res.json(orders)
   } catch (err) {
     next(err)
@@ -20,7 +20,11 @@ router.get('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     if (!isUser(req)) throw new Error('User not authorized for get')
-    const orders = await Order.findAll({where: {userId: req.user}})
+    const orders = await Order.findAll({
+      where: {userId: req.user},
+      include: [{model: Product}, {model: ProductOrder}]
+    })
+
     res.json(orders)
   } catch (err) {
     next(err)

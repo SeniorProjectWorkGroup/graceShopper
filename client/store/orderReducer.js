@@ -46,7 +46,7 @@ export const fetchOrders = () => {
 
 export const fetchOrdersByUser = userId => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/orderss?userId=${userId}`)
+    const {data} = await axios.get(`/api/orders/${userId}`)
     dispatch(getUserOrders(data))
   }
 }
