@@ -40,7 +40,7 @@ router.get('/:orderId', async (req, res, next) => {
 // post route uses stripe to create a stripe charge then an order to post to db
 router.post('/', async (req, res, next) => {
   const {addressAtPurchase, status, totalItems, dateOfPurchase} = req.body
-  const token = req.body.stripeToken
+  const token = req.body.stripeToken //change to match
 
   try {
     if (!isUser(req)) throw new Error('User not authorized for post')
