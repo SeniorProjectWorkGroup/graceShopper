@@ -19,30 +19,31 @@ class SingleProductPage extends React.Component {
   render() {
     // Product with eager loaded categories
     const {product, reviews} = this.props
+    console.log('reviews:', reviews)
     // Set layout
     return (
       <div>
         <div>
           <img src={'/' + product.imageUrl} />
         </div>
-        <div>name: {product.name}</div>
-        <div>numInStock: {product.numInStock}</div>
-        <div>price: {product.price}</div>
-        <div>description: {product.description}</div>
+        <div><h1><b>{product.name}</b></h1></div>
+        <div>Only {product.numInStock} left</div>
+        <div><h3>${product.price}</h3></div>
+        <div>{product.description}</div>
         <div>
           <button type="button">Add to Cart</button>
         </div>
-        <div>Reviews</div>
+        <br/>
+        <div><h1>Reviews</h1></div>
         {reviews &&
           reviews.map(review => {
             return (
               <div key={review.id}>
-                <div>{review.title}</div>
-                <div>user name</div>
-                <div>
-                  <StarRating num={review.rating} />
-                </div>
-                <div>{review.text}</div>
+                <div>user pic; {review.user.email}</div>
+                <div><StarRating num={review.rating} />&nbsp;<b>{review.title}</b></div>
+                <div>{review.createdAt}</div>
+                <div><p>{review.text}</p></div>
+                <br/>
               </div>
             )
           })}
