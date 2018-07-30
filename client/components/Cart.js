@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import CartItem from './CartItem'
-import {fetchCart} from '../store/cartReducer'
+import {fetchCart, destroyItem} from '../store/cartReducer'
 import {NavLink} from 'react-router-dom'
 
 class CartLoader extends Component {
@@ -24,6 +24,10 @@ class CartLoader extends Component {
       this.props.loadCart(this.props.user.cartId)
       this.setState({requested: true})
     }
+  }
+
+  deleteClicked = async targetId => {
+    this.props.deleteLineitem(targetId)
   }
 
   render() {
@@ -49,6 +53,7 @@ class CartLoader extends Component {
                   item={item.product}
                   key={item.id}
                   itemId={item.id}
+                  deleteClicked={this.deleteClicked}
                 />
               )
             })}
@@ -69,7 +74,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadCart: id => dispatch(fetchCart(id))
+  loadCart: id => dispatch(fetchCart(id)),
+  deleteLineitem: deleteId => dispatch(destroyItem(deleteId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartLoader)
