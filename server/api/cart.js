@@ -3,11 +3,11 @@ const {LineItem, Cart, Product} = require('../db/models')
 module.exports = router
 
 //get items in a cart
-router.get('/:cartId', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const cartItems = await LineItem.findAll({
       where: {
-        cartId: req.params.cartId
+        cartId: req.user.cartId
       },
       include: [Product]
     })
