@@ -26,24 +26,41 @@ class SingleProductPage extends React.Component {
         <div>
           <img src={'/' + product.imageUrl} />
         </div>
-        <div><h1><b>{product.name}</b></h1></div>
-        <div>Only {product.numInStock} left</div>
-        <div><h3>${product.price}</h3></div>
+        <div>
+          <h1>
+            <b>{product.name}</b>
+          </h1>
+        </div>
+
+        {product.numInStock >= 1 ? (
+          <div>Only {product.numInStock} left</div>
+        ) : (
+          <div> No More in Ye' old armoury </div>
+        )}
+        <div>
+          <h3>${product.price}</h3>
+        </div>
         <div>{product.description}</div>
         <div>
           <button type="button">Add to Cart</button>
         </div>
-        <br/>
-        <div><h1>Reviews</h1></div>
+        <br />
+        <div>
+          <h1>Reviews</h1>
+        </div>
         {reviews &&
           reviews.map(review => {
             return (
               <div key={review.id}>
                 <div>user pic; {review.user.email}</div>
-                <div><StarRating num={review.rating} />&nbsp;<b>{review.title}</b></div>
+                <div>
+                  <StarRating num={review.rating} />&nbsp;<b>{review.title}</b>
+                </div>
                 <div>{review.createdAt}</div>
-                <div><p>{review.text}</p></div>
-                <br/>
+                <div>
+                  <p>{review.text}</p>
+                </div>
+                <br />
               </div>
             )
           })}

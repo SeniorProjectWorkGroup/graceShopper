@@ -65,7 +65,7 @@ class AddProductForm extends Component {
           />
           <label htmlFor="numInStock"> Amount of Product in Stock </label>
           <input
-            className={this.state.numInStock > 0 ? '' : 'require'}
+            className={this.state.numInStock >= 0 ? '' : 'require'}
             name="numInStock"
             min="0"
             placeholder="1"
@@ -75,7 +75,7 @@ class AddProductForm extends Component {
           />
           <label htmlFor="price"> Price </label>
           <input
-            className={this.state.numInStock > 0 ? '' : 'require'}
+            className={this.state.numInStock >= 0 ? '' : 'require'}
             name="price"
             type="Number"
             min="0.00"
