@@ -18,3 +18,5 @@ router.post('/checkout', async (req, res) => {
     res.status(500).end()
   }
 })
+
+// this api is no longer needed, but need to test
