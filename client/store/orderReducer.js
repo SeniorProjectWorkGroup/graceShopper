@@ -42,6 +42,8 @@ export const fetchOrders = () => {
   }
 }
 
+//need create order thunk
+
 export const fetchOrdersByUser = userId => {
   return async dispatch => {
     const {data} = await axios.get(`/api/orderss?userId=${userId}`)

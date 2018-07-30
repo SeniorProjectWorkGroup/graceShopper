@@ -13,7 +13,7 @@ class CheckoutForm extends Component {
     let {token} = await this.props.stripe.createToken({name: 'Name'})
 
     //rewrite this using api routes
-    let response = await fetch('/charge', {
+    let response = await fetch('/orders', {
       method: 'POST',
       headers: {'Content-Type': 'text/plain'},
       body: token.id

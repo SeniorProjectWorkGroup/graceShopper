@@ -44,6 +44,7 @@ router.post('/', async (req, res, next) => {
 
   try {
     if (!isUser(req)) throw new Error('User not authorized for post')
+    console.log('in order post api')
     let chargeStatus = await stripe.charges.create({
       amount: req.body.amount,
       currency: 'usd',
