@@ -12,6 +12,7 @@ class CategorySideBar extends React.Component {
       return product.categories.find(category => category.id === categoryId)
     })
     this.props.setDisplayedProducts(productsInCategory)
+    // this.props.history.push('/products')
   }
 
   getCategoriesAndCount = (products = []) => {
@@ -34,6 +35,10 @@ class CategorySideBar extends React.Component {
     return categoryHash
   }
 
+  capitalize = (str) => {
+    return str[0].toUpperCase() + str.slice(1)
+  }
+
   render() {
     // Derive the categories from the productList
     const categoriesAndCount = this.getCategoriesAndCount(
@@ -42,7 +47,7 @@ class CategorySideBar extends React.Component {
     return (
       <div>
         <h2>Filters</h2>
-        <ul>
+        <ul className="category-filter-list">
           {categoriesAndCount &&
             Object.entries(categoriesAndCount).map(
               ([categoryId, categoryData]) => {
@@ -53,7 +58,7 @@ class CategorySideBar extends React.Component {
                       onClick={this.createClickHandler(categoryId)}
                       type="button"
                     >
-                      {categoryData.categoryInfo.name} {categoryData.count}
+                      <img src="/icons/broad-dagger.svg" className="category-icon"/>&nbsp;{this.capitalize(categoryData.categoryInfo.name)} <span>{categoryData.count}</span>
                     </button>
                   </li>
                 )

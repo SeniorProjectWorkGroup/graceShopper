@@ -25,7 +25,7 @@ const toIntIfExists = str => {
   return undefined
 }
 
-const DEFAULT_LIMIT = 3
+const DEFAULT_LIMIT = 20
 const DEFAULT_OFFSET = 0
 
 class ProductLoader extends Component {

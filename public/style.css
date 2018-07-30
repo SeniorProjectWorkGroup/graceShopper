@@ -8739,3 +8739,18 @@ nav {
   width: 50px;
   height: 50px;
 }
+
+.category-icon {
+  width:20px;
+  height: 20px;
+}
+
+ul.category-filter-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+img.star-rating {
+  width: 27px;
+  height: 27px;
+}
