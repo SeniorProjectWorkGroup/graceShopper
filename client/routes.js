@@ -32,7 +32,7 @@ class Routes extends Component {
         <Route
           path="/checkout"
           render={routeProps => (
-            <StripeProvider apiKey="pk_test_LwL4RUtinpP3PXzYirX2jNfR">
+            <StripeProvider apiKey="pk_test_oAeGHI2qYF1MucHECmbLFF5i">
               <div className="example">
                 <h1>Please enter payment information</h1>
                 <Elements>
