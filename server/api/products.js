@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
     })
     if (req.query.limit) options.limit = req.query.limit
     if (req.query.offset) options.offset = req.query.offset
-
+    options.where.numInStock = {$gte: 1}
     const products = await Product.findAll(options)
     res.json(products)
   } catch (err) {

@@ -32,7 +32,11 @@ class SingleProductPage extends React.Component {
             <b>{product.name}</b>
           </h1>
         </div>
-        <div>Only {product.numInStock} left</div>
+        {product.numInStock >= 1 ? (
+          <div>Only {product.numInStock} left</div>
+        ) : (
+          <div> No More in Ye' old armoury </div>
+        )}
         <div>
           <h3>${product.price}</h3>
         </div>
