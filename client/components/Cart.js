@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import CartItem from './CartItem'
 import {fetchCart} from '../store/cartReducer'
+import {NavLink} from 'react-router-dom'
 
 let i = 1
 
@@ -61,9 +62,9 @@ class CartLoader extends Component {
           </ul>
           <div>Tax: {tax}</div>
           <div>Total: {total}</div>
-          <button type="button" className="btn-primary">
-            Checkout
-          </button>
+          <NavLink to={`/checkout`} className="btn-primary">
+            Checkout!
+          </NavLink>
         </div>
       )
     }
