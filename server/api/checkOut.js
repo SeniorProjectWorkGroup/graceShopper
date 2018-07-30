@@ -1,6 +1,6 @@
 const router = require('express').Router()
 // const {Checkout} = require('../db/models')
-const stripe = require('stripe')('sk_test_TwTTlid3GeOG6YPydOjARw4I')
+const stripe = require('stripe')('pk_test_oAeGHI2qYF1MucHECmbLFF5i')
 
 module.exports = router
 
