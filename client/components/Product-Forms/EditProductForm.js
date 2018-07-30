@@ -27,8 +27,12 @@ class AddProductForm extends Component {
     return (
       this.state.description.length === 0 ||
       this.state.name.length === 0 ||
-      this.state.numInStock < 0 ||
-      this.state.price < 0
+      parseInt(this.state.numInStock, 10) < 0 ||
+      !this.state.numInStock ||
+      typeof parseInt(this.state.numInStock, 10) !== 'number' ||
+      parseInt(this.state.price, 10) < 0 ||
+      !this.state.price ||
+      typeof parseInt(this.state.price, 10) !== 'number'
     )
   }
 
@@ -101,7 +105,9 @@ class AddProductForm extends Component {
             onChange={this.handleChange}
           />
           <button
-            className="flex btn-primary m-auto mt-lg-1 rounded"
+            className={`flex m-auto mt-lg-1 rounded ${
+              this.validation() ? 'btn-warning' : 'btn-primary'
+            }`}
             disabled={this.validation()}
             type="submit"
           >
