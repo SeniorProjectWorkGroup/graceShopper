@@ -3,6 +3,17 @@ const {Order} = require('../db/models')
 const {isAdmin, isUser} = require('./helper')
 module.exports = router
 
+//get all orders
+router.get('/', async (req, res, next) => {
+  try {
+    if (!isAdmin(req)) throw new Error('User not authorized for get')
+    const orders = await Order.findAll()
+    res.json(orders)
+  } catch (err) {
+    next(err)
+  }
+})
+
 //get all orders for a specific user
 router.get('/', async (req, res, next) => {
   try {
