@@ -11,6 +11,7 @@ import {reviewsForCurrProduct} from './reviews'
 import cart from './cartReducer'
 import lineItems from './lineItemReducer'
 import userList from './userListReducer'
+import orders from './orderReducer'
 
 const reducer = combineReducers({
   cart,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   currentProduct,
   displayedProducts,
   lineItems,
+  orders,
   productList,
   reviewsForCurrProduct,
   user,
