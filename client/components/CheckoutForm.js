@@ -5,6 +5,7 @@ import {fetchCart} from '../store/cartReducer'
 import {calculateTaxAndTotal} from '../utils'
 import history from '../history'
 import {postOrders} from '../store/orderReducer'
+import {removeFromCart} from '../store/lineItemReducer'
 
 const states = [
   'AL',
@@ -108,6 +109,7 @@ class CheckoutForm extends Component {
     await this.props.submitOrder(newOrderEntry)
     console.log('Purchase Complete!')
     this.setState({complete: true})
+    await this.props.clearCart(this.props.cartItems)
     history.push('/home')
 
     //rewrite this using api routes
@@ -176,7 +178,7 @@ class CheckoutForm extends Component {
         <div className="cart-review">
           Review your cart
           {this.props.cartItems.map(item => {
-            console.log(this.props.user)
+            console.log(this.props.cartItems)
 
             return (
               <div key={item.id}>
@@ -193,11 +195,11 @@ class CheckoutForm extends Component {
                     </span>
                   </div>
                 </li>
-                <div>Tax: {tax}</div>
-                <div>Total: {total}</div>
               </div>
             )
           })}
+          <div>Tax: {tax}</div>
+          <div>Total: {total}</div>
         </div>
       </div>
     )
@@ -210,7 +212,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadCart: id => dispatch(fetchCart(id)),
-  submitOrder: order => dispatch(postOrders(order))
+  submitOrder: order => dispatch(postOrders(order)),
+  clearCart: cart =>
+    cart.map(item => {
+      dispatch(removeFromCart(item))
+    })
 })
 
 const injectedForm = injectStripe(CheckoutForm)
