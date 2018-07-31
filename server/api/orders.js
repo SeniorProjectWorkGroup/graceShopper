@@ -28,16 +28,32 @@ router.get('/', async (req, res, next) => {
         }
       ]
     })
-    console.log(orders.productOrders)
     res.json(orders)
   } catch (err) {
     next(err)
   }
 })
-router.get('/:statusType', async (req, res, next) => {
+
+router.get('/:orderId', async (req, res, next) => {
+  try {
+    if (!isAdmin(req)) throw new Error('Only admin may access this')
+    const order = await Order.findById(req.params.orderId, {
+      include: [
+        {
+          model: ProductOrder,
+          include: [{model: Product}]
+        }
+      ]
+    })
+    res.json(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/status/:statusType', async (req, res, next) => {
   try {
     if (!isAdmin(req)) throw new Error('User not authorized for get')
-    console.log(req.params.statusType)
     const orders = await Order.findAll({
       where: {
         status: req.params.statusType
@@ -49,7 +65,6 @@ router.get('/:statusType', async (req, res, next) => {
         }
       ]
     })
-    console.log(orders)
     res.json(orders)
   } catch (err) {
     next(err)
@@ -69,7 +84,6 @@ router.get('/user/:orderId', async (req, res, next) => {
         }
       ]
     })
-    console.log(orders)
     res.json(orders)
   } catch (err) {
     next(err)
@@ -94,7 +108,7 @@ router.post('/', async (req, res, next) => {
       addressAtPurchase,
       status,
       totalItems,
-      totalSale: chargeStatus.amount,
+      totalSale: req.body.amount,
       dateOfPurchase
     })
     res.json({chargeStatus, order})
@@ -108,10 +122,17 @@ router.put('/:orderId', async (req, res, next) => {
   const changedOrder = {addressAtPurchase, status}
   try {
     if (!isAdmin(req)) throw new Error('User not authorized for put')
-    const orderToChange = await Order.findById(req.params.orderId)
+    const orderToChange = await Order.findById(req.params.orderId, {
+      include: [
+        {
+          model: ProductOrder,
+          include: [{model: Product}]
+        }
+      ]
+    })
     await orderToChange.update(changedOrder)
     res.json({
-      orderToChange: orderToChange,
+      editedOrder: orderToChange,
       message: 'Order Updated'
     })
   } catch (err) {

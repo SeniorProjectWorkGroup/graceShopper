@@ -31,25 +31,32 @@ class AllOrders extends Component {
             </button>
             <button value="CREATED" onClick={this.handleClick} type="button">
               {' '}
-              SHIPPED
+              CREATED
             </button>
             <button value="PROCESSING" onClick={this.handleClick} type="button">
               {' '}
               PROCESSING
+            </button>
+            <button value="CANCELED" onClick={this.handleClick} type="button">
+              {' '}
+              CANCELED
             </button>
           </div>
           {this.props.orders.map(order => {
             const {productOrders} = order
             return (
               <div className="orderCard" key={order.id}>
+                <NavLink to={`/orders/${order.id}`}>
+                  <span className="product-name">Order: {order.id}</span>
+                </NavLink>
                 <div className="flex">
                   <div className="flexDown">
                     <p>Order Placed </p>
-                    <p> {order.date} </p>
+                    <p> {new Date(order.createdAt).toString().slice(0, 16)} </p>
                   </div>
                   <div className="flexDown">
                     <p>Total</p>
-                    <p> What ever the Total Is: IN DB???? </p>
+                    <p> TBA </p>
                   </div>
                   <div className="flexDown">
                     <p>Ship To</p>
