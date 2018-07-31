@@ -2,9 +2,7 @@ import React, {Component} from 'react'
 import Product from './Product'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
-import {
-  fetchProductsWithPagination
-} from '../store/products/productsList'
+import {fetchProductsWithPagination} from '../store/products/productsList'
 
 function ProductList({products}) {
   return (
@@ -46,7 +44,7 @@ class ProductLoader extends Component {
       console.log(`The last navigation action was ${action}`)
       this.doFetchProducts(location)
     })
-    this.setState({ unlisten })
+    this.setState({unlisten})
 
     // Fetch with pagination
     this.doFetchProducts(this.props.location)
@@ -61,7 +59,7 @@ class ProductLoader extends Component {
     }
   }
 
-  parsePaginationQuery = (location) => {
+  parsePaginationQuery = location => {
     const query = new URLSearchParams(location.search)
     const limit = toIntIfExists(query.get('limit')) || DEFAULT_LIMIT
     const offset = toIntIfExists(query.get('offset')) || DEFAULT_OFFSET
