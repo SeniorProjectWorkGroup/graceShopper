@@ -35,17 +35,17 @@ function Product(props) {
             {product.description.slice(0, 70) + '...'}
           </span>
 
-          {props.user.role === 'ADMIN' ? (
+          {/* Only Admin has an editProduct button */}
+          {props.user.role === 'ADMIN' && (
             <NavLink to={`/editProduct/${product.id}`} className="btn-primary">
               Edit Product
             </NavLink>
-          ) : null}
+          )}
           <button
             type="button"
             onClick={() => props.addToCart(product.id, props.user.cartId)}
           >
-            {' '}
-            Add to Cart{' '}
+            Add to Cart
           </button>
         </div>
       </li>
