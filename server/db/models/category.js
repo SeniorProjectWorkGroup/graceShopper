@@ -10,7 +10,8 @@ const Category = db.define('category', {
     }
   },
   imageUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: '/icons/default-category.svg'
   }
 })
 

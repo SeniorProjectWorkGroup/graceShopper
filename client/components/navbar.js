@@ -7,28 +7,30 @@ import history from '../history'
 
 const Navbar = ({handleClick, isLoggedIn, userRole, cartId}) => (
   <nav>
-    {isLoggedIn ? (
+    {/* Display this navigation when user is logged in */}
+    {isLoggedIn && (
       <div className="flex">
         {/* The navbar will show these links after you log in */}
         <Link to="/home">Home</Link>
         <Link to="/products">Products</Link>
-        <div>
-          <Link to="/orders"> Orders </Link>
-        </div>
-        {userRole === 'ADMIN' ? (
+        {userRole === 'ADMIN' && (
           <Fragment>
+            <Link to="/orders"> Orders </Link>
             <Link to="/addProduct"> Add Product </Link>
             <Link to="/manageOrders"> Manage Orders </Link>
             <Link to="/users"> Edit Users </Link>
           </Fragment>
-        ) : null}
+        )}
         <a href="#" onClick={handleClick}>
           Logout
         </a>
       </div>
-    ) : (
+    )}
+    {/* Display this navigation when user is not logged in */}
+    {!isLoggedIn && (
       <div className="flex">
         {/* The navbar will show these links before you log in */}
+        <Link to="/products">Products</Link>
         <Link to="/login">Login</Link>
         <Link to="/signup">Sign Up</Link>
       </div>
