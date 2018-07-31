@@ -37,7 +37,6 @@ router.get('/', async (req, res, next) => {
 router.get('/:statusType', async (req, res, next) => {
   try {
     if (!isAdmin(req)) throw new Error('User not authorized for get')
-    console.log('In the call')
     console.log(req.params.statusType)
     const orders = await Order.findAll({
       where: {
@@ -58,7 +57,7 @@ router.get('/:statusType', async (req, res, next) => {
 })
 
 //get one specific order
-router.get('/:orderId', async (req, res, next) => {
+router.get('/user/:orderId', async (req, res, next) => {
   try {
     if (!isUser(req)) throw new Error('Only users may access this')
     const orders = await Order.findAll({

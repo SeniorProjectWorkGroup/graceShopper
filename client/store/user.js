@@ -11,9 +11,9 @@ const REMOVE_USER = 'REMOVE_USER'
  * INITIAL STATE
  */
 const defaultUser = {
-  id: 1,
-  email: 'cody@email.com',
-  role: 'ADMIN'
+  // id: 1,
+  // email: 'cody@email.com',
+  // role: 'ADMIN'
 }
 
 /**
@@ -68,7 +68,12 @@ export const logout = () => async dispatch => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER: {
-      console.log('in user reducer. GET_USER. state:', state, 'Returning action.user:', action.user)
+      console.log(
+        'in user reducer. GET_USER. state:',
+        state,
+        'Returning action.user:',
+        action.user
+      )
       return action.user
     }
     case REMOVE_USER:

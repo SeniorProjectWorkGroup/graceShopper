@@ -52,7 +52,7 @@ export const fetchAllOrders = () => {
 
 export const fetchOrdersByUser = userId => {
   return async dispatch => {
-    const {data: userOrders} = await axios.get(`/api/orders/${userId}`)
+    const {data: userOrders} = await axios.get(`/api/orders/user/${userId}`)
     dispatch(getUserOrders(userOrders))
   }
 }
