@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {Order, Product, ProductOrder} = require('../db/models')
 const {isAdmin, isUser} = require('./helper')
-const stripe = require('stripe')('pk_test_oAeGHI2qYF1MucHECmbLFF5i')
+const stripe = require('stripe')('sk_test_j93j6W1y4UExszBzJA2Vv46c')
 
 module.exports = router
 
@@ -80,13 +80,13 @@ router.get('/:orderId', async (req, res, next) => {
 // post route uses stripe to create a stripe charge then an order to post to db
 router.post('/', async (req, res, next) => {
   const {addressAtPurchase, status, totalItems, dateOfPurchase} = req.body
-  const token = req.body.stripeToken
-
+  const token = req.body.token //change to match
+  console.log('this should be the token', req.body.token)
   try {
     if (!isUser(req)) throw new Error('User not authorized for post')
     console.log('in order post api')
     let chargeStatus = await stripe.charges.create({
-      amount: req.body.amount,
+      amount: Math.round(req.body.amount * 100),
       currency: 'usd',
       description: '???',
       source: token
@@ -98,7 +98,7 @@ router.post('/', async (req, res, next) => {
       totalSale: chargeStatus.amount,
       dateOfPurchase
     })
-    res.json(chargeStatus, order)
+    res.json({chargeStatus, order})
   } catch (err) {
     next(err)
   }

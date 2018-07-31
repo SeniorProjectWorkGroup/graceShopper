@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {putItem} from '../store/cartReducer'
+import { putLineItem } from '../store/lineItemReducer';
 
 class CartItem extends React.Component {
   constructor(props) {
@@ -23,6 +24,11 @@ class CartItem extends React.Component {
       this.setState({editClicked: true})
     }
   }
+  handleDelete = evt => {
+    evt.preventDefault()
+    this.props.deleteClicked(this.props.itemId)
+  }
+
   render() {
     const {item} = this.props
     return (
@@ -51,6 +57,15 @@ class CartItem extends React.Component {
               <button type="button" onClick={this.editItem}>
                 {this.state.editClicked ? 'SAVE' : 'EDIT'}
               </button>
+
+              <button
+                onClick={this.handleDelete}
+                className="btn-warning"
+                type="button"
+              >
+                {' '}
+                Remove Item{' '}
+              </button>
             </div>
           </div>
         </li>
@@ -61,7 +76,7 @@ class CartItem extends React.Component {
 
 const mapDispatch = dispatch => ({
   submitEdit: (editedId, editedQuantity) => {
-    dispatch(putItem(editedId, editedQuantity))
+    dispatch(putLineItem(editedId, editedQuantity))
   }
 })
 const mapState = state => ({

@@ -10,7 +10,7 @@ export const setDisplayedProducts = (products) => ({
 
 // ============  Reducers  ============
 export const displayedProducts = (state = [], action) => {
-  // console.log('displayedProducts reducer. action:', action)
+  console.log('displayedProducts reducer. state:', state, 'action:', action)
   switch (action.type) {
     case SET_DISPLAYEDPRODUCTS: return action.products
     default: return state

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProductById} from '../../store/products/singleProduct'
 import {putProductById} from '../../store/products/productsList'
-import {EIDRM} from 'constants'
+
 class AddProductForm extends Component {
   constructor(props) {
     super(props)
@@ -11,6 +11,7 @@ class AddProductForm extends Component {
       numInStock: this.props.numInStock || 1,
       price: this.props.price || 10,
       imgURL: this.props.imgURL || '',
+      category: this.props.categoryId || 0,
       description: this.props.description || ''
     }
     this.submitBtn = null
@@ -46,6 +47,7 @@ class AddProductForm extends Component {
       numInStock: this.state.numInStock,
       price: this.state.price,
       imgURL: this.state.imgURL,
+      category: this.state.category,
       description: this.state.description
     }
     this.props.submitProduct(
@@ -98,6 +100,20 @@ class AddProductForm extends Component {
             onChange={this.handleChange}
             placeholder="Enter description here"
           />
+          <label htmlFor="category"> Product Category </label>
+          <select
+            name="category"
+            className="form-control"
+            value={this.state.category}
+            onChange={this.handleChange}
+          >
+            {this.props.categories.map(category => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+
           <label htmlFor="imgURLs"> Image URLs </label>
           <input
             name="imgURL"
@@ -112,7 +128,7 @@ class AddProductForm extends Component {
             type="submit"
           >
             {' '}
-            Add Product{' '}
+            Edit Product{' '}
           </button>
         </form>
       </div>
@@ -121,7 +137,8 @@ class AddProductForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentProduct: state.currentProduct
+  currentProduct: state.currentProduct,
+  categories: state.categories
 })
 const mapDispatchToProps = dispatch => ({
   getCurrentProduct: id => dispatch(fetchProductById(id)),

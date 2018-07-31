@@ -1,61 +1,54 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import CartItem from './CartItem'
-import {fetchCart} from '../store/cartReducer'
+import {fetchLineItems, destroyItem} from '../store/lineItemReducer'
 import {NavLink} from 'react-router-dom'
-
+import {calculateTaxAndTotal} from '../utils'
 class CartLoader extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      requested: false
-    }
-  }
   componentDidMount() {
-    if (this.props.user.cartId && !this.state.requested) {
-      this.props.loadCart(this.props.user.cartId)
-      this.setState({requested: true})
-    }
+    // if (this.props.user.cartId && !this.state.requested) {
+    console.log('Loading Cart')
+    this.props.fetchLineItemsInCart()
   }
-
-  componentDidUpdate() {
-    console.log('user', this.props.user)
-    if (this.props.user.cartId && !this.state.requested) {
-      this.props.loadCart(this.props.user.cartId)
-      this.setState({requested: true})
-    }
+  // componentDidUpdate() {
+  //   if (!this.props.cart.lineItems.length) {
+  //     console.log('Loading Cart Again')
+  //     this.props.fetchLineItemsInCart()
+  //   }
+  // }
+  deleteClicked = targetId => {
+    this.props.deleteLineitem(targetId)
   }
 
   render() {
-    if (!this.props.user.cartId) {
+    console.log('In Cart.render. this.props.cart:', this.props.cart)
+    const {lineItems} = this.props.cart
+    console.log('In Cart.render. this.props.lineItems:', lineItems)
+    if (!this.props.cart.lineItems.length) {
+      console.log('Empty. this.props.cart:', this.props.cart)
       return <h1> Loading Cart</h1>
     } else {
-      /*Calculate Vitual Variables for Total and Tax*/
-      const sumTotal = this.props.cartItems.reduce((sum, item) => {
-        sum = sum + item.product.price * item.quantity
-        return sum
-      }, 0)
-      const tax = Math.round(0.0875 * sumTotal * 100) / 100
-      const total = Math.round((tax + sumTotal) * 100) / 100
-
+      const {tax, total} = calculateTaxAndTotal(lineItems)
       return (
         <div>
-          Welcome to your cart! {this.props.user.cartId}
+          Welcome to your cart!
+          {/* {this.props.user.cartId} */}
           <ul>
-            {this.props.cartItems.map(item => {
+            {lineItems.map(item => {
               return (
                 <CartItem
                   quantity={item.quantity}
                   item={item.product}
                   key={item.id}
                   itemId={item.id}
+                  deleteClicked={this.deleteClicked}
                 />
               )
             })}
           </ul>
           <div>Tax: {tax}</div>
           <div>Total: {total}</div>
-          <NavLink to={`/checkout`} className="btn-primary">
+          <NavLink to="/checkout" className="btn-primary">
             Checkout!
           </NavLink>
         </div>
@@ -64,12 +57,13 @@ class CartLoader extends Component {
   }
 }
 const mapStateToProps = state => ({
-  cartItems: state.cart,
-  user: state.user
+  cart: state.cart,
+  // user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadCart: id => dispatch(fetchCart(id))
+  fetchLineItemsInCart: () => dispatch(fetchLineItems()),
+  deleteLineitem: deleteId => dispatch(destroyItem(deleteId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartLoader)

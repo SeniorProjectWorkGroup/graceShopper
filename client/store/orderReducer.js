@@ -87,6 +87,7 @@ export const destroy = orderId => {
 }
 
 const orderReducer = (orders = [], action) => {
+  // console.log('in orderreducer. orders:', orders, 'action:', action)
   switch (action.type) {
     case GET_ORDERS:
       return action.orders
