@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import {fetchAllOrders, fetchOrdersByStatus} from '../../store/orderReducer'
@@ -49,6 +49,13 @@ class AllOrders extends Component {
                 <NavLink to={`/orders/${order.id}`}>
                   <span className="product-name">Order: {order.id}</span>
                 </NavLink>
+
+                {order.user && (
+                  <Fragment>
+                    <h4> Completed by {order.user.name} </h4>
+                    <h5> at {order.user.email} </h5>{' '}
+                  </Fragment>
+                )}
                 <div className="flex">
                   <div className="flexDown">
                     <p>Order Placed </p>
@@ -56,7 +63,7 @@ class AllOrders extends Component {
                   </div>
                   <div className="flexDown">
                     <p>Total</p>
-                    <p> TBA </p>
+                    <p> {order.totalSale} </p>
                   </div>
                   <div className="flexDown">
                     <p>Ship To</p>
