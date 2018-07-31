@@ -7,9 +7,10 @@ import {Login, Signup, UserHome, ProductList, Cart} from './components'
 import {me} from './store'
 import AddProductForm from './components/Product-Forms/AddProductForm'
 import EditProductForm from './components/Product-Forms/EditProductForm'
-import SingleProductPage from './components/SingleProductPage';
+import SingleProductPage from './components/SingleProductPage'
 import AdminUserManagement from './components/Admin/AdminUserManagement'
 import CheckoutForm from './components/CheckoutForm'
+import {Oops} from './components/Oops'
 
 /**
  * COMPONENT
@@ -60,10 +61,12 @@ class Routes extends Component {
               path="/users"
               render={routeProps => <AdminUserManagement {...routeProps} />}
             />
+            <Route path="*" component={Oops} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={Oops} />
+        {/* <Route component={Login} /> */}
       </Switch>
     )
   }
@@ -76,7 +79,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    admin: state.user.role === 'ADMIN'
   }
 }
 
