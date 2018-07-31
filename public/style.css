@@ -8762,3 +8762,8 @@ img.star-rating {
   width: 500px;
   height: 100px;
 }
+
+.pagination-nav {
+  /* margin: auto; */
+  text-align: center;
+}
