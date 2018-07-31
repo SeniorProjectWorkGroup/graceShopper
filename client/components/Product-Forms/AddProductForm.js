@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postProducts} from '../../store/products/productsList'
+import {Oops} from '../Oops'
 
 export class AddProductForm extends Component {
   constructor(props) {
@@ -50,6 +51,9 @@ export class AddProductForm extends Component {
   }
 
   render() {
+    if (this.props.currentUser.role !== 'ADMIN') {
+      return <Oops />
+    }
     return (
       <form className="text-center form-group" onSubmit={this.handleSubmit}>
         <label htmlFor="name"> Product Name </label>
@@ -123,7 +127,8 @@ export class AddProductForm extends Component {
 }
 
 const mapState = state => ({
-  categories: state.categories
+  categories: state.categories,
+  currentUser: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
