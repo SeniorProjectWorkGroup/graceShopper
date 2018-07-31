@@ -55,7 +55,7 @@ class Routes extends Component {
           render={routeProps => (
             <StripeProvider apiKey="pk_test_oAeGHI2qYF1MucHECmbLFF5i">
               <div className="example">
-                <h1>Please enter payment information</h1>
+                <h1>Checkout</h1>
                 <Elements>
                   <CheckoutForm {...routeProps} />
                 </Elements>

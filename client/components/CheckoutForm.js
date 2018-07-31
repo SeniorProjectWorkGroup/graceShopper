@@ -77,9 +77,11 @@ class CheckoutForm extends Component {
       addressZip: '',
       status: 'CREATED'
     }
-    console.log(this.props.cart)
     this.handleChange = this.handleChange.bind(this)
     this.validation = this.validation.bind(this)
+  }
+  async componentDidMount() {
+    await this.props.loadCart()
   }
 
   validation() {
@@ -116,101 +118,95 @@ class CheckoutForm extends Component {
     this.setState({complete: true})
     await this.props.clearCart(this.props.cart.lineItems)
     history.push('/home')
-
-    //rewrite this using api routes
-    // let response = await fetch('/orders', {
-    //   method: 'POST',
-    //   headers: {'Content-Type': 'text/plain'},
-    //   body: token.id
-    // })
-
-    // if (response.ok) this.setState({complete: true})
-    // console.log('Purchase Complete!')
-    // history.push('/')
   }
 
   render() {
     if (this.state.complete) return <h1>Purchase Complete</h1>
-    // const {tax, total} = calculateTaxAndTotal(this.props.cartItems)
-    return (
-      <div className="checkout">
-        <p>Would you like to complete the purchase?</p>
+    console.log(this.props.cart)
+    if (this.props.cart.lineItems.length) {
+      const {tax, total} = calculateTaxAndTotal(this.props.cart.lineItems)
+      return (
+        <div className="checkout">
+          <p>Would you like to complete the purchase?</p>
 
-        <CardElement />
-        <form>
-          Shipping Information
-          <label htmlFor="name"> Name </label>
-          <input
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="addressStreet"> Street </label>
-          <input
-            name="addressStreet"
-            value={this.state.addressStreet}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="addressCity"> City </label>
-          <input
-            name="addressCity"
-            value={this.state.addressCity}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="state"> State </label>
-          <select
-            name="addressState"
-            className="form-control"
-            value={this.state.addressState}
-            onChange={this.handleChange}
-          >
-            {states.map(state => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
-          <label htmlFor="addressZip"> Zipcode </label>
-          <input
-            name="addressZip"
-            value={this.state.addressZip}
-            onChange={this.handleChange}
-          />
-          <button disabled={this.validation()} onClick={this.submit}>
-            Send
-          </button>
-        </form>
-        <div className="cart-review">
-          Review your cart
-          {this.props.cart.lineItems.map(item => {
-            console.log(
-              'this is the list of items in cart',
-              this.props.cart.lineItems
-            )
+          <CardElement />
+          <form>
+            Shipping Information
+            <label htmlFor="name"> Name </label>
+            <input
+              name="name"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
+            <label htmlFor="addressStreet"> Street </label>
+            <input
+              name="addressStreet"
+              value={this.state.addressStreet}
+              onChange={this.handleChange}
+            />
+            <label htmlFor="addressCity"> City </label>
+            <input
+              name="addressCity"
+              value={this.state.addressCity}
+              onChange={this.handleChange}
+            />
+            <label htmlFor="state"> State </label>
+            <select
+              name="addressState"
+              className="form-control"
+              value={this.state.addressState}
+              onChange={this.handleChange}
+            >
+              {states.map(state => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="addressZip"> Zipcode </label>
+            <input
+              name="addressZip"
+              value={this.state.addressZip}
+              onChange={this.handleChange}
+            />
+            <button disabled={this.validation()} onClick={this.submit}>
+              Send
+            </button>
+          </form>
+          <div className="cart-review">
+            Review your cart
+            {this.props.cart.lineItems.map(item => {
+              console.log(
+                'this is the list of items in cart',
+                this.props.cart.lineItems
+              )
 
-            return (
-              <div key={item.id}>
-                <li className="cart-item list-unstyled">
-                  <a>
-                    <img className="item-img" src={item.product.imageUrl} />
-                  </a>
+              return (
+                <div key={item.id}>
+                  <li className="cart-item list-unstyled">
+                    <a>
+                      <img className="item-img" src={item.product.imageUrl} />
+                    </a>
 
-                  <div className="item-body flexDown">
-                    <span className="item-name">{item.product.name}</span>
-                    <span className="item-price">
-                      {Math.round(item.product.price * item.quantity * 100) /
-                        100}
-                    </span>
-                  </div>
-                </li>
-              </div>
-            )
-          })}
-          {/* <div>Tax: {tax}</div>
-          <div>Total: {total}</div> */}
+                    <div className="item-body flexDown">
+                      <span className="item-name">{item.product.name}</span>
+                      <span className="item-price">
+                        {Math.round(item.product.price * item.quantity * 100) /
+                          100}
+                      </span>
+                    </div>
+                  </li>
+                </div>
+              )
+            })}
+            <div>Tax: {tax}</div>
+            <div>Total: {total}</div>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return <div>Ye olde carte appears to be emptye</div>
+    }
   }
 }
 const mapStateToProps = state => ({

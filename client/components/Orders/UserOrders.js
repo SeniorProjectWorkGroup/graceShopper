@@ -58,7 +58,7 @@ class UserOrders extends Component {
         </div>
       )
     } else {
-      return <p> Loading </p>
+      return <p> You do not appear to have any past orders </p>
     }
   }
 }

@@ -6,27 +6,18 @@ import {NavLink} from 'react-router-dom'
 import {calculateTaxAndTotal} from '../utils'
 class CartLoader extends Component {
   componentDidMount() {
-    // if (this.props.user.cartId && !this.state.requested) {
     console.log('Loading Cart')
     this.props.fetchLineItemsInCart()
   }
-  // componentDidUpdate() {
-  //   if (!this.props.cart.lineItems.length) {
-  //     console.log('Loading Cart Again')
-  //     this.props.fetchLineItemsInCart()
-  //   }
-  // }
+
   deleteClicked = targetId => {
     this.props.deleteLineitem(targetId)
   }
 
   render() {
-    console.log('In Cart.render. this.props.cart:', this.props.cart)
     const {lineItems} = this.props.cart
-    console.log('In Cart.render. this.props.lineItems:', lineItems)
     if (!this.props.cart.lineItems.length) {
-      console.log('Empty. this.props.cart:', this.props.cart)
-      return <h1> Loading Cart</h1>
+      return <h1> Cart Appears to Be Empty</h1>
     } else {
       const {tax, total} = calculateTaxAndTotal(lineItems)
       return (
@@ -57,7 +48,7 @@ class CartLoader extends Component {
   }
 }
 const mapStateToProps = state => ({
-  cart: state.cart,
+  cart: state.cart
   // user: state.user
 })
 

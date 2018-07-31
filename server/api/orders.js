@@ -108,7 +108,7 @@ router.post('/', async (req, res, next) => {
       addressAtPurchase,
       status,
       totalItems,
-      totalSale: chargeStatus.amount,
+      totalSale: req.body.amount,
       dateOfPurchase
     })
     res.json({chargeStatus, order})
