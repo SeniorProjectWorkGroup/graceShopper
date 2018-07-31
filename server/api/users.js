@@ -5,7 +5,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    if (!isAdmin(req, next)) throw new Error('User not authorized for post')
+    if (!isAdmin(req, next)) throw new Error('User not authorized to get users')
     const users = await User.findAll({
       attributes: ['id', 'email', 'role']
     })
