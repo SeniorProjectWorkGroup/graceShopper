@@ -3932,6 +3932,13 @@ input[type=button].btn-block {
     margin-bottom: 40px;
     margin-left: 20px;
 }
+
+.card:hover {
+  position: relative;
+  bottom: 1em;
+  box-shadow: .3em .3em 2em .2em black;
+}
+
 .card > hr {
   margin-right: 0;
   margin-left: 0;
@@ -8640,6 +8647,12 @@ h3 {
 /*# sourceMappingURL=style.css.map */
 body {
   font-family: sans-serif;
+  background-color: rgba(1, 0, 0, .8);
+}
+.brick{
+  background-image: url('img/ravenna.png');
+  background-position: cover;
+
 }
 
 a {
@@ -8681,6 +8694,7 @@ nav {
   position: sticky;
   top: 0;
   color: white;
+  z-index: 100;
 }
 
 
@@ -8697,6 +8711,7 @@ nav {
 
 .categories{
   list-style: none;
+  margin: 10.1px;
 }
 
 .categories button:hover{
@@ -8727,15 +8742,19 @@ nav {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content:space-evenly;
-  align-items: center
+  align-items: center;
+  padding: 1em;
 }
 .list-container {
-  background-image: url('./wall.jpeg')
+  color: white;
+
 }
 
 
 .products-page-container {
   display: flex;
+  max-width: 69%;
+
 }
 
 .user-review-icon {
@@ -8763,6 +8782,50 @@ img.star-rating {
   height: 100px;
 }
 
+.sideBarAd {
+  background-image: url('img/HoodedMan.jpg');
+  background-size: cover;
+  width: 30em;
+  min-height: 100vh;
+  position: fixed;
+  right: -1em;
+
+  border-right:2em solid rgba(4, 2, 2, 0.283);
+  margin-top: -1em;
+  margin-left: 1em;
+
+}
+.searchSideBar {
+  color: white;
+}
+
+.productCardImg {
+  /* border-top-left-radius: calc(0.25rem - 1px);
+  border-top-right-radius: calc(0.25rem - 1px); */
+  border: 2px solid darkgreen;
+  margin-left: 4%;
+  width: 92%
+}
+
+.cabin{
+  font-family: 'Cabin', sans-serif;
+
+}
+
+.quarterMasterBtn:active {
+  border: .25rem solid black;
+}
+
+.cartBtn:active {
+  background-color: rgba(191, 44, 44, 0.79);
+  border: .25rem solid black;
+
+}
+
+.form-centered{
+  position: relative;
+  left: calc(50% - 18em);
+}
 .pagination-nav {
   /* margin: auto; */
   text-align: center;

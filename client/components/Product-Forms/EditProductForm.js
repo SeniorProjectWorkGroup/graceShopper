@@ -63,9 +63,12 @@ class AddProductForm extends Component {
       return <Oops />
     }
     return (
-      <div>
+      <div className="m-5 text-white form-centered">
         <h1> Edit the Product </h1>
-        <form className="text-center form-group" onSubmit={this.handleSubmit}>
+        <form
+          className="text-center form-group text-white"
+          onSubmit={this.handleSubmit}
+        >
           <label htmlFor="name"> Product Name </label>
           <input
             name="name"
@@ -125,7 +128,7 @@ class AddProductForm extends Component {
             onChange={this.handleChange}
           />
           <button
-            className={`flex m-auto mt-lg-1 rounded ${
+            className={`flex m-auto mt-lg-1 rounded  quarterMasterBtn${
               this.validation() ? 'btn-warning' : 'btn-primary'
             }`}
             disabled={this.validation()}
