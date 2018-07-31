@@ -21,7 +21,7 @@ function Product(props) {
           <span className="product-price">${product.price}</span>
         </div>
         <NavLink to={`/products/${product.id}`}>
-          <img className="card-img-top" src={product.imageUrl} />
+          <img className="productCardImg" src={product.imageUrl} />
         </NavLink>
 
         <div className="card-body">
@@ -41,6 +41,7 @@ function Product(props) {
             </NavLink>
           ) : null}
           <button
+            className="m-1 cartBtn"
             type="button"
             onClick={() => props.addToCart(product.id, props.user.cartId)}
           >

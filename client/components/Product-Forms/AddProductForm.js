@@ -55,73 +55,78 @@ export class AddProductForm extends Component {
       return <Oops />
     }
     return (
-      <form className="text-center form-group" onSubmit={this.handleSubmit}>
-        <label htmlFor="name"> Product Name </label>
-        <input
-          name="name"
-          className={this.state.name.length > 0 ? '' : 'require'}
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="numInStock"> Amount of Product in Stock </label>
-        <input
-          className={this.state.numInStock > 0 ? '' : 'require'}
-          name="numInStock"
-          min="0"
-          placeholder="1"
-          type="Number"
-          value={this.state.numInStock}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="price"> Price </label>
-        <input
-          className={this.state.numInStock > 0 ? '' : 'require'}
-          name="price"
-          type="Number"
-          min="0.00"
-          placeholder="10.00"
-          step="0.01"
-          value={this.state.price}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="description"> Product Description </label>
-        <textarea
-          name="description"
-          className={this.state.description.length > 0 ? '' : 'require'}
-          value={this.state.description}
-          onChange={this.handleChange}
-          placeholder="Enter description here"
-        />
-        <label htmlFor="category"> Product Category </label>
-        <select
-          name="category"
-          className="form-control"
-          value={this.state.category}
-          onChange={this.handleChange}
+      <div className="form-centered">
+        <form
+          className="text-center form-group text-white m-5"
+          onSubmit={this.handleSubmit}
         >
-          {this.props.categories.map(category => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="imgURLs"> Image URLs </label>
-        <input
-          name="imgURL"
-          value={this.state.imgURL}
-          onChange={this.handleChange}
-        />
-        <button
-          disabled={this.validation()}
-          className={`flex m-auto mt-lg-1 rounded ${
-            this.validation() ? 'btn-warning' : 'btn-primary'
-          }`}
-          type="submit"
-        >
-          {' '}
-          Add Product{' '}
-        </button>
-      </form>
+          <label htmlFor="name"> Product Name </label>
+          <input
+            name="name"
+            className={this.state.name.length > 0 ? '' : 'require'}
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="numInStock"> Amount of Product in Stock </label>
+          <input
+            className={this.state.numInStock > 0 ? '' : 'require'}
+            name="numInStock"
+            min="0"
+            placeholder="1"
+            type="Number"
+            value={this.state.numInStock}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="price"> Price </label>
+          <input
+            className={this.state.numInStock > 0 ? '' : 'require'}
+            name="price"
+            type="Number"
+            min="0.00"
+            placeholder="10.00"
+            step="0.01"
+            value={this.state.price}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="description"> Product Description </label>
+          <textarea
+            name="description"
+            className={this.state.description.length > 0 ? '' : 'require'}
+            value={this.state.description}
+            onChange={this.handleChange}
+            placeholder="Enter description here"
+          />
+          <label htmlFor="category"> Product Category </label>
+          <select
+            name="category"
+            className="form-control"
+            value={this.state.category}
+            onChange={this.handleChange}
+          >
+            {this.props.categories.map(category => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="imgURLs"> Image URLs </label>
+          <input
+            name="imgURL"
+            value={this.state.imgURL}
+            onChange={this.handleChange}
+          />
+          <button
+            disabled={this.validation()}
+            className={`flex m-auto mt-lg-1 rounded  quarterMasterBtn ${
+              this.validation() ? 'btn-warning' : 'btn-primary'
+            }`}
+            type="submit"
+          >
+            {' '}
+            Add Product{' '}
+          </button>
+        </form>
+      </div>
     )
   }
 }

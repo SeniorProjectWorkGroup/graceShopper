@@ -20,12 +20,12 @@ class UserListing extends Component {
   }
   render() {
     return (
-      <li>
+      <li className="m-3">
         <div className="flex">
-          {this.props.user.email}
+          <p className="m-2">{this.props.user.email}</p>
           <button
             onClick={this.handleDelete}
-            className="btn-warning"
+            className="btn-warning m-2 rounded mr-4 quarterMasterBtn"
             type="button"
           >
             {' '}
@@ -41,7 +41,7 @@ class UserListing extends Component {
               <option value="ADMIN">Admin</option>
               <option value="SHOPPER">Shopper</option>
             </select>
-            <button type="submit" className="btn">
+            <button type="submit" className="btn quarterMasterBtn m-1">
               {' '}
               Save{' '}
             </button>

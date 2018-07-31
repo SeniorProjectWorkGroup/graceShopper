@@ -5,7 +5,6 @@ import {setDisplayedProducts} from '../store/products/displayedProducts'
 class CategorySideBar extends React.Component {
   createClickHandler = categoryId => () => {
     categoryId = parseInt(categoryId, 10)
-    // console.log('event.target:', event.target, 'categoryId:', categoryId)
     // Update displayedProducts to show products for the category
     const productsInCategory = this.props.productList.filter(product => {
       return product.categories.find(category => category.id === categoryId)
@@ -44,8 +43,7 @@ class CategorySideBar extends React.Component {
       this.props.productList
     )
     return (
-      <div>
-        <h2>Filters</h2>
+      <div className="searchSideBar">
         <ul className="category-filter-list">
           {categoriesAndCount &&
             Object.entries(categoriesAndCount).map(
@@ -53,7 +51,7 @@ class CategorySideBar extends React.Component {
                 return (
                   <li className="categories" key={categoryId}>
                     <button
-                      className="btn"
+                      className="btn cart"
                       onClick={this.createClickHandler(categoryId)}
                       type="button"
                     >

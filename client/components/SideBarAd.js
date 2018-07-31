@@ -1,11 +1,8 @@
 import React from 'react'
 const SideBarAd = props => {
-  return (
-    <div
-      className="sideBarAd"
-      style={{backgroundImage: `url(img/HoodedMan.jpg)`}}
-    />
-  )
+  return (<div className="sideBarAd" />
+
+)
 }
 
 export default SideBarAd

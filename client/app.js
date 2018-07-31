@@ -11,8 +11,8 @@ const App = () => {
       <Navbar />
       <div className="flex">
         <Routes />
+        <SideBarAd />
       </div>
-      <SideBarAd />
     </div>
   )
 }

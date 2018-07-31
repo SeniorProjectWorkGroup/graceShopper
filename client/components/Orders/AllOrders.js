@@ -18,7 +18,7 @@ class AllOrders extends Component {
   render() {
     if (this.props.orders.length) {
       return (
-        <div>
+        <div className="text-white m-5">
           <h2> All Orders </h2>
           <div>
             <button value="ALL" onClick={this.handleClick} type="button">

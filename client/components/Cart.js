@@ -17,11 +17,11 @@ class CartLoader extends Component {
   render() {
     const {lineItems} = this.props.cart
     if (!this.props.cart.lineItems.length) {
-      return <h1> Cart Appears to Be Empty</h1>
+      return <h1 className="m-5 text-white"> Cart Appears to Be Empty</h1>
     } else {
       const {tax, total} = calculateTaxAndTotal(lineItems)
       return (
-        <div>
+        <div className="m-5 text-white">
           Welcome to your cart!
           {/* {this.props.user.cartId} */}
           <ul>

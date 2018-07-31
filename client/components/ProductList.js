@@ -67,10 +67,13 @@ class ProductLoader extends Component {
   }
 
   doFetchProducts = location => {
-    // Fetch with pagination
-    console.log('In ProductList component. doFetchProducts. this.props.productList.length:', this.props.productList.length)
+    // Fetch with paginatio
     const [limit, offset] = this.parsePaginationQuery(location)
-    this.props.fetchProductsWithPagination(this.props.productList, limit, offset)
+    this.props.fetchProductsWithPagination(
+      this.props.productList,
+      limit,
+      offset
+    )
   }
 
   render() {
@@ -81,9 +84,11 @@ class ProductLoader extends Component {
     const productsToShow = this.props.displayedProducts
 
     return (
-      <div>
-        <h1 style={{ display: 'inline' }}>All Products</h1>&nbsp;&nbsp;
-        <h6 style={{ display: 'inline' }}>{offset}-{offset + limit} of {this.props.productList.length} results</h6>
+      <div style={{color: 'white'}}>
+        <h1 style={{margin: '1em', display: 'inline'}}>All Products</h1>&nbsp;&nbsp;
+        <h6 style={{display: 'inline'}}>
+          {offset}-{offset + limit} of {this.props.productList.length} results
+        </h6>
         <ProductList products={productsToShow} />
         {/* Pagination navigation */}
         <NavLink to={`/products?limit=${limit}&offset=${newOffset}`}>

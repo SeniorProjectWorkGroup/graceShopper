@@ -6,31 +6,47 @@ import {logout} from '../store'
 import history from '../history'
 
 const Navbar = ({handleClick, isLoggedIn, userRole, cartId}) => (
-  <nav>
+  <nav className="nav nav-pills nav-justified">
     {/* Display this navigation when user is logged in */}
+    <h4 className="cabin ml-4 mt-3 navTitle"> The QuarterMaster </h4>
+    <Link className="nav-item cabin" to="/home">
+      Home
+    </Link>
+    <Link className="nav-item cabin" to="/products">
+      Products
+    </Link>
     {isLoggedIn && (
-      <div className="flex">
+      <Fragment>
         {/* The navbar will show these links after you log in */}
-        <Link to="/home">Home</Link>
-        <Link to="/products">Products</Link>
-        <Link to="/orders"> Orders </Link>
+        <Link className="nav-item cabin" to="/orders">
+          {' '}
+          Orders{' '}
+        </Link>
         {userRole === 'ADMIN' && (
           <Fragment>
-            <Link to="/addProduct"> Add Product </Link>
-            <Link to="/manageOrders"> Manage Orders </Link>
-            <Link to="/users"> Edit Users </Link>
+            <Link className="nav-item cabin" to="/addProduct">
+              {' '}
+              Add Product{' '}
+            </Link>
+            <Link className="nav-item cabin" to="/manageOrders">
+              {' '}
+              Manage Orders{' '}
+            </Link>
+            <Link className="nav-item cabin" to="/users">
+              {' '}
+              Edit Users{' '}
+            </Link>
           </Fragment>
         )}
-        <a href="#" onClick={handleClick}>
+        <a className="cabin" href="#" onClick={handleClick}>
           Logout
         </a>
-      </div>
+      </Fragment>
     )}
     {/* Display this navigation when user is not logged in */}
     {!isLoggedIn && (
       <div className="flex">
         {/* The navbar will show these links before you log in */}
-        <Link to="/products">Products</Link>
         <Link to="/login">Login</Link>
         <Link to="/signup">Sign Up</Link>
       </div>
