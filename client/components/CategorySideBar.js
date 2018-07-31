@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {setDisplayedProducts} from '../store/products/displayedProducts'
 
 class CategorySideBar extends React.Component {
-
   createClickHandler = categoryId => () => {
     categoryId = parseInt(categoryId, 10)
     // console.log('event.target:', event.target, 'categoryId:', categoryId)
@@ -35,7 +34,7 @@ class CategorySideBar extends React.Component {
     return categoryHash
   }
 
-  capitalize = (str) => {
+  capitalize = str => {
     return str[0].toUpperCase() + str.slice(1)
   }
 
@@ -58,7 +57,19 @@ class CategorySideBar extends React.Component {
                       onClick={this.createClickHandler(categoryId)}
                       type="button"
                     >
-                      <img src="/icons/broad-dagger.svg" className="category-icon"/>&nbsp;{this.capitalize(categoryData.categoryInfo.name)} <span>{categoryData.count}</span>
+                      {categoryData.categoryInfo.imageUrl ? (
+                        <img
+                          src={categoryData.categoryInfo.imageUrl}
+                          className="category-icon"
+                        />
+                      ) : (
+                        <img
+                          src="/icons/broad-dagger.svg"
+                          className="category-icon"
+                        />
+                      )}
+                      &nbsp;{this.capitalize(categoryData.categoryInfo.name)}{' '}
+                      <span>{categoryData.count}</span>
                     </button>
                   </li>
                 )
@@ -70,7 +81,7 @@ class CategorySideBar extends React.Component {
   }
 }
 
-const mapStateToProps = ({productList}) => ({ productList })
+const mapStateToProps = ({productList}) => ({productList})
 
 const mapDispatchToProps = dispatch => ({
   setDisplayedProducts: products => dispatch(setDisplayedProducts(products))

@@ -8,7 +8,6 @@ const App = () => {
     <div>
       <Navbar />
       <div className="flex">
-        <CategorySideBar />
         <Routes />
       </div>
     </div>

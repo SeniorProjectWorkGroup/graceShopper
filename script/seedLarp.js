@@ -5,6 +5,7 @@ const {Category, Order, Product, Review, User} = require('../server/db/models')
 const users = require('./data/user.json')
 const orders = require('./data/order.json')
 const reviews = require('./data/review.json')
+const categoryIcons = require('./larpData/category-icons.json')
 const fs = require('fs')
 const path = require('path')
 
@@ -60,15 +61,29 @@ async function seed() {
       // Find or create categories
       const categories = product.categories
       for (let k = 0; k < categories.length; k++) {
-        const [category, found] = await Category.findOrCreate({
-          where: {name: categories[k]},
-          default: {name: categories[k]}
+        const thisCategoryName = categories[k]
+        const categoryToCreate = {name: thisCategoryName }
+        // Set the imageUrl of the category if specified
+        // console.log('thisCategoryName:', thisCategoryName, 'categoryIcons[thisCategoryName]:', categoryIcons[thisCategoryName])
+        if (categoryIcons[thisCategoryName]) {
+          categoryToCreate.imageUrl = categoryIcons[thisCategoryName]
+        }
+        // console.log('created:', createdCat)
+        const [category, created] = await Category.findOrCreate({
+          where: {name: thisCategoryName},
+          defaults: categoryToCreate
         })
+        if (created) {
+          console.log('Category created:', categoryToCreate)
+        }
         // Create the product-category association
         await createdProduct.addCategory(category.id)
       }
     }
   }
+
+  // Set the images on the categories
+  // categoryIcons.forEach(())
 
   // Seed the Orders
   await Order.bulkCreate(orders)

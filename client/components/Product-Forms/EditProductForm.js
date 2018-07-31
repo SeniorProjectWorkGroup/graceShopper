@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProductById} from '../../store/products/singleProduct'
 import {putProductById} from '../../store/products/productsList'
+import {Oops} from '../Oops'
 
 class AddProductForm extends Component {
   constructor(props) {
@@ -58,6 +59,9 @@ class AddProductForm extends Component {
   }
 
   render() {
+    if (this.props.currentUser.role !== 'ADMIN') {
+      return <Oops />
+    }
     return (
       <div>
         <h1> Edit the Product </h1>
@@ -138,7 +142,8 @@ class AddProductForm extends Component {
 
 const mapStateToProps = state => ({
   currentProduct: state.currentProduct,
-  categories: state.categories
+  categories: state.categories,
+  currentUser: state.user
 })
 const mapDispatchToProps = dispatch => ({
   getCurrentProduct: id => dispatch(fetchProductById(id)),

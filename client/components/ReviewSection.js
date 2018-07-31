@@ -5,7 +5,6 @@ import ReviewForm from './ReviewForm'
 import {connect} from 'react-redux'
 
 class ReviewSection extends React.Component {
-
   toDateString = dateStr => {
     const options = {year: 'numeric', month: 'long', day: 'numeric'}
     return new Date(dateStr).toLocaleDateString('en-US', options)
@@ -15,8 +14,13 @@ class ReviewSection extends React.Component {
     console.log('submitReview. target:', event.target)
     event.preventDefault()
 
-    const formData = new FormData(event.target);
-    console.log('FormData:', formData, 'reviewText:', formData.get('reviewText'))
+    const formData = new FormData(event.target)
+    console.log(
+      'FormData:',
+      formData,
+      'reviewText:',
+      formData.get('reviewText')
+    )
     const review = {
       title: formData.get('title'),
       rating: formData.get('rating'),
@@ -34,11 +38,14 @@ class ReviewSection extends React.Component {
         <div>
           <h1>Reviews</h1>
         </div>
-        <div>
-          Leave a review
-          <ReviewForm handleReview={this.handleReview} />
-          <br/>
-        </div>
+        {/* Only display review form if the user is logged in */}
+        {this.props.user.id && (
+          <div>
+            Leave a review
+            <ReviewForm handleReview={this.handleReview} />
+            <br />
+          </div>
+        )}
         {reviews &&
           reviews.map(review => {
             return (
@@ -67,8 +74,10 @@ class ReviewSection extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapStateToProps = ({user}) => ({user})
 
+const mapDispatchToProps = dispatch => ({
+  postReview: (productId, review) => dispatch(postReview(productId, review))
 })
 
-export default connect(null, mapDispatchToProps)(ReviewSection)
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewSection)

@@ -60,11 +60,25 @@ router.post('/product/:productId', async (req, res, next) => {
     const productId = req.params.productId
     // title, rating, text; userId, productId
     const {title, rating, text} = req.body
+    console.log('in reviews.post. req.user:' + req.user)
     const userId = req.user.id
-    console.log('productId:', productId, 'req.body:', req.body, 'userId:', userId)
-    const newReview = { title, rating, text, userId, productId }
-    const createdReview = await Review.create(newReview, { returning: true })
-    res.json(createdReview)
+    console.log(
+      'productId:',
+      productId,
+      'req.body:',
+      req.body,
+      'userId:',
+      userId
+    )
+    const newReview = {title, rating, text, userId, productId}
+    const createdReview = await Review.create(newReview, {returning: true})
+    // Get the eager-loaded version of the review
+    const eagerLoadedReview = await Review.find({
+      where: {id: createdReview.id},
+      include: [User]
+    })
+    console.log('createdReview:', createdReview, 'eagerLoadedReview:', eagerLoadedReview)
+    res.json(eagerLoadedReview)
   } catch (err) {
     next(err)
   }
