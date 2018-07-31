@@ -6,6 +6,7 @@ const GET_USER_ORDERS = 'GET_USER_ORDERS'
 const CREATE_ORDER = 'CREATE_ORDER'
 const DELETE_ORDER = 'DELETE_ORDER'
 const EDIT_ORDER = 'EDIT_ORDER'
+const GOT_ORDERS_BY_STATUS = 'GOT_ORDERS_BY_STATUS'
 
 //ACTION CREATORS
 const getOrders = orders => ({
@@ -34,8 +35,13 @@ const editOrder = (editedId, updatedOrder) => ({
   updatedOrder
 })
 
+const gotOrdersByStatus = ordersByStatus => ({
+  type: GOT_ORDERS_BY_STATUS,
+  ordersByStatus
+})
+
 //THUNK CREATORS
-export const fetchOrders = () => {
+export const fetchAllOrders = () => {
   return async dispatch => {
     const {data: orders} = await axios.get('/api/orders')
     dispatch(getOrders(orders))
@@ -46,10 +52,19 @@ export const fetchOrders = () => {
 
 export const fetchOrdersByUser = userId => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/orderss?userId=${userId}`)
-    dispatch(getUserOrders(data))
+    const {data: userOrders} = await axios.get(`/api/orders/user/${userId}`)
+    dispatch(getUserOrders(userOrders))
   }
 }
+export const fetchOrdersByStatus = statusType => {
+  return async dispatch => {
+    console.log('Thunk', statusType)
+    const {data: statusOrders} = await axios.get(`/api/orders/${statusType}`)
+    console.log(statusOrders)
+    dispatch(gotOrdersByStatus(statusOrders))
+  }
+}
+
 export const postOrders = order => {
   return async dispatch => {
     const {data} = await axios.post('/api/orders', order)
@@ -59,8 +74,6 @@ export const postOrders = order => {
 
 export const putOrderById = (orderId, orderUpdated) => {
   return async dispatch => {
-    console.log('ID', orderId)
-    console.log('orderrrr', orderUpdated)
     const {data} = await axios.put(`/api/orders/${orderId}`, orderUpdated)
     dispatch(editOrder(data))
   }
@@ -77,9 +90,11 @@ const orderReducer = (orders = [], action) => {
   // console.log('in orderreducer. orders:', orders, 'action:', action)
   switch (action.type) {
     case GET_ORDERS:
-      return action.products
+      return action.orders
+    case GOT_ORDERS_BY_STATUS:
+      return action.ordersByStatus
     case GET_USER_ORDERS:
-      return action.products
+      return action.orders
     case CREATE_ORDER:
       return [...orders, action.order]
     case DELETE_ORDER: {
