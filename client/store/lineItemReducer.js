@@ -1,6 +1,6 @@
 import axios from 'axios'
-//ACTION TYPES
-const ActionTypes = {
+// ========== ACTION TYPES ============
+export const ActionTypes = {
   GOT_ITEMS: 'GOT_ITEMS',
   ADD_ITEM: 'ADD_ITEM',
   DELETE_ITEM: 'DELETE_ITEM',
@@ -8,7 +8,7 @@ const ActionTypes = {
   CLEAR_CART: 'CLEAR_CART',
   CREATE_CART: 'CREATE_CART'
 }
-//ACTION CREATORS
+// ========== ACTION CREATORS ===========
 export const gotLineItems = lineItems => ({
   type: ActionTypes.GOT_ITEMS,
   lineItems
@@ -30,12 +30,12 @@ export const deletedLineItem = deletedId => ({
 export const clearCart = () => ({
   type: ActionTypes.CLEAR_CART
 })
-//THUNK CREATORS
+//========== THUNK CREATORS ==========
 export const fetchLineItems = () => {
   return async dispatch => {
     try {
       const {data: lineItems} = await axios.get(`/api/items`)
-      console.log('Thunk', lineItems)
+      // console.log('In thunk fetchLineItems. lineItems:', lineItems)
       dispatch(gotLineItems(lineItems))
     } catch (err) {
       console.log(err)
@@ -49,7 +49,8 @@ export const putLineItem = (itemId, editedItem) => {
       `/api/items/${itemId}`,
       editedItem
     )
-    dispatch(editedItem(updatedItem))
+    // console.log('in lineitemreducer.putLineitem. updateditem:', updatedItem)
+    dispatch(editedLineItem(updatedItem))
   }
 }
 
@@ -66,13 +67,14 @@ export const addItemToCartInServer = item => {
   }
 }
 
-//REDUCER
+// =============== REDUCER ============
 const defaultLineItems = []
 
 const lineItemReducer = (lineItemsState = defaultLineItems, action) => {
+  // console.log('in lineitemreducer. lineitemsstate:', lineItemsState, 'action:', action)
   switch (action.type) {
     case ActionTypes.GOT_ITEMS: {
-      console.log('Reducer', action.lineItems)
+      // console.log('Reducer', action.lineItems)
       return action.lineItems
     }
     case ActionTypes.ADD_ITEM:
@@ -94,7 +96,7 @@ const lineItemReducer = (lineItemsState = defaultLineItems, action) => {
     case ActionTypes.CLEAR_ITEMS:
       return defaultLineItems
     default:
-      return defaultLineItems
+      return lineItemsState
   }
 }
 

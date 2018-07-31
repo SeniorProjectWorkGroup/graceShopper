@@ -21,6 +21,7 @@ class SingleProductPage extends React.Component {
     // Product with eager loaded categories
     const {product, reviews} = this.props
     console.log('reviews:', reviews)
+    const productId = this.props.match.params.id
     // Set layout
     return (
       <div>
@@ -45,7 +46,7 @@ class SingleProductPage extends React.Component {
           <button type="button">Add to Cart</button>
         </div>
         <br />
-        <ReviewSection reviews={reviews}/>
+        <ReviewSection reviews={reviews} productId={}/>
       </div>
     )
   }
