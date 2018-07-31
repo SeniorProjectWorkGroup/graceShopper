@@ -11,6 +11,8 @@ import SingleProductPage from './components/SingleProductPage'
 import AdminUserManagement from './components/Admin/AdminUserManagement'
 import CheckoutForm from './components/CheckoutForm'
 import {Oops} from './components/Oops'
+import OrdersView from './components/Orders/OrdersView'
+import AllOrders from './components/Orders/AllOrders'
 
 /**
  * COMPONENT
@@ -21,7 +23,7 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, userRole} = this.props
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -54,9 +56,18 @@ class Routes extends Component {
               render={routeProps => <AddProductForm {...routeProps} />}
             />
             <Route
+              path="/orders"
+              render={routeProps => <OrdersView {...routeProps} />}
+            />
+            <Route
               path="/editProduct/:productId"
               render={routeProps => <EditProductForm {...routeProps} />}
             />
+            <Route
+              path="/manageOrders"
+              render={routeProps => <AllOrders {...routeProps} />}
+            />
+
             <Route
               path="/users"
               render={routeProps => <AdminUserManagement {...routeProps} />}
@@ -81,6 +92,7 @@ const mapState = state => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     admin: state.user.role === 'ADMIN'
+    userRole: state.user.role
   }
 }
 

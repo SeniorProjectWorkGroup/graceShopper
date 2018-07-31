@@ -12,9 +12,13 @@ const Navbar = ({handleClick, isLoggedIn, userRole, cartId}) => (
         {/* The navbar will show these links after you log in */}
         <Link to="/home">Home</Link>
         <Link to="/products">Products</Link>
+        <div>
+          <Link to="/orders"> Orders </Link>
+        </div>
         {userRole === 'ADMIN' ? (
           <Fragment>
             <Link to="/addProduct"> Add Product </Link>
+            <Link to="/manageOrders"> Manage Orders </Link>
             <Link to="/users"> Edit Users </Link>
           </Fragment>
         ) : null}

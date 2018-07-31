@@ -1,0 +1,100 @@
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
+import {fetchAllOrders, fetchOrdersByStatus} from '../../store/orderReducer'
+
+class AllOrders extends Component {
+  componentDidMount() {
+    this.props.getAllOrders()
+  }
+  handleClick = evt => {
+    console.log(evt.target.value)
+    if (evt.target.value === 'ALL') this.props.getAllOrders()
+    else {
+      this.props.getOrdersByStatus(evt.target.value)
+    }
+  }
+
+  render() {
+    if (this.props.orders.length) {
+      return (
+        <div>
+          <h2> All Orders </h2>
+          <div>
+            <button value="ALL" onClick={this.handleClick} type="button">
+              {' '}
+              ALL
+            </button>
+            <button value="COMPLETE" onClick={this.handleClick} type="button">
+              {' '}
+              COMPLETE
+            </button>
+            <button value="CREATED" onClick={this.handleClick} type="button">
+              {' '}
+              SHIPPED
+            </button>
+            <button value="PROCESSING" onClick={this.handleClick} type="button">
+              {' '}
+              PROCESSING
+            </button>
+          </div>
+          {this.props.orders.map(order => {
+            const {productOrders} = order
+            return (
+              <div className="orderCard" key={order.id}>
+                <div className="flex">
+                  <div className="flexDown">
+                    <p>Order Placed </p>
+                    <p> {order.date} </p>
+                  </div>
+                  <div className="flexDown">
+                    <p>Total</p>
+                    <p> What ever the Total Is: IN DB???? </p>
+                  </div>
+                  <div className="flexDown">
+                    <p>Ship To</p>
+                    <p>{order.addressAtPurchase}</p>
+                  </div>
+                  <div className="flexDown">
+                    <p>Status</p>
+                    <p>{order.status}</p>
+                  </div>
+                </div>
+                {productOrders.map(orderItem => (
+                  <div key={orderItem.id} className="flex">
+                    <div>
+                      {/* <img src={`/${orderItem.product.imageUrl}`} /> */}
+                    </div>
+                    <div className="flexDown">
+                      <NavLink to={`/products/${orderItem.product.id}`}>
+                        <span className="product-name">
+                          {orderItem.product.name}
+                        </span>
+                      </NavLink>
+                      <p>${orderItem.product.price}</p>
+                      <p> Quantity: {orderItem.quantity} </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
+          })}
+        </div>
+      )
+    } else {
+      return <p> Loading </p>
+    }
+  }
+}
+
+const mapDispatch = dispatch => ({
+  getAllOrders: () => dispatch(fetchAllOrders()),
+  getOrdersByStatus: status => dispatch(fetchOrdersByStatus(status))
+})
+
+const mapState = state => ({
+  user: state.user,
+  orders: state.orders
+})
+
+export default connect(mapState, mapDispatch)(AllOrders)
