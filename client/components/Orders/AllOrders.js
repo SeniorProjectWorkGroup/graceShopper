@@ -46,7 +46,9 @@ class AllOrders extends Component {
             const {productOrders} = order
             return (
               <div className="orderCard" key={order.id}>
-                Order: {order.id}
+                <NavLink to={`/orders/${order.id}`}>
+                  <span className="product-name">Order: {order.id}</span>
+                </NavLink>
                 <div className="flex">
                   <div className="flexDown">
                     <p>Order Placed </p>
