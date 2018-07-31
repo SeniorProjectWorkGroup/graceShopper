@@ -68,8 +68,9 @@ class ProductLoader extends Component {
 
   doFetchProducts = location => {
     // Fetch with pagination
+    console.log('In ProductList component. doFetchProducts. this.props.productList.length:', this.props.productList.length)
     const [limit, offset] = this.parsePaginationQuery(location)
-    this.props.fetchProductsWithPagination(limit, offset)
+    this.props.fetchProductsWithPagination(this.props.productList, limit, offset)
   }
 
   render() {
@@ -81,7 +82,8 @@ class ProductLoader extends Component {
 
     return (
       <div>
-        <h1>All Products</h1>
+        <h1 style={{ display: 'inline' }}>All Products</h1>&nbsp;&nbsp;
+        <h6 style={{ display: 'inline' }}>{offset}-{offset + limit} of {this.props.productList.length} results</h6>
         <ProductList products={productsToShow} />
         {/* Pagination navigation */}
         <NavLink to={`/products?limit=${limit}&offset=${newOffset}`}>
@@ -92,13 +94,14 @@ class ProductLoader extends Component {
   }
 }
 
-const mapStateToProps = ({displayedProducts = []}) => ({
-  displayedProducts: displayedProducts
+const mapStateToProps = ({productList = [], displayedProducts = []}) => ({
+  productList,
+  displayedProducts
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchProductsWithPagination: (limit, offset) =>
-    dispatch(fetchProductsWithPagination(limit, offset))
+  fetchProductsWithPagination: (allProducts, limit, offset) =>
+    dispatch(fetchProductsWithPagination(allProducts, limit, offset))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductLoader)

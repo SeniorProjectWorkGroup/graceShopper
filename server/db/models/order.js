@@ -22,6 +22,9 @@ const Order = db.define('order', {
   },
   dateOfPurchase: {
     type: Sequelize.DATE
+  },
+  userId: {
+    type: Sequelize.INTEGER
   }
 })
 
