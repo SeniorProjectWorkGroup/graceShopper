@@ -16,7 +16,7 @@ class CartLoader extends Component {
   //     this.props.fetchLineItemsInCart()
   //   }
   // }
-  deleteClicked = async targetId => {
+  deleteClicked = targetId => {
     this.props.deleteLineitem(targetId)
   }
 
@@ -31,7 +31,8 @@ class CartLoader extends Component {
       const {tax, total} = calculateTaxAndTotal(lineItems)
       return (
         <div>
-          Welcome to your cart! {this.props.user.cartId}
+          Welcome to your cart!
+          {/* {this.props.user.cartId} */}
           <ul>
             {lineItems.map(item => {
               return (
@@ -57,7 +58,7 @@ class CartLoader extends Component {
 }
 const mapStateToProps = state => ({
   cart: state.cart,
-  user: state.user
+  // user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
