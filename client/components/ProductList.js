@@ -3,6 +3,7 @@ import Product from './Product'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import {fetchProductsWithPagination} from '../store/products/productsList'
+import PaginationNav from './PaginationNav'
 
 function ProductList({products}) {
   return (
@@ -79,8 +80,9 @@ class ProductLoader extends Component {
   render() {
     // Use the current limit and offset to compute the pagination navigation limits & offsets
     const [limit, offset] = this.parsePaginationQuery(this.props.location)
-    const newOffset = offset + limit
+    // const newOffset = offset + limit
 
+    const totalNumProducts = this.props.productList.length
     const productsToShow = this.props.displayedProducts
 
     return (
@@ -91,9 +93,7 @@ class ProductLoader extends Component {
         </h6>
         <ProductList products={productsToShow} />
         {/* Pagination navigation */}
-        <NavLink to={`/products?limit=${limit}&offset=${newOffset}`}>
-          Next ->
-        </NavLink>
+        <PaginationNav limit={limit} offset={offset} max={totalNumProducts} />
       </div>
     )
   }

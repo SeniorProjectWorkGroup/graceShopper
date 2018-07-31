@@ -8826,3 +8826,7 @@ img.star-rating {
   position: relative;
   left: calc(50% - 18em);
 }
+.pagination-nav {
+  /* margin: auto; */
+  text-align: center;
+}
