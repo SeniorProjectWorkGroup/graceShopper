@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postProducts} from '../../store/products/productsList'
 import {Oops} from '../Oops'
+import {fetchCategories} from '../../store/category'
 
 export class AddProductForm extends Component {
   constructor(props) {
@@ -18,6 +19,9 @@ export class AddProductForm extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.validation = this.validation.bind(this)
+  }
+  async componentDidMount() {
+    await this.props.getCats()
   }
 
   validation() {
@@ -56,23 +60,27 @@ export class AddProductForm extends Component {
     }
     return (
       <form className="text-center form-group" onSubmit={this.handleSubmit}>
-        <label htmlFor="name"> Product Name </label>
-        <input
-          name="name"
-          className={this.state.name.length > 0 ? '' : 'require'}
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="numInStock"> Amount of Product in Stock </label>
-        <input
-          className={this.state.numInStock > 0 ? '' : 'require'}
-          name="numInStock"
-          min="0"
-          placeholder="1"
-          type="Number"
-          value={this.state.numInStock}
-          onChange={this.handleChange}
-        />
+        <div className="form-group">
+          <label htmlFor="name"> Product Name </label>
+          <input
+            name="name"
+            className={this.state.name.length > 0 ? '' : 'require'}
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="numInStock"> Amount of Product in Stock </label>
+          <input
+            className={this.state.numInStock > 0 ? '' : 'require'}
+            name="numInStock"
+            min="0"
+            placeholder="1"
+            type="Number"
+            value={this.state.numInStock}
+            onChange={this.handleChange}
+          />
+        </div>
         <label htmlFor="price"> Price </label>
         <input
           className={this.state.numInStock > 0 ? '' : 'require'}
@@ -132,7 +140,8 @@ const mapState = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  submitProduct: product => dispatch(postProducts(product))
+  submitProduct: product => dispatch(postProducts(product)),
+  getCats: () => dispatch(fetchCategories())
 })
 
 export default connect(mapState, mapDispatchToProps)(AddProductForm)
