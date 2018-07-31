@@ -11,9 +11,9 @@ const REMOVE_USER = 'REMOVE_USER'
  * INITIAL STATE
  */
 const defaultUser = {
-  id: 1,
-  email: 'cody@email.com',
-  role: 'ADMIN'
+  // id: 1,
+  // email: 'cody@email.com',
+  // role: 'ADMIN'
 }
 
 /**

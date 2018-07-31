@@ -4,10 +4,12 @@ const db = require('../db')
 
 const User = db.define('user', {
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: 'Mr. Smith'
   },
   imageUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: '/icons/default-user.svg'
   },
   email: {
     type: Sequelize.STRING,
