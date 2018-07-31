@@ -3,15 +3,24 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, ProductList, Cart} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  ProductList,
+  Cart,
+  CategorySideBar
+} from './components'
 import {me} from './store'
 import AddProductForm from './components/Product-Forms/AddProductForm'
 import EditProductForm from './components/Product-Forms/EditProductForm'
 import SingleProductPage from './components/SingleProductPage'
 import AdminUserManagement from './components/Admin/AdminUserManagement'
 import CheckoutForm from './components/CheckoutForm'
+import {Oops} from './components/Oops'
 import OrdersView from './components/Orders/OrdersView'
 import AllOrders from './components/Orders/AllOrders'
+
 /**
  * COMPONENT
  */
@@ -27,7 +36,17 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/products" component={ProductList} />
+        <Route
+          exact
+          path="/products"
+          render={routeProps => (
+            <div>
+              <CategorySideBar />
+              <ProductList {...routeProps} />
+            </div>
+          )}
+        />
+        {/* component={ProductList} /> */}
         <Route path="/products/:id" component={SingleProductPage} />
         <Route path="/cart" component={Cart} />
         <Route exact path="/" render={() => <Redirect to="/products" />} />
@@ -70,10 +89,12 @@ class Routes extends Component {
               path="/users"
               render={routeProps => <AdminUserManagement {...routeProps} />}
             />
+            <Route path="*" component={Oops} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={Oops} />
+        {/* <Route component={Login} /> */}
       </Switch>
     )
   }
@@ -87,6 +108,7 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
+    admin: state.user.role === 'ADMIN',
     userRole: state.user.role
   }
 }

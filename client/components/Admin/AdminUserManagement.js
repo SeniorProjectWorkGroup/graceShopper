@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchUsers, destroyUser} from '../../store/userListReducer'
 import UserListing from './UserListing'
+import {Oops} from '../Oops'
+
 class AdminUserManagement extends Component {
   async componentDidMount() {
     try {
@@ -16,6 +18,9 @@ class AdminUserManagement extends Component {
     this.props.deleteUser(targetId)
   }
   render() {
+    if (this.props.currentUser.role !== 'ADMIN') {
+      return <Oops />
+    }
     return (
       <div>
         <h3> Users </h3>
