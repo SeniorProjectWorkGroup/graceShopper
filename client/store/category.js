@@ -30,7 +30,7 @@ export const fetchCategories = () => {
 
 // ============  Reducers  ============
 export const categories = (state = [], action) => {
-  // console.log('in reduceCategories. action:', action)
+  // console.log('in reduceCategories. state:', state, 'action:', action)
   switch(action.type) {
     case GOT_CATEGORIES_FROM_SERVER: return action.categories
     default: return state

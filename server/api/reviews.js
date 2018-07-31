@@ -58,10 +58,13 @@ router.get('/user/:userId', async (req, res, next) => {
 router.post('/product/:productId', async (req, res, next) => {
   try {
     const productId = req.params.productId
-    // TODO
     // title, rating, text; userId, productId
     const {title, rating, text} = req.body
-
+    const userId = req.user.id
+    console.log('productId:', productId, 'req.body:', req.body, 'userId:', userId)
+    const newReview = { title, rating, text, userId, productId }
+    const createdReview = await Review.create(newReview, { returning: true })
+    res.json(createdReview)
   } catch (err) {
     next(err)
   }

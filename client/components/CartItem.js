@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {putItem} from '../store/cartReducer'
+import { putLineItem } from '../store/lineItemReducer';
 
 class CartItem extends React.Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class CartItem extends React.Component {
 
 const mapDispatch = dispatch => ({
   submitEdit: (editedId, editedQuantity) => {
-    dispatch(putItem(editedId, editedQuantity))
+    dispatch(putLineItem(editedId, editedQuantity))
   }
 })
 const mapState = state => ({

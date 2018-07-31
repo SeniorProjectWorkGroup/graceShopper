@@ -1,15 +1,30 @@
 import React from 'react'
 import StarRating from './StarRating'
+import {postReview} from '../store/reviews'
+import ReviewForm from './ReviewForm'
+import {connect} from 'react-redux'
 
 class ReviewSection extends React.Component {
+
   toDateString = dateStr => {
     const options = {year: 'numeric', month: 'long', day: 'numeric'}
     return new Date(dateStr).toLocaleDateString('en-US', options)
   }
 
-  submitReview = event => {
+  handleReview = event => {
     console.log('submitReview. target:', event.target)
     event.preventDefault()
+
+    const formData = new FormData(event.target);
+    console.log('FormData:', formData, 'reviewText:', formData.get('reviewText'))
+    const review = {
+      title: formData.get('title'),
+      rating: formData.get('rating'),
+      text: formData.get('text')
+    }
+    console.log('in handlereview. review:', review)
+    const productId = this.props.productId //this.props.match.params.id
+    this.props.postReview(productId, review)
   }
 
   render() {
@@ -21,13 +36,8 @@ class ReviewSection extends React.Component {
         </div>
         <div>
           Leave a review
-          <form onSubmit={this.submitReview}>
-            <textarea
-              className="review-input-box"
-              placeholder="Write your review here. What did you like most? What did you like the least?"
-            />
-            <button type="submit">Write Review</button>
-          </form>
+          <ReviewForm handleReview={this.handleReview} />
+          <br/>
         </div>
         {reviews &&
           reviews.map(review => {
@@ -35,7 +45,7 @@ class ReviewSection extends React.Component {
               <div key={review.id}>
                 <div>
                   <img
-                    src={review.user.imageUrl}
+                    src={review.user.imageUrl || '/icons/default-user.svg'}
                     className="user-review-icon"
                   />{' '}
                   {review.user.name}
@@ -57,4 +67,8 @@ class ReviewSection extends React.Component {
   }
 }
 
-export default ReviewSection
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default connect(null, mapDispatchToProps)(ReviewSection)

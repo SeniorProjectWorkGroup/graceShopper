@@ -1,7 +1,7 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {postItem} from '../store/cartReducer'
+import {addItemToCartInServer} from '../store/lineItemReducer'
 
 function Product(props) {
   const product = props.product
@@ -58,7 +58,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  addToCart: (productId, cartId) => dispatch(postItem({productId, cartId}))
+  addToCart: (productId, cartId) =>
+    dispatch(addItemToCartInServer({productId, cartId}))
 })
 
 export default connect(mapState, mapDispatch)(Product)

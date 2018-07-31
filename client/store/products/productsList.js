@@ -125,6 +125,7 @@ const mergeArrays = (arr1, arr2, comparator) => {
 }
 
 const productListReducer = (productListState = [], action) => {
+  // console.log('in productlist reducer. productliststate:', productListState, 'action:', action)
   switch (action.type) {
     case GET_PRODUCTS:
       return action.products
@@ -138,6 +139,7 @@ const productListReducer = (productListState = [], action) => {
         action.products,
         (obj1, obj2) => obj1.id === obj2.id
       )
+      // return action.products
     }
     case ADD_PRODUCT:
       return [...productListState, action.product]
