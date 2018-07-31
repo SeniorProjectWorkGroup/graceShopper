@@ -15,9 +15,9 @@ const getProducts = products => ({
   products
 })
 
-const gotProductsWithPagination = (products) => ({
+const gotProductsWithPagination = products => ({
   type: GOT_PRODUCTS_WITH_PAGINATION,
-  products,
+  products
   // limit,
   // offset
 })
@@ -68,14 +68,25 @@ export const fetchProductsByCategory = categoryId => {
   }
 }
 
-export const fetchProductsWithPagination = (limit, offset) => {
+export const fetchProductsWithPagination = (allProducts, limit, offset) => {
   return async dispatch => {
-    const {data: products} = await axios.get(
-      `/api/products?limit=${limit}&offset=${offset}`
-    )
-    dispatch(gotProductsWithPagination(products))
-    // Display the products
-    dispatch(setDisplayedProducts(products))
+    // const {data: products} = await axios.get(
+    //   `/api/products?limit=${limit}&offset=${offset}`
+    // )
+    console.log('in fetchProductsWithPagination thunk. allProducts.length:' + allProducts.length)
+    let productsToDisplay;
+    // Check if can just display the products. If there's not enough, fetch them
+    if (allProducts.length < limit + offset) {
+      console.log('======== DOING A FETCH OF ALL PRODUCTS==========')
+      const {data: products} = await axios.get(`/api/products`)
+      dispatch(gotProductsWithPagination(products))
+      productsToDisplay = products.slice(offset, offset + limit)
+    } else {
+      productsToDisplay = allProducts.slice(offset, offset + limit)
+    }
+
+    // Display the paginated products
+    dispatch(setDisplayedProducts(productsToDisplay))
   }
 }
 
