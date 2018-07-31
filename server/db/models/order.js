@@ -10,20 +10,21 @@ const Order = db.define('order', {
     type: Sequelize.ENUM('CREATED', 'PROCESSING', 'CANCELED', 'COMPLETE'),
     defaultValue: 'CREATED'
   },
-  // totalItems: {
-  //   type: Sequelize.INTEGER,
-  //   validate: {
-  //     min: 1
-  //   }
-  // },
-  // totalSale: {
-  //   type: Sequelize.VIRTUAL,
-  //   get() {
-  //     return 5
-  //   }
-  // },
+  totalItems: {
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 1
+    }
+  },
+  totalSale: {
+    type: Sequelize.FLOAT,
+    min: 0
+  },
   dateOfPurchase: {
     type: Sequelize.DATE
+  },
+  userId: {
+    type: Sequelize.INTEGER
   }
 })
 
