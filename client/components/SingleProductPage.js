@@ -46,7 +46,10 @@ class SingleProductPage extends React.Component {
           <button type="button">Add to Cart</button>
         </div>
         <br />
-        <ReviewSection reviews={reviews} productId={}/>
+        <ReviewSection
+          reviews={reviews}
+          // productId={}
+        />
       </div>
     )
   }

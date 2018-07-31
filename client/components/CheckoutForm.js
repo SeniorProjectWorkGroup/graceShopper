@@ -5,7 +5,11 @@ import {fetchCart} from '../store/cartReducer'
 import {calculateTaxAndTotal} from '../utils'
 import history from '../history'
 import {postOrders} from '../store/orderReducer'
-import {removeFromCart} from '../store/lineItemReducer'
+import {
+  fetchLineItems,
+  destroyItem,
+  removeFromCart
+} from '../store/lineItemReducer'
 
 const states = [
   'AL',
@@ -73,6 +77,7 @@ class CheckoutForm extends Component {
       addressZip: '',
       status: 'CREATED'
     }
+    console.log(this.props.cart)
     this.handleChange = this.handleChange.bind(this)
     this.validation = this.validation.bind(this)
   }
@@ -93,7 +98,7 @@ class CheckoutForm extends Component {
 
   async submit(ev) {
     // User clicked submit
-    const {total} = calculateTaxAndTotal(this.props.cartItems)
+    const {total} = calculateTaxAndTotal(this.props.cart.lineItems)
     ev.preventDefault()
     let {token} = await this.props.stripe.createToken({name: 'Name'})
     // build new order to thunk out
@@ -109,7 +114,7 @@ class CheckoutForm extends Component {
     await this.props.submitOrder(newOrderEntry)
     console.log('Purchase Complete!')
     this.setState({complete: true})
-    await this.props.clearCart(this.props.cartItems)
+    await this.props.clearCart(this.props.cart.lineItems)
     history.push('/home')
 
     //rewrite this using api routes
@@ -126,7 +131,7 @@ class CheckoutForm extends Component {
 
   render() {
     if (this.state.complete) return <h1>Purchase Complete</h1>
-    const {tax, total} = calculateTaxAndTotal(this.props.cartItems)
+    // const {tax, total} = calculateTaxAndTotal(this.props.cartItems)
     return (
       <div className="checkout">
         <p>Would you like to complete the purchase?</p>
@@ -177,8 +182,11 @@ class CheckoutForm extends Component {
         </form>
         <div className="cart-review">
           Review your cart
-          {this.props.cartItems.map(item => {
-            console.log(this.props.cartItems)
+          {this.props.cart.lineItems.map(item => {
+            console.log(
+              'this is the list of items in cart',
+              this.props.cart.lineItems
+            )
 
             return (
               <div key={item.id}>
@@ -198,24 +206,24 @@ class CheckoutForm extends Component {
               </div>
             )
           })}
-          <div>Tax: {tax}</div>
-          <div>Total: {total}</div>
+          {/* <div>Tax: {tax}</div>
+          <div>Total: {total}</div> */}
         </div>
       </div>
     )
   }
 }
 const mapStateToProps = state => ({
-  cartItems: state.cart,
+  cart: state.cart,
   user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadCart: id => dispatch(fetchCart(id)),
+  loadCart: () => dispatch(fetchLineItems()),
   submitOrder: order => dispatch(postOrders(order)),
   clearCart: cart =>
     cart.map(item => {
-      dispatch(removeFromCart(item))
+      dispatch(destroyItem(item.id))
     })
 })
 
