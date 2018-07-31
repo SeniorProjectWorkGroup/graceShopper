@@ -2,6 +2,8 @@ import React from 'react'
 
 import {Navbar, CategorySideBar} from './components'
 import Routes from './routes'
+import SideBarAd from './components/SideBarAd'
+
 //
 const App = () => {
   return (
@@ -9,6 +11,7 @@ const App = () => {
       <Navbar />
       <div className="flex">
         <Routes />
+        <SideBarAd />
       </div>
     </div>
   )

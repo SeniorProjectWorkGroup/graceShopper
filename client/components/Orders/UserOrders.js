@@ -11,7 +11,7 @@ class UserOrders extends Component {
   render() {
     if (this.props.orders.length) {
       return (
-        <div>
+        <div className="m-5 text-white">
           <h2> Your Orders </h2>
           {this.props.orders.map(order => {
             const {productOrders} = order
@@ -58,7 +58,12 @@ class UserOrders extends Component {
         </div>
       )
     } else {
-      return <p> You do not appear to have any past orders </p>
+      return (
+        <p className="m-5 text-white">
+          {' '}
+          You do not appear to have any past orders{' '}
+        </p>
+      )
     }
   }
 }

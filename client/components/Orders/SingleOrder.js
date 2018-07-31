@@ -26,20 +26,22 @@ class SingleOrderView extends Component {
     if (this.props.singleOrder.length) {
       const singleOrder = this.props.singleOrder[0]
       return (
-        <div>
-          <h2> {singleOrder.id} </h2>
-          <h4>
+        <div className="m-5 text-white">
+          <h2> Order {singleOrder.id} </h2>
+          <h4> Completed by {singleOrder.user.name} </h4>
+          <h5> at {singleOrder.user.email} </h5>
+          <p>
             {' '}
             Submitted on{' '}
             {new Date(singleOrder.createdAt).toString().slice(0, 16)}{' '}
-          </h4>
+          </p>
           {this.props.singleOrder.map(order => {
             const {productOrders} = order
             return (
               <div className="orderCard" key={order.id}>
                 <div className="flexDown">
                   <p>Total</p>
-                  <p> TDB</p>
+                  <p> {order.totalSale}</p>
                 </div>
                 <div className="flexDown">
                   <p>Ship To</p>

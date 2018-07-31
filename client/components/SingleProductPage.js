@@ -2,8 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProductById} from '../store/products/singleProduct'
 import {fetchReviews} from '../store/reviews'
-import StarRating from './StarRating'
 import ReviewSection from './ReviewSection'
+import {addItemToCartInServer} from '../store/lineItemReducer'
 
 class SingleProductPage extends React.Component {
   componentDidMount() {
@@ -43,23 +43,34 @@ class SingleProductPage extends React.Component {
         </div>
         <div>{product.description}</div>
         <div>
-          <button type="button">Add to Cart</button>
+          {/* <button type="button">Add to Cart</button> */}
+          <button
+            type="button"
+            onClick={() =>
+              this.props.addToCart(product.id, this.props.user.cartId)
+            }
+          >
+            Add to Cart
+          </button>
         </div>
         <br />
-        <ReviewSection reviews={reviews} productId={productId}/>
+        <ReviewSection reviews={reviews} productId={productId} />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({currentProduct, reviewsForCurrProduct}) => ({
+const mapStateToProps = ({currentProduct, reviewsForCurrProduct, user}) => ({
   product: currentProduct,
-  reviews: reviewsForCurrProduct
+  reviews: reviewsForCurrProduct,
+  user
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchProduct: productId => dispatch(fetchProductById(productId)),
-  fetchReviews: productId => dispatch(fetchReviews(productId))
+  fetchReviews: productId => dispatch(fetchReviews(productId)),
+  addToCart: (productId, cartId) =>
+    dispatch(addItemToCartInServer({productId, cartId}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProductPage)

@@ -22,9 +22,9 @@ class AdminUserManagement extends Component {
       return <Oops />
     }
     return (
-      <div>
+      <div className="m-5 text-white">
         <h3> Users </h3>
-        <ul>
+        <ul className="list-unstyled m-2">
           {this.props.userList.map(user => {
             if (user.id !== this.props.currentUser.id)
               return (

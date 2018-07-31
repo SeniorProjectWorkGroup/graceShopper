@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, Product, ProductOrder} = require('../db/models')
+const {Order, Product, ProductOrder, User} = require('../db/models')
 const {isAdmin, isUser} = require('./helper')
 const stripe = require('stripe')('sk_test_j93j6W1y4UExszBzJA2Vv46c')
 
@@ -25,7 +25,8 @@ router.get('/', async (req, res, next) => {
         {
           model: ProductOrder,
           include: [{model: Product}]
-        }
+        },
+        {model: User}
       ]
     })
     res.json(orders)
@@ -42,7 +43,8 @@ router.get('/:orderId', async (req, res, next) => {
         {
           model: ProductOrder,
           include: [{model: Product}]
-        }
+        },
+        {model: User}
       ]
     })
     res.json(order)

@@ -61,6 +61,7 @@ export const destroyItem = itemId => {
   }
 }
 export const addItemToCartInServer = item => {
+  // item : { productId, cartId }
   return async dispatch => {
     const {data} = await axios.post(`/api/items/`, item)
     dispatch(addedLineItem(data))
