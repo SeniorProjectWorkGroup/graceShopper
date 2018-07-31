@@ -16,12 +16,10 @@ import {ActionTypes} from './lineItemReducer'
 //   }
 // }
 
-
-const cartReducer = (cart = { lineItems: []}, action) => {
-  console.log('in cartreducer. cart:', cart, 'action:', action)
+const cartReducer = (cart = {lineItems: []}, action) => {
   const newLineItems = lineItemReducer(cart.lineItems, action)
   if (cart.lineItems !== newLineItems) {
-    return { lineItems: newLineItems }
+    return {lineItems: newLineItems}
   }
   return cart
 }

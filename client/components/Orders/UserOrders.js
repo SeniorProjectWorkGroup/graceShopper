@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import {fetchOrdersByUser} from '../../store/orderReducer'
 
-class OrdersView extends Component {
+class UserOrders extends Component {
   componentDidMount() {
     this.props.getUserOrders(this.props.user.id)
   }
@@ -17,14 +17,15 @@ class OrdersView extends Component {
             const {productOrders} = order
             return (
               <div className="orderCard" key={order.id}>
+                Order: {order.id}
                 <div className="flex">
                   <div className="flexDown">
                     <p>Order Placed </p>
-                    <p> {order.date} </p>
+                    <p> {new Date(order.createdAt).toString().slice(0, 16)} </p>
                   </div>
                   <div className="flexDown">
                     <p>Total</p>
-                    <p> What ever the Total Is: IN DB???? </p>
+                    <p> TDB</p>
                   </div>
                   <div className="flexDown">
                     <p>Ship To</p>
@@ -71,4 +72,4 @@ const mapState = state => ({
   orders: state.orders
 })
 
-export default connect(mapState, mapDispatch)(OrdersView)
+export default connect(mapState, mapDispatch)(UserOrders)

@@ -7,6 +7,7 @@ const CREATE_ORDER = 'CREATE_ORDER'
 const DELETE_ORDER = 'DELETE_ORDER'
 const EDIT_ORDER = 'EDIT_ORDER'
 const GOT_ORDERS_BY_STATUS = 'GOT_ORDERS_BY_STATUS'
+const GOT_ORDER_BY_ID = 'GOT_ORDER_BY_ID'
 
 //ACTION CREATORS
 const getOrders = orders => ({
@@ -39,6 +40,10 @@ const gotOrdersByStatus = ordersByStatus => ({
   type: GOT_ORDERS_BY_STATUS,
   ordersByStatus
 })
+const gotOrderById = orderById => ({
+  type: GOT_ORDER_BY_ID,
+  orderById
+})
 
 //THUNK CREATORS
 export const fetchAllOrders = () => {
@@ -58,10 +63,16 @@ export const fetchOrdersByUser = userId => {
 }
 export const fetchOrdersByStatus = statusType => {
   return async dispatch => {
-    console.log('Thunk', statusType)
-    const {data: statusOrders} = await axios.get(`/api/orders/${statusType}`)
-    console.log(statusOrders)
+    const {data: statusOrders} = await axios.get(
+      `/api/orders/status/${statusType}`
+    )
     dispatch(gotOrdersByStatus(statusOrders))
+  }
+}
+export const fetchOrderById = orderId => {
+  return async dispatch => {
+    const {data: singleOrder} = await axios.get(`/api/orders/${orderId}`)
+    dispatch(gotOrderById(singleOrder))
   }
 }
 
@@ -74,8 +85,11 @@ export const postOrders = order => {
 
 export const putOrderById = (orderId, orderUpdated) => {
   return async dispatch => {
-    const {data} = await axios.put(`/api/orders/${orderId}`, orderUpdated)
-    dispatch(editOrder(data))
+    const {data: editResponse} = await axios.put(
+      `/api/orders/${orderId}`,
+      orderUpdated
+    )
+    dispatch(editOrder(orderId, editResponse.editedOrder))
   }
 }
 
@@ -91,6 +105,8 @@ const orderReducer = (orders = [], action) => {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders
+    case GOT_ORDER_BY_ID:
+      return [action.orderById]
     case GOT_ORDERS_BY_STATUS:
       return action.ordersByStatus
     case GET_USER_ORDERS:
@@ -104,10 +120,11 @@ const orderReducer = (orders = [], action) => {
       return filteredOrder
     }
     case EDIT_ORDER: {
-      const updatedOrder = orders.map(order => {
-        if (order.id !== action.editedId) return action.updatedOrder
+      const updatedOrdersList = orders.map(order => {
+        if (order.id === action.editedId) return action.updatedOrder
+        else return order
       })
-      return updatedOrder
+      return updatedOrdersList
     }
     default:
       return orders

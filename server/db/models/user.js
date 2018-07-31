@@ -17,6 +17,7 @@ const User = db.define('user', {
   role: Sequelize.ENUM('ADMIN', 'SHOPPER'),
   password: {
     type: Sequelize.STRING,
+    defaultValue: 'SHOPPER',
     // Making `.password` act like a func hides it when serializing to JSON.
     // This is a hack to get around Sequelize's lack of a "private" option.
     get() {
