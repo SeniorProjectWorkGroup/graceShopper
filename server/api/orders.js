@@ -5,26 +5,25 @@ const stripe = require('stripe')('pk_test_oAeGHI2qYF1MucHECmbLFF5i')
 
 module.exports = router
 
-//get all orders
-router.get('/admin', async (req, res, next) => {
-  try {
-    if (!isAdmin(req)) throw new Error('User not authorized for get')
-    const orders = await Order.findAll({include: [{model: Product}]})
-    res.json(orders)
-  } catch (err) {
-    next(err)
-  }
-})
+// get all orders
+// router.get('/admin', async (req, res, next) => {
+//   try {
+//     if (!isAdmin(req)) throw new Error('User not authorized for get')
+//     const orders = await Order.findAll({include: [{model: Product}]})
+//     res.json(orders)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
-//get all orders for a specific user
+//get all orders
 router.get('/', async (req, res, next) => {
   try {
-    if (!isUser(req)) throw new Error('User not authorized for get')
-    const orders = await Order.findAll({
-      where: {userId: req.user},
-      include: [{model: Product}, {model: ProductOrder}]
+    if (!isAdmin(req)) throw new Error('User not authorized for get')
+    const orders = await ProductOrder.findAll({
+      include: [Product, Order]
     })
-
+    console.log(orders)
     res.json(orders)
   } catch (err) {
     next(err)
@@ -33,9 +32,13 @@ router.get('/', async (req, res, next) => {
 //get one specific order
 router.get('/:orderId', async (req, res, next) => {
   try {
-    if (!isUser(req)) throw new Error('User not authorized for get')
-    const order = await Order.findById(req.params.orderId)
-    res.json(order)
+    if (!isUser(req)) throw new Error('Only users may access this')
+    const orders = await ProductOrder.findAll({
+      where: {userId: req.user.id},
+      include: [Product, Order]
+    })
+    console.log(orders)
+    res.json(orders)
   } catch (err) {
     next(err)
   }

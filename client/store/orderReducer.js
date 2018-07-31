@@ -35,7 +35,7 @@ const editOrder = (editedId, updatedOrder) => ({
 })
 
 //THUNK CREATORS
-export const fetchOrders = () => {
+export const fetchAllOrders = () => {
   return async dispatch => {
     const {data: orders} = await axios.get('/api/orders')
     dispatch(getOrders(orders))
@@ -46,8 +46,8 @@ export const fetchOrders = () => {
 
 export const fetchOrdersByUser = userId => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/orders/${userId}`)
-    dispatch(getUserOrders(data))
+    const {data: userOrders} = await axios.get(`/api/orders/${userId}`)
+    dispatch(getUserOrders(userOrders))
   }
 }
 export const postOrders = order => {
@@ -76,9 +76,9 @@ export const destroy = orderId => {
 const orderReducer = (orders = [], action) => {
   switch (action.type) {
     case GET_ORDERS:
-      return action.products
+      return action.orders
     case GET_USER_ORDERS:
-      return action.products
+      return action.orders
     case CREATE_ORDER:
       return [...orders, action.order]
     case DELETE_ORDER: {

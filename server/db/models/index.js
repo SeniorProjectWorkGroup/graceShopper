@@ -26,8 +26,7 @@ Category.belongsToMany(Product, {through: 'ProductCategory'})
 
 ProductOrder.belongsTo(Order)
 ProductOrder.belongsTo(Product)
-
-User.hasMany(Order)
+ProductOrder.belongsTo(User)
 
 Product.hasMany(Review)
 Review.belongsTo(Product)
