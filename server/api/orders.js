@@ -20,8 +20,35 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     if (!isAdmin(req)) throw new Error('User not authorized for get')
-    const orders = await ProductOrder.findAll({
-      include: [Product, Order]
+    const orders = await Order.findAll({
+      include: [
+        {
+          model: ProductOrder,
+          include: [{model: Product}]
+        }
+      ]
+    })
+    console.log(orders.productOrders)
+    res.json(orders)
+  } catch (err) {
+    next(err)
+  }
+})
+router.get('/:statusType', async (req, res, next) => {
+  try {
+    if (!isAdmin(req)) throw new Error('User not authorized for get')
+    console.log('In the call')
+    console.log(req.params.statusType)
+    const orders = await Order.findAll({
+      where: {
+        status: req.params.statusType
+      },
+      include: [
+        {
+          model: ProductOrder,
+          include: [{model: Product}]
+        }
+      ]
     })
     console.log(orders)
     res.json(orders)
@@ -29,13 +56,19 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
 //get one specific order
 router.get('/:orderId', async (req, res, next) => {
   try {
     if (!isUser(req)) throw new Error('Only users may access this')
-    const orders = await ProductOrder.findAll({
+    const orders = await Order.findAll({
       where: {userId: req.user.id},
-      include: [Product, Order]
+      include: [
+        {
+          model: ProductOrder,
+          include: [{model: Product}]
+        }
+      ]
     })
     console.log(orders)
     res.json(orders)

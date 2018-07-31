@@ -1,43 +1,61 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 import {fetchOrdersByUser} from '../../store/orderReducer'
 
 class OrdersView extends Component {
   componentDidMount() {
-    console.log('Get the orders')
     this.props.getUserOrders(this.props.user.id)
   }
 
   render() {
-    console.log(this.props)
     if (this.props.orders.length) {
-      if (this.props.user.role === 'ADMIN') {
-        return (
-          <div>
-            <h1> All Orders </h1>
-            {this.props.orders.map(order => {
-              return (
-                <div key={order.id}>
-                  <p> {order.product.name} </p>
+      return (
+        <div>
+          <h2> Your Orders </h2>
+          {this.props.orders.map(order => {
+            const {productOrders} = order
+            return (
+              <div className="orderCard" key={order.id}>
+                <div className="flex">
+                  <div className="flexDown">
+                    <p>Order Placed </p>
+                    <p> {order.date} </p>
+                  </div>
+                  <div className="flexDown">
+                    <p>Total</p>
+                    <p> What ever the Total Is: IN DB???? </p>
+                  </div>
+                  <div className="flexDown">
+                    <p>Ship To</p>
+                    <p>{order.addressAtPurchase}</p>
+                  </div>
+                  <div className="flexDown">
+                    <p>Status</p>
+                    <p>{order.status}</p>
+                  </div>
                 </div>
-              )
-            })}
-          </div>
-        )
-      } else {
-        return (
-          <div>
-            <h2> Your Orders </h2>
-            {this.props.orders.map(order => {
-              return (
-                <div key={order.id}>
-                  <p> {order.product.name} </p>
-                </div>
-              )
-            })}
-          </div>
-        )
-      }
+                {productOrders.map(orderItem => (
+                  <div key={orderItem.id} className="flex">
+                    <div>
+                      {/* <img src={`/${orderItem.product.imageUrl}`} /> */}
+                    </div>
+                    <div className="flexDown">
+                      <NavLink to={`/products/${orderItem.product.id}`}>
+                        <span className="product-name">
+                          {orderItem.product.name}
+                        </span>
+                      </NavLink>
+                      <p>${orderItem.product.price}</p>
+                      <p> Quantity: {orderItem.quantity} </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
+          })}
+        </div>
+      )
     } else {
       return <p> Loading </p>
     }
