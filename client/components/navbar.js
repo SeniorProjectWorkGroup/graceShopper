@@ -15,7 +15,9 @@ const Navbar = ({handleClick, isLoggedIn, userRole, cartId}) => (
         <Link to="/products">Products</Link>
         {userRole === 'ADMIN' && (
           <Fragment>
+            <Link to="/orders"> Orders </Link>
             <Link to="/addProduct"> Add Product </Link>
+            <Link to="/manageOrders"> Manage Orders </Link>
             <Link to="/users"> Edit Users </Link>
           </Fragment>
         )}

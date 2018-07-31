@@ -1,37 +1,76 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const {Order, Product, ProductOrder} = require('../db/models')
 const {isAdmin, isUser} = require('./helper')
-const stripe = require('stripe')('pk_test_oAeGHI2qYF1MucHECmbLFF5i')
+const stripe = require('stripe')('sk_test_j93j6W1y4UExszBzJA2Vv46c')
 
 module.exports = router
+
+// get all orders
+// router.get('/admin', async (req, res, next) => {
+//   try {
+//     if (!isAdmin(req)) throw new Error('User not authorized for get')
+//     const orders = await Order.findAll({include: [{model: Product}]})
+//     res.json(orders)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 //get all orders
 router.get('/', async (req, res, next) => {
   try {
     if (!isAdmin(req)) throw new Error('User not authorized for get')
-    const orders = await Order.findAll()
+    const orders = await Order.findAll({
+      include: [
+        {
+          model: ProductOrder,
+          include: [{model: Product}]
+        }
+      ]
+    })
+    console.log(orders.productOrders)
+    res.json(orders)
+  } catch (err) {
+    next(err)
+  }
+})
+router.get('/:statusType', async (req, res, next) => {
+  try {
+    if (!isAdmin(req)) throw new Error('User not authorized for get')
+    console.log(req.params.statusType)
+    const orders = await Order.findAll({
+      where: {
+        status: req.params.statusType
+      },
+      include: [
+        {
+          model: ProductOrder,
+          include: [{model: Product}]
+        }
+      ]
+    })
+    console.log(orders)
     res.json(orders)
   } catch (err) {
     next(err)
   }
 })
 
-//get all orders for a specific user
-router.get('/', async (req, res, next) => {
-  try {
-    if (!isUser(req)) throw new Error('User not authorized for get')
-    const orders = await Order.findAll({where: {userId: req.user}})
-    res.json(orders)
-  } catch (err) {
-    next(err)
-  }
-})
 //get one specific order
-router.get('/:orderId', async (req, res, next) => {
+router.get('/user/:orderId', async (req, res, next) => {
   try {
-    if (!isUser(req)) throw new Error('User not authorized for get')
-    const order = await Order.findById(req.params.orderId)
-    res.json(order)
+    if (!isUser(req)) throw new Error('Only users may access this')
+    const orders = await Order.findAll({
+      where: {userId: req.user.id},
+      include: [
+        {
+          model: ProductOrder,
+          include: [{model: Product}]
+        }
+      ]
+    })
+    console.log(orders)
+    res.json(orders)
   } catch (err) {
     next(err)
   }
@@ -40,13 +79,13 @@ router.get('/:orderId', async (req, res, next) => {
 // post route uses stripe to create a stripe charge then an order to post to db
 router.post('/', async (req, res, next) => {
   const {addressAtPurchase, status, totalItems, dateOfPurchase} = req.body
-  const token = req.body.stripeToken
-
+  const token = req.body.token //change to match
+  console.log('this should be the token', req.body.token)
   try {
     if (!isUser(req)) throw new Error('User not authorized for post')
     console.log('in order post api')
     let chargeStatus = await stripe.charges.create({
-      amount: req.body.amount,
+      amount: Math.round(req.body.amount * 100),
       currency: 'usd',
       description: '???',
       source: token
@@ -58,7 +97,7 @@ router.post('/', async (req, res, next) => {
       totalSale: chargeStatus.amount,
       dateOfPurchase
     })
-    res.json(chargeStatus, order)
+    res.json({chargeStatus, order})
   } catch (err) {
     next(err)
   }
