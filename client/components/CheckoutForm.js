@@ -122,7 +122,7 @@ class CheckoutForm extends Component {
 
   render() {
     if (this.state.complete) return <h1>Purchase Complete</h1>
-    console.log(this.props.cart)
+    console.log(this.props.user.id)
     if (this.props.cart.lineItems.length) {
       const {tax, total} = calculateTaxAndTotal(this.props.cart.lineItems)
       return (

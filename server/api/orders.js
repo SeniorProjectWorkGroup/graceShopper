@@ -92,7 +92,13 @@ router.get('/user/:orderId', async (req, res, next) => {
 
 // post route uses stripe to create a stripe charge then an order to post to db
 router.post('/', async (req, res, next) => {
-  const {addressAtPurchase, status, totalItems, dateOfPurchase} = req.body
+  const {
+    addressAtPurchase,
+    status,
+    totalItems,
+    dateOfPurchase,
+    userId
+  } = req.body
   const token = req.body.token //change to match
   console.log('this should be the token', req.body.token)
   try {
@@ -109,7 +115,8 @@ router.post('/', async (req, res, next) => {
       status,
       totalItems,
       totalSale: req.body.amount,
-      dateOfPurchase
+      dateOfPurchase,
+      userId
     })
     res.json({chargeStatus, order})
   } catch (err) {
