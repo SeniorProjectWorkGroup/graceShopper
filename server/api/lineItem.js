@@ -53,6 +53,9 @@ router.delete('/:itemId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     console.log('in lineitems.post. req.body:', req.body)
+    // const {productId} = req.body
+    // Get the cart for the user
+    // req.user.id
     let [lineItem, created] = await LineItem.findOrCreate({
       where: {
         productId: req.body.productId,

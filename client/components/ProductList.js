@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Product from './Product'
 import {connect} from 'react-redux'
-import {NavLink} from 'react-router-dom'
 import {fetchProductsWithPagination} from '../store/products/productsList'
 import PaginationNav from './PaginationNav'
 
