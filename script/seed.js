@@ -9,38 +9,38 @@ const productCategories = require('./data/product_category.json')
 const orders = require('./data/order.json')
 const reviews = require('./data/review.json')
 
-/**
- * Welcome to the seed file!
- */
-
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  // Seed Users
-  await User.bulkCreate(users);
+  const users = await Promise.all([
+    User.create({email: 'cody@email.com', password: '123'}),
+    User.create({email: 'murphy@email.com', password: '123'})
+  ])
+
   console.log(`seeded ${users.length} users`)
 
   // Seed Products
-  await Product.bulkCreate(sampleProducts);
+  await Product.bulkCreate(sampleProducts)
   console.log(`seeded ${sampleProducts.length} products`)
 
   // Seed Categories
-  await Category.bulkCreate(sampleCategories);
+  await Category.bulkCreate(sampleCategories)
   console.log(`seeded ${sampleCategories.length} categories`)
 
   // Seed Product-Category associations
   const promiseArr = []
-  productCategories.forEach((productCategory) => {
+  productCategories.forEach(productCategory => {
     // Get each product and add the category to it
-    let promise = Product.findById(productCategory.productId)
-    .then((product) => {
+    let promise = Product.findById(productCategory.productId).then(product => {
       return product.addCategory(productCategory.categoryId)
     })
     promiseArr.push(promise)
   })
   await Promise.all(promiseArr)
-  console.log(`seeded ${productCategories.length} product-category associations`)
+  console.log(
+    `seeded ${productCategories.length} product-category associations`
+  )
 
   // Seed the Orders
   await Order.bulkCreate(orders)
