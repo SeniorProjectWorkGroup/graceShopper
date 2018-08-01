@@ -25,7 +25,7 @@ class UserOrders extends Component {
                   </div>
                   <div className="flexDown">
                     <p>Total</p>
-                    <p> TDB</p>
+                    <p> {order.totalSale}</p>
                   </div>
                   <div className="flexDown">
                     <p>Ship To</p>

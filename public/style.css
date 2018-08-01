@@ -8788,7 +8788,7 @@ img.star-rating {
   width: 30em;
   min-height: 100vh;
   position: fixed;
-  right: -1em;
+  right: -5em;
 
   border-right:2em solid rgba(4, 2, 2, 0.283);
   margin-top: -1em;
@@ -8829,4 +8829,51 @@ img.star-rating {
 .pagination-nav {
   /* margin: auto; */
   text-align: center;
+}
+
+.orderCard{
+  background-color: white;
+  color: black;
+  padding: 2em;
+  border-radius: 1em;
+  box-shadow: 0.5em 0.5em 0.8em 0.1em;
+  margin: 1em;
+}
+.orderCard p{
+  margin: .3em;
+}
+
+.orderInfo{
+  margin-right: 2em;
+}
+
+.orderItem div{
+  margin: 1em;
+  font-size: 1.2em;
+}
+
+.orderItem img{
+  height: 10em;
+}
+
+#Greeting {
+  left: 19em;
+  position: relative;
+  top: 20em;
+}
+
+#home-sword {
+  width:21em;
+  animation: sword-movement 5s infinite forwards;
+}
+@keyframes sword-movement{
+  20%{
+    transform: rotate(180deg)
+  }
+  50%{
+    transform: rotate(180deg)
+  }
+  90%{
+    transform: rotate(180deg)
+  }
 }
