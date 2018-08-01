@@ -10,7 +10,7 @@ import EditProductForm from './components/Product-Forms/EditProductForm'
 import SingleProductPage from './components/SingleProductPage'
 import AdminUserManagement from './components/Admin/AdminUserManagement'
 import CheckoutForm from './components/CheckoutForm'
-
+import OrderUnit from './components/Product-Forms/orderUnit'
 import {UserOrders, AllOrders, SingleOrderView} from './components/Orders/'
 import {Oops} from './components/Oops'
 
@@ -32,6 +32,8 @@ class Routes extends Component {
         <Route exact path="/products" component={ProductsPage} />
         <Route path="/products/:id" component={SingleProductPage} />
         <Route path="/cart" component={Cart} />
+        <Route path="/orderUnit" render={() => <OrderUnit />} />
+        <Route path="/home" component={UserHome} />
         <Route exact path="/" render={() => <Redirect to="/products" />} />
         <Route
           path="/checkout"
@@ -50,7 +52,6 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/" render={() => <Redirect to="/products" />} />
-            <Route path="/home" component={UserHome} />
 
             <Route
               path="/addProduct"
@@ -65,6 +66,7 @@ class Routes extends Component {
               path="/manageOrders"
               render={routeProps => <AllOrders {...routeProps} />}
             />
+
             <Route
               path="/orders/:orderId"
               render={routeProps => <SingleOrderView {...routeProps} />}

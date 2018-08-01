@@ -20,25 +20,45 @@ class AllOrders extends Component {
       return (
         <div className="text-white m-5">
           <h2> All Orders </h2>
-          <div>
-            <button value="ALL" onClick={this.handleClick} type="button">
-              {' '}
+          <div className="btn-group m-3">
+            <button
+              className="btn"
+              value="ALL"
+              onClick={this.handleClick}
+              type="button"
+            >
               ALL
             </button>
-            <button value="COMPLETE" onClick={this.handleClick} type="button">
-              {' '}
+            <button
+              className="btn"
+              value="COMPLETE"
+              onClick={this.handleClick}
+              type="button"
+            >
               COMPLETE
             </button>
-            <button value="CREATED" onClick={this.handleClick} type="button">
-              {' '}
+            <button
+              className="btn"
+              value="CREATED"
+              onClick={this.handleClick}
+              type="button"
+            >
               CREATED
             </button>
-            <button value="PROCESSING" onClick={this.handleClick} type="button">
-              {' '}
+            <button
+              className="btn"
+              value="PROCESSING"
+              onClick={this.handleClick}
+              type="button"
+            >
               PROCESSING
             </button>
-            <button value="CANCELED" onClick={this.handleClick} type="button">
-              {' '}
+            <button
+              className="btn"
+              value="CANCELED"
+              onClick={this.handleClick}
+              type="button"
+            >
               CANCELED
             </button>
           </div>
@@ -46,45 +66,46 @@ class AllOrders extends Component {
             const {productOrders} = order
             return (
               <div className="orderCard" key={order.id}>
-                <NavLink to={`/orders/${order.id}`}>
-                  <span className="product-name">Order: {order.id}</span>
-                </NavLink>
+                <div className="orderHead">
+                  <NavLink to={`/orders/${order.id}`}>
+                    <span className="product-name">Order: {order.id}</span>
+                  </NavLink>
 
-                {order.user && (
-                  <Fragment>
-                    <h4> Completed by {order.user.name} </h4>
-                    <h5> at {order.user.email} </h5>{' '}
-                  </Fragment>
-                )}
-                <div className="flex">
-                  <div className="flexDown">
+                  {order.user && (
+                    <Fragment>
+                      <h4> Completed by {order.user.name} </h4>
+                      <h5> at {order.user.email} </h5>{' '}
+                    </Fragment>
+                  )}
+                </div>
+                <div className="flex cabin">
+                  <div className="flexDown orderInfo">
                     <p>Order Placed </p>
                     <p> {new Date(order.createdAt).toString().slice(0, 16)} </p>
                   </div>
-                  <div className="flexDown">
+                  <div className="flexDown orderInfo">
                     <p>Total</p>
                     <p> {order.totalSale} </p>
                   </div>
-                  <div className="flexDown">
+                  <div className="flexDown orderInfo">
                     <p>Ship To</p>
                     <p>{order.addressAtPurchase}</p>
                   </div>
-                  <div className="flexDown">
+                  <div className="flexDown orderInfo">
                     <p>Status</p>
                     <p>{order.status}</p>
                   </div>
                 </div>
                 {productOrders.map(orderItem => (
-                  <div key={orderItem.id} className="flex">
-                    <div>
-                      {/* <img src={`/${orderItem.product.imageUrl}`} /> */}
-                    </div>
+                  <div key={orderItem.id} className="flex orderItem">
+                    <img src={`/${orderItem.product.imageUrl}`} />
                     <div className="flexDown">
                       <NavLink to={`/products/${orderItem.product.id}`}>
                         <span className="product-name">
                           {orderItem.product.name}
                         </span>
                       </NavLink>
+
                       <p>${orderItem.product.price}</p>
                       <p> Quantity: {orderItem.quantity} </p>
                     </div>
