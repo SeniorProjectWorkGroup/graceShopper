@@ -8,39 +8,58 @@ import history from '../history'
 const Navbar = ({handleClick, isLoggedIn, userRole, cartId}) => (
   <nav className="nav nav-pills nav-justified">
     {/* Display this navigation when user is logged in */}
-    <h4 className="cabin ml-4 mt-3 navTitle"> The QuarterMaster </h4>
-    <Link className="nav-item cabin" to="/home">
-      Home
-    </Link>
-    <Link className="nav-item cabin" to="/products">
-      Products
-    </Link>
+    <div className="title-container">
+      <h4 className="cabin ml-4 mt-3 navTitle"> The QuarterMaster </h4>
+      <div>The number one site for larping equipment</div>
+    </div>
+    <div>
+      <Link className="nav-item cabin" to="/home">
+        <div>
+          <img className="nav-icon" src="/icons/tower.svg" />
+        </div>
+        <div>Home</div>
+      </Link>
+    </div>
+    <div>
+      <Link className="nav-item cabin" to="/products">
+        <div>
+          <img className="nav-icon" src="/icons/coins-outlined.svg" />
+        </div>
+        <div>Shop Products</div>
+      </Link>
+    </div>
     {isLoggedIn && (
       <Fragment>
-        {/* The navbar will show these links after you log in */}
-        <Link className="nav-item cabin" to="/orders">
-          {' '}
-          Orders{' '}
-        </Link>
+        <div>
+          {/* The navbar will show these links after you log in */}
+          <Link className="nav-item cabin" to="/orders">
+            <div>
+              <img className="nav-icon" src="/icons/chest-outlined.svg" />
+            </div>
+            <div>Orders</div>
+          </Link>
+        </div>
         {userRole === 'ADMIN' && (
           <Fragment>
             <Link className="nav-item cabin" to="/addProduct">
-              {' '}
-              Add Product{' '}
+              Add Product
             </Link>
             <Link className="nav-item cabin" to="/manageOrders">
-              {' '}
-              Manage Orders{' '}
+              Manage Orders
             </Link>
             <Link className="nav-item cabin" to="/users">
-              {' '}
-              Edit Users{' '}
+              Edit Users
             </Link>
           </Fragment>
         )}
-        <a className="cabin" href="#" onClick={handleClick}>
-          Logout
-        </a>
+        <div>
+          <a className="cabin" href="#" onClick={handleClick}>
+            <div>
+              <img className="nav-icon" src="/icons/logout-swords.svg" />
+            </div>
+            <div>Logout</div>
+          </a>
+        </div>
       </Fragment>
     )}
     {/* Display this navigation when user is not logged in */}
@@ -59,7 +78,12 @@ const Navbar = ({handleClick, isLoggedIn, userRole, cartId}) => (
         history.push(`/cart`)
       }}
     >
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAflBMVEX///8AAADm5uaqqqp6enrIyMhdXV1ra2tLS0v5+fm1tbVHR0d9fX3b29vLy8v39/fw8PC/v79cXFyLi4vY2NhsbGyjo6OxsbFjY2OamppTU1MWFhYoKCjR0dHh4eEiIiIyMjKSkpIZGRk4ODg9PT2EhISenp57e3sXFxcMDAxsS5q+AAAI50lEQVR4nO2dW0PjOAyFKeVWblNgCqVcC8PM8P//4O7sPqCTyJLsWFXa8fda19FJHF8k2dnbazQajUaj0Wg0Go1Go7E7zKbLM5nVwWW0kUO4mlg4m0fbWcyhSeBk8jCLtrSQmVHgZLKINrWQqVnh5Fu0rWUs7Arvom0t48iucBltaxkZz3ASbWsZpxkKn6KNLePBrvAm2tYyvtsVPkbbWsjFo1nifrStpRx+nCe5pgqn0ZZ6sE8VXkdb48ILlbitc1ORc6rwMNoaD2Dt8RFtjQtU4e9oY1xYUYnP0dZ4AOur22hrPIDxYhVtjQsw59nJ8eKDKryKtsaDS6rwINoaF6jCz2hjXFhSiRfR1nhwRxX+jLbGgzlVeBZtjQuvVOKWuk1l1js/XjxRhdvq3ZehCh/2t4BshTl+43Gwyox45viNx0Le7GuuVzg+8hzYP6LNLSHrbbyPtraEdY7Ci2hrS8gLB2YEcEZDnsKDaHMLyOtqbDkp4+J7lsJv0ebmk+uOOIs2OJeTTIF7t9EW5/GQ79l9pv8/eToUuESnwGWiGC10kygEq5qDVE3/FwXn/Gm2wE6YTS46M10ru5CyMoVnWOLXhTCbkpZBi6ZmFqbbAA53ebkAvX1RLBdblVyWTmNTXZpJIbRSOT1yYalPhtagpGXQq6VcVyaFsGyzm1foTII3WZ633xgMMymkM375rkIjLUxQgzCbnJYBtz7x0psU0smiHPc6ptUVessy0jLgnU1EVU0KT0gZcY6CebIWORyP5kosXaBJIb2k6G2HRnpsUcMBYTYxLQNmsYkGbVFoG1j/UKORdsJscloGnR4kBkSL9eAfkpYK2EjLw7i0lhexJJ2nJ9qMRSHcU6n7rtNIO2E2MS3DMCBaFJqHQ0h1HhB3gBm1OHmn49gDX8SicE2KSLFZXL0a1XDY0zLgXvCvhUWhdTiEZz0osAJhNqkgzCf59mxRSF/nc+FykCM6KPnuxlrTvl7QopAWEYbDao2082ikmwq28QOiQSEUEfoPeCcGZovQqsTxghbkl1oGheBXEJaksCYYmCEKUwdpvKAX5V99g0IYDtOrQ4wb5chhgE5LmijSXvCVLWFQCKuZ9EQFig1NaTKnZUAohy1hULhWb9N/gKNz8F7Qd9ttxYfNNjCDQvpOpIfDqo2082yE7g02qvAzSr0mujpMe4agkf7KUqNa/ro8SgHd2wlXAkbpM7amT1LiPXWtJbg5K+zNmoyb4QJHnpYhzkKMjDvMVmMD4bjDbBUEjjsto86Ol5/RMgTyor4pLvULRfFWRWDGGQUbp9a2rPGmZdRppGMeLyoJHO+0pt5ec5hzLhfHLAu6CvnkCtFaTvoFFmdaBf+WAYW1GmlnMp+MJlDnCesypbVwawvq9nrnrwELJ9kLnwU40o5SpeB1ZVaI6vqQetgTwTwYm2seiGAKs4EbiXHpqArp5ClhPfhva+7mgTBbym0ALYhphapC+jsfQoCbWLGRWsNsdP3KuEw1hTDF512E4HDIypdVMd072oSY26ApBG8C3wIf9SKlmMJstBCTHKEphJ6K9XlBI618LIkpzKb09ppC6CfZC6xpiftyNRymMNutbKKmkHZnP9gLQCOtvY8euumE2xRSTvpJSppC6otj49aQXf86QAwLhNkSblOwoD+j0hTSJ8QOh2taQeVG2gmzJUIFSmxMU0h/ZuNztIDDYQ+09tTSmpbpd0eKQm3C0PFND9HCAyuDxFBEFwf9dqYohDbOhQXgRXHYnQyRl8RLIE+dFYVqaOdNuwUDgUbEd+Z7a7EZKQrpWMMlmkAjTRgwDAiz8QmrcoBTUUi9QdzqEGb/Llvo17KBf4ABsdfQFIU0y4kLk9N/+xyzBq2Ej9TDzKc3ICoK6WvGDIcwXCU8AEOBm8iWgPVPr8NXFNJfmeEQGqnTuUDgBeJjPqIVskItB5cuPr3OAoTVDb/8pH6IXmRPVqikjcHPXgdZwHjBr85of9jzWMkKlbxL2N7idngVhNnYdAs5B5P+vfeWKumb9L/KTpMBgJfk/YQB1lir7q/i3+nK4rNXMdxcv9NWxrL72fFEzpHsfnY8LX4kYbZ64YoeIwmzDUjN1xhLNNhPIeSdBeKocCS7nx0VPutX3wA1Mr2SvOjX98f1TNVz/fru+B7Bbf3AiSNle5rtwMXOfx1smA9vfZ3tONv7sR2BjN3PW8rfdshwtDEumHezbS2QluE6uwiDKqyUwToy7Luft5XdP2QYxou/4JDhnTyUfk0V7v4hw7t/KH3i/IQtB9IyHJ2XcVjSMrYbCLM5BZyDgbSMjfP603+ICj9k2P2LFBkfGHTC/aN+n7oNvrh7F+J3P3s/xPgwm/dsMT7M5u43DQ+zuX/mNuPb1z54CwwPQm3gg3f7uhWOOEbyv5gvdUO82NQnC/evpiEMPlSo0Wg0Gg1f5od3t/e3d5cVPih4cTq9v59ejSq4NZt+5Sqvhq1unr6W2G837h4LK133VHmixvfOB2CORpHV8vw26XJWaNhHr6YxpLXwbo2iGSS7uN7IYkIi5bcp8KYkvM3ZHwKqS9p/mh23uU7VVPgFizpIfqnMcUPwpkeGgKRNCnmniYueg7hRQ95KkxViWEk1xbVT2Z2RY5ey7SjqIWqfLM0YFZU9ObVO2MtFc51mjNZKTVWPTcpA87nZm6katAtqpppZ9juvOtJjknf0II15SGQmpEjMkKg7v81djepjjkln1TcKmRUeaTXFKNSfobmVHms11T2hzYxmlj2P+Earyn87CUt/6YvYv714p9QUlZGsbQ62B4q0Bh+VJaht9sqYtT3KNYVlesrJNTmZL8oWVfdMqDK7snw1Yk2BOeVSTD8veUnsa8IeYSctukOmR1H4VHbNM3WzSZ+8nztXTn+IweV0LzupOXP+hpPUiPFSIRQyiDVrVknOxD7bNb9GC+RHxbLl3IyZniZP2N4ks25LLY+nHHY756D5aI85nTkvB/XtVyR48TiCsMwXT7fnxydHi/XV4NdmfnqzuF4dn08DR8FGo9FoNBqNRqPRaDQacfwDvG57/Jv9lFgAAAAASUVORK5CYII=" />
+      <Link className="nav-item cabin" to="/cart">
+        <div>
+          <img src="/icons/backpack.svg" />
+        </div>
+        <div>Cart</div>
+      </Link>
     </div>
   </nav>
 )
