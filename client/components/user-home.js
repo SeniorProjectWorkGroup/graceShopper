@@ -9,8 +9,14 @@ export const UserHome = props => {
   const {email} = props
 
   return (
-    <div id="Test" className="text-white cabin m-5">
-      <h3>Welcome, {email}</h3>
+    <div>
+      <div id="Greeting" className="text-white cabin m-5">
+        <h3>Welcome, {email}</h3>
+      </div>
+      <img
+        id="home-sword"
+        src="http://www.stickpng.com/assets/images/580b585b2edbce24c47b244d.png"
+      />
     </div>
   )
 }

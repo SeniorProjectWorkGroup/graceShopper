@@ -51,7 +51,7 @@ class CategorySideBar extends React.Component {
                 return (
                   <li className="categories" key={categoryId}>
                     <button
-                      className="btn cart"
+                      className="btn cart cartBtn"
                       onClick={this.createClickHandler(categoryId)}
                       type="button"
                     >

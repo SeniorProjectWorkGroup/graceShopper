@@ -52,7 +52,6 @@ const Navbar = ({handleClick, isLoggedIn, userRole, cartId}) => (
       </div>
     )}
 
-    {/*  history.push(`/cart/${cartId}`)*/}
     <div
       className="cartIcon"
       onClick={() => {
@@ -71,7 +70,8 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
     userRole: state.user.role,
-    cartId: state.user.cartId
+    cartId: state.user.cartId,
+    cart: state.cart
   }
 }
 

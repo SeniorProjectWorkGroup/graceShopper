@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import {fetchOrderById, putOrderById} from '../../store/orderReducer'
@@ -28,10 +28,13 @@ class SingleOrderView extends Component {
       return (
         <div className="m-5 text-white">
           <h2> Order {singleOrder.id} </h2>
-          <h4> Completed by {singleOrder.user.name} </h4>
-          <h5> at {singleOrder.user.email} </h5>
+          {singleOrder.user && (
+            <Fragment>
+              <h4> Completed by {singleOrder.user.name} </h4>
+              <h5> at {singleOrder.user.email} </h5>
+            </Fragment>
+          )}{' '}
           <p>
-            {' '}
             Submitted on{' '}
             {new Date(singleOrder.createdAt).toString().slice(0, 16)}{' '}
           </p>
@@ -40,12 +43,10 @@ class SingleOrderView extends Component {
             return (
               <div className="orderCard" key={order.id}>
                 <div className="flexDown">
-                  <p>Total</p>
-                  <p> {order.totalSale}</p>
+                  <p>Total: ${order.totalSale}</p>
                 </div>
                 <div className="flexDown">
-                  <p>Ship To</p>
-                  <p>{order.addressAtPurchase}</p>
+                  <p>Ship To {order.addressAtPurchase}</p>
                 </div>
                 <div className="flexDown">
                   <form onSubmit={this.handleSubmit}>
@@ -63,16 +64,15 @@ class SingleOrderView extends Component {
                   </form>
                 </div>
                 {productOrders.map(orderItem => (
-                  <div key={orderItem.id} className="flex">
-                    <div>
-                      {/* <img src={`/${orderItem.product.imageUrl}`} /> */}
-                    </div>
+                  <div key={orderItem.id} className="flex orderItem mt-2">
+                    <img src={`/${orderItem.product.imageUrl}`} />
                     <div className="flexDown">
                       <NavLink to={`/products/${orderItem.product.id}`}>
                         <span className="product-name">
                           {orderItem.product.name}
                         </span>
                       </NavLink>
+
                       <p>${orderItem.product.price}</p>
                       <p> Quantity: {orderItem.quantity} </p>
                     </div>
