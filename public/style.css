@@ -8839,6 +8839,9 @@ img.star-rating {
   box-shadow: 0.5em 0.5em 0.8em 0.1em;
   margin: 1em;
 }
+.orderCard p{
+  margin: .3em;
+}
 
 .orderInfo{
   margin-right: 2em;
