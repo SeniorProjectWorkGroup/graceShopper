@@ -36,11 +36,11 @@ class ReviewSection extends React.Component {
     return (
       <div>
         <div>
-          <h1>Reviews</h1>
+          <h1 className="text-white">Reviews</h1>
         </div>
         {/* Only display review form if the user is logged in */}
         {this.props.user.id && (
-          <div>
+          <div className="text-white">
             Leave a review
             <ReviewForm handleReview={this.handleReview} />
             <br />
@@ -50,7 +50,7 @@ class ReviewSection extends React.Component {
           reviews.map(review => {
             return (
               <div key={review.id}>
-                <div>
+                <div className="text-white">
                   <img
                     src={review.user.imageUrl || '/icons/default-user.svg'}
                     className="user-review-icon"
@@ -59,11 +59,13 @@ class ReviewSection extends React.Component {
                 </div>
                 <div>
                   <StarRating num={review.rating} />&nbsp;&nbsp;{' '}
-                  <b>{review.title}</b>
+                  <b className="text-white">{review.title}</b>
                 </div>
-                <div>{this.toDateString(review.createdAt)}</div>
+                <div className="text-white">
+                  {this.toDateString(review.createdAt)}
+                </div>
                 <div>
-                  <p>{review.text}</p>
+                  <p className="text-white">{review.text}</p>
                 </div>
                 <br />
               </div>

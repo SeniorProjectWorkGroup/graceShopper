@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postProducts} from '../../store/products/productsList'
 import {Oops} from '../Oops'
+import {fetchCategories} from '../../store/category'
 
 export class AddProductForm extends Component {
   constructor(props) {
@@ -18,6 +19,9 @@ export class AddProductForm extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.validation = this.validation.bind(this)
+  }
+  async componentDidMount() {
+    await this.props.getCats()
   }
 
   validation() {
@@ -137,7 +141,8 @@ const mapState = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  submitProduct: product => dispatch(postProducts(product))
+  submitProduct: product => dispatch(postProducts(product)),
+  getCats: () => dispatch(fetchCategories())
 })
 
 export default connect(mapState, mapDispatchToProps)(AddProductForm)

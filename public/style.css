@@ -8839,6 +8839,58 @@ img.star-rating {
   text-align: center;
 }
 
+.prod-pic {
+  border-radius: 40px;
+  border: 1px solid black;
+  box-shadow: .5em .5em .8em .1em;
+width: 100%
+}
+
+.prod-pic-small {
+  border-radius: 40px;
+  border: 1px solid black;
+
+width: 25%
+}
+
+.img-container-small {
+  padding: 12px 20px;
+  margin: 8px 0;
+width:10%
+}
+
+.img-container {
+  padding: 12px 20px;
+  margin: 8px 0;
+width:22%
+}
+
+.single-prod-card {
+  display:flex;
+  width:60%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  margin-right: 4em;
+}
+
+.prod-info {
+  background-color:white;
+
+  border-radius: 8px;
+  border: 1px solid black;
+  padding: 12px 20px;
+  box-shadow: .5em .5em .8em .1em;
+}
+
+.prod-des {
+  margin: 8px 0
+}
+
+.prod-text {
+  width:80%;
+  padding: 12px 20px;
+  margin: 8px 0
+}
 .orderCard{
   background-color: white;
   color: black;

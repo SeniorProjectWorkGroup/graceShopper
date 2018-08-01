@@ -24,37 +24,42 @@ class SingleProductPage extends React.Component {
     const productId = this.props.match.params.id
     // Set layout
     return (
-      <div>
-        <div>
-          <img src={'/' + product.imageUrl} />
+      <div className="single-prod-card">
+        <div className="img-container">
+          <img className="prod-pic" src={'/' + product.imageUrl} />
         </div>
-        <div>
-          <h1>
-            <b>{product.name}</b>
-          </h1>
+        <div className="prod-text">
+          <div>
+            <h1>
+              <b className="text-white">{product.name}</b>
+            </h1>
+          </div>
+          <div className="prod-info">
+            {product.numInStock >= 1 ? (
+              <div>Only {product.numInStock} left</div>
+            ) : (
+              <div> No More in Ye' old armoury </div>
+            )}
+
+            <div className="prod-des">{product.description}</div>
+            <div>
+              <h3>${product.price}</h3>
+            </div>
+            <div>
+              {/* <button type="button">Add to Cart</button> */}
+              <button
+                type="button"
+                onClick={() =>
+                  this.props.addToCart(product.id, this.props.user.cartId)
+                }
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+          <br />
+          <ReviewSection reviews={reviews} productId={productId} />
         </div>
-        {product.numInStock >= 1 ? (
-          <div>Only {product.numInStock} left</div>
-        ) : (
-          <div> No More in Ye' old armoury </div>
-        )}
-        <div>
-          <h3>${product.price}</h3>
-        </div>
-        <div>{product.description}</div>
-        <div>
-          {/* <button type="button">Add to Cart</button> */}
-          <button
-            type="button"
-            onClick={() =>
-              this.props.addToCart(product.id, this.props.user.cartId)
-            }
-          >
-            Add to Cart
-          </button>
-        </div>
-        <br />
-        <ReviewSection reviews={reviews} productId={productId} />
       </div>
     )
   }

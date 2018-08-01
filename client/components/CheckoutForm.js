@@ -126,86 +126,111 @@ class CheckoutForm extends Component {
     if (this.props.cart.lineItems.length) {
       const {tax, total} = calculateTaxAndTotal(this.props.cart.lineItems)
       return (
-        <div className="checkout">
-          <p>Would you like to complete the purchase?</p>
+        <div className="text-center form-group text-white m-5">
+          <div className="checkout text-white">
+            <p>Would you like to complete the purchase?</p>
 
-          <CardElement />
-          <form>
-            Shipping Information
-            <label htmlFor="name"> Name </label>
-            <input
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-            <label htmlFor="addressStreet"> Street </label>
-            <input
-              name="addressStreet"
-              value={this.state.addressStreet}
-              onChange={this.handleChange}
-            />
-            <label htmlFor="addressCity"> City </label>
-            <input
-              name="addressCity"
-              value={this.state.addressCity}
-              onChange={this.handleChange}
-            />
-            <label htmlFor="state"> State </label>
-            <select
-              name="addressState"
-              className="form-control"
-              value={this.state.addressState}
-              onChange={this.handleChange}
-            >
-              {states.map(state => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
-            <label htmlFor="addressZip"> Zipcode </label>
-            <input
-              name="addressZip"
-              value={this.state.addressZip}
-              onChange={this.handleChange}
-            />
-            <button disabled={this.validation()} onClick={this.submit}>
-              Send
-            </button>
-          </form>
-          <div className="cart-review">
-            Review your cart
-            {this.props.cart.lineItems.map(item => {
-              console.log(
-                'this is the list of items in cart',
-                this.props.cart.lineItems
-              )
+            <CardElement />
+            <div className="newthing">
+              <form className="text-center form-group text-white m-5">
+                Shipping Information
+                <label htmlFor="name" className="text-white">
+                  {' '}
+                  Name{' '}
+                </label>
+                <input
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+                <label htmlFor="addressStreet" className="text-white">
+                  {' '}
+                  Street{' '}
+                </label>
+                <input
+                  name="addressStreet"
+                  value={this.state.addressStreet}
+                  onChange={this.handleChange}
+                />
+                <label htmlFor="addressCity" className="text-white">
+                  {' '}
+                  City{' '}
+                </label>
+                <input
+                  name="addressCity"
+                  value={this.state.addressCity}
+                  onChange={this.handleChange}
+                />
+                <label htmlFor="state" className="text-white">
+                  {' '}
+                  State{' '}
+                </label>
+                <select
+                  name="addressState"
+                  className="form-control"
+                  value={this.state.addressState}
+                  onChange={this.handleChange}
+                >
+                  {states.map(state => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+                <label htmlFor="addressZip" className="text-white">
+                  {' '}
+                  Zipcode{' '}
+                </label>
+                <input
+                  name="addressZip"
+                  value={this.state.addressZip}
+                  onChange={this.handleChange}
+                />
+                <button disabled={this.validation()} onClick={this.submit}>
+                  Send
+                </button>
+              </form>
+              <div className="cart-review text-white">
+                Review your cart
+                {this.props.cart.lineItems.map(item => {
+                  console.log(
+                    'this is the list of items in cart',
+                    this.props.cart.lineItems
+                  )
 
-              return (
-                <div key={item.id}>
-                  <li className="cart-item list-unstyled">
-                    <a>
-                      <img className="item-img" src={item.product.imageUrl} />
-                    </a>
+                  return (
+                    <div key={item.id}>
+                      <li className="cart-item list-unstyled text-white">
+                        <a className="img-container-small">
+                          <img
+                            className="prod-pic-small"
+                            src={item.product.imageUrl}
+                          />
+                        </a>
 
-                    <div className="item-body flexDown">
-                      <span className="item-name">{item.product.name}</span>
-                      <span className="item-price">
-                        {Math.round(item.product.price * item.quantity * 100) /
-                          100}
-                      </span>
+                        <div className="item-body flexDown">
+                          <span className="item-name">{item.product.name}</span>
+                          <span className="item-price">
+                            {Math.round(
+                              item.product.price * item.quantity * 100
+                            ) / 100}
+                          </span>
+                        </div>
+                      </li>
                     </div>
-                  </li>
-                </div>
-              )
-            })}
-            <div>Tax: {tax}</div>
-            <div>Total: {total}</div>
+                  )
+                })}
+                <div className="text-white">Tax: {tax}</div>
+                <div className="text-white">Total: {total}</div>
+              </div>
+            </div>
           </div>
         </div>
       )
     } else {
-      return <div>Ye olde carte appears to be emptye</div>
+      return (
+        <div className="text-white">Ye olde carte appears to be emptye</div>
+      )
     }
   }
 }
