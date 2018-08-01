@@ -8846,6 +8846,19 @@ img.star-rating {
 width: 100%
 }
 
+.prod-pic-small {
+  border-radius: 40px;
+  border: 1px solid black;
+
+width: 25%
+}
+
+.img-container-small {
+  padding: 12px 20px;
+  margin: 8px 0;
+width:10%
+}
+
 .img-container {
   padding: 12px 20px;
   margin: 8px 0;
